@@ -1,6 +1,7 @@
 *.map
 *.dat
 *.csv
+*.pak
 modDescription.txt
 todo.txt
 usefulscnrscripts.txt

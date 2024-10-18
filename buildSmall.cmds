@@ -25,7 +25,7 @@ echo ==Skulls...==
 runcommands firefightfolder\scripts\hud\skulls.cmds
 
 echo ==Fixing AI...==
-runcommands firefightfolder\scripts\ai\animationGraphs.cmds
+runcommands firefightfolder\scripts\ai\vehicles.cmds
 runcommands firefightfolder\scripts\ai\weapons.cmds
 
 echo ==Fixing ODST weapons...==

@@ -4,12 +4,19 @@ addblockelements Modes[0].WeaponClass[0].WeaponIk
 setfield Modes[0].WeaponClass[0].WeaponIk[0].Marker left_hand
 setfield Modes[0].WeaponClass[0].WeaponIk[0].AttachToMarker left_hand
 sortmodes
+echo first_person:melee_strike_1
 setfield Animations[23].PlaybackFlags DisableWeaponIk,DisableWeaponAim1stPerson
+echo first_person:posing:var2
 setfield Animations[27].PlaybackFlags DisableWeaponIk
+echo first_person:ready
 setfield Animations[29].PlaybackFlags DisableWeaponIk,DisableWeaponAim1stPerson
+echo first_person:reload_empty
 setfield Animations[30].PlaybackFlags DisableWeaponIk,DisableWeaponAim1stPerson
+echo first_person:reload_full
 setfield Animations[31].PlaybackFlags DisableWeaponIk,DisableWeaponAim1stPerson
+echo first_person:sprint_loop_airborne
 setfield Animations[40].PlaybackFlags DisableWeaponIk
+echo first_person:throw_equipment
 addblockelements animations[41].animationdata.FrameEvents 1
 setfield animations[41].animationdata.Frameevents[0].Frame 12
 setfield Animations[41].PlaybackFlags DisableWeaponIk

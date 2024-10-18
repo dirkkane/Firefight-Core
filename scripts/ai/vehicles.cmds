@@ -1,7 +1,5 @@
 OpenCacheFile firefightfolder\source_maps\odst\sc110.map
-mergeanimationgraphs objects\characters\marine\marine.jmad objects\characters\marine\marine.jmad
 porttag replace single objects\characters\brute\brute.jmad
 porttag replace single objects\characters\brute\ai\brute.character
-mergeanimationgraphs objects\characters\grunt\grunt.jmad objects\characters\grunt\grunt.jmad
 porttag replace objects\vehicles\phantom\turrets\chin_gun\chin_gun.jmad
 Exit
