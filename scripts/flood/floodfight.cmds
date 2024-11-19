@@ -11,7 +11,7 @@ runcommands firefightfolder\scripts\flood\h100\floodCharPalette.cmds
 runcommands firefightfolder\scripts\flood\h100\floodWeapPalette.cmds
 runcommands firefightfolder\scripts\flood\h100\engineerAIFlood.cmds
 setfield skyreferences[0].skyobject levels\dirk\flood_h100\sky\sky.scenery
-setfield skyparameters levels\solo\050_floodvoi\sky\floodvoi.sky_atm_parameters
+setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 SaveTagChanges
 Exit
 
@@ -23,7 +23,7 @@ runcommands firefightfolder\scripts\flood\l200\floodCharPalette.cmds
 runcommands firefightfolder\scripts\flood\l200\floodWeapPalette.cmds
 runcommands firefightfolder\scripts\flood\l200\engineerAIFlood.cmds
 setfield skyreferences[0].skyobject levels\dirk\flood_h100\sky\sky.scenery
-setfield skyparameters levels\solo\050_floodvoi\sky\floodvoi.sky_atm_parameters
+setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 SaveTagChanges
 Exit
 

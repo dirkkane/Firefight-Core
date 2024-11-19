@@ -34,7 +34,6 @@ shared.map
 
 `source_maps\h3`:
 ```
-050_floodvoi.map
 110_hc.map
 campaign.map
 mainmenu.map

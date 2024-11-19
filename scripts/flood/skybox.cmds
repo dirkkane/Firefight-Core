@@ -21,15 +21,3 @@ EditTag levels\dirk\flood_h100\sky\sky.scenery
 SetField Model levels\dirk\flood_h100\sky\sky.model
 SaveTagChanges
 Exit
-
-EditTag levels\solo\050_floodvoi\sky\floodvoi.sky_atm_parameters
-setfield TransparentSortDistance 200
-setfield AtmosphereSettings[0].Intensity 0.1
-setfield AtmosphereSettings[1].Intensity 0.1
-setfield AtmosphereSettings[2].Intensity 0.1
-setfield AtmosphereSettings[3].Intensity 0.1
-setfield AtmosphereSettings[4].Intensity 0.1
-setfield AtmosphereSettings[5].Intensity 0.1
-setfield AtmosphereSettings[6].Intensity 0.1
-savetagchanges
-Exit
