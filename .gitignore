@@ -2,6 +2,7 @@
 *.dat
 *.csv
 *.pak
+/tagtool
 modDescription.txt
 todo.txt
 usefulscnrscripts.txt
