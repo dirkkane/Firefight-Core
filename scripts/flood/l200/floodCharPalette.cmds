@@ -11,7 +11,7 @@ SetField characterpalette[9].Instance objects\characters\flood_ranged\ai\flood_p
 SetField characterpalette[10].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
 SetField characterpalette[11].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
 SetField characterpalette[12].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
-SetField characterpalette[13].Instance objects\characters\engineer\ai\engineer_freeform.character
+SetField characterpalette[13].Instance null
 SetField characterpalette[14].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
 SetField characterpalette[15].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
 SetField characterpalette[16].Instance objects\characters\flood_stalker\ai\flood_pureform_stalker.character
@@ -33,4 +33,4 @@ setfield CharacterPalette[31].Instance null
 SetField characterpalette[32].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
 SetField characterpalette[33].Instance objects\characters\marine\ai\marine_odst_buck_goo.character
 SetField characterpalette[34].Instance objects\characters\civilians\civilian_police\ai\civilian_police_l200.character
-SetField characterpalette[35].Instance objects\characters\engineer\ai\engineer_slaveform.character
+SetField characterpalette[35].Instance null

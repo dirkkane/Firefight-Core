@@ -21,7 +21,7 @@ edittag levels\dirk\flood_l200\flood_l200.scenario
 setfield mapid 80083
 runcommands firefightfolder\scripts\flood\l200\floodCharPalette.cmds
 runcommands firefightfolder\scripts\flood\l200\floodWeapPalette.cmds
-runcommands firefightfolder\scripts\flood\l200\engineerAIFlood.cmds
+# runcommands firefightfolder\scripts\flood\l200\engineerAIFlood.cmds
 setfield skyreferences[0].skyobject levels\dirk\flood_h100\sky\sky.scenery
 setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 SaveTagChanges
