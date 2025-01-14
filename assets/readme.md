@@ -1,5 +1,6 @@
 ## Firefight Core
 The base firefight experience for ElDewrito. Prove your might and hold out as long as possible against unending hordes of Covenant and Flood hostiles. Good luck, spartan.
+
 ### IMPORTANT NOTE FOR MULTIPLAYER!
 Do not use cosmetic mods when playing with others, differences in game data causes the networking to have errors and end the game. To remove cosmetic mods, open the ElDewrito launcher, go to settings, then files, and click verify files to restore the game to its default state. You may reapply your cosmetic mods when not playing firefight.
 
@@ -14,6 +15,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 ### WIP Changelog
 * Removed engineers from Chasm Ten (Flood)
 * Fixed campaign player rep not picking up health packs
+* Added readme for in-game mod info
 
 ### v2.6 Changelog
 * Fixed crash on Lost Platoon
