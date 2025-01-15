@@ -16,6 +16,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Removed engineers from Chasm Ten (Flood)
 * Fixed campaign player rep not picking up health packs
 * Added readme for in-game mod info
+* Removed VISR X-Ray (still happens through overlapping VISR lines, not fixable?)
 
 ### v2.6 Changelog
 * Fixed crash on Lost Platoon

@@ -32,3 +32,18 @@ SetField PlayerInformation[1].FlashlightOn sound\game_sfx\ui\hud_ui\vision_on.so
 SetField PlayerInformation[1].FlashlightOff sound\game_sfx\ui\hud_ui\vision_off.sound
 SaveTagChanges
 Exit
+
+edittag globals\default_vision_mode.vision_mode
+setfield OnFootPing.VisionThroughWallsDistance 0
+setfield OnFootPing.PingSpeed 40
+setfield OnFootPing.PingFalloff 0
+setfield EnemyPingColor.Alpha 0.1
+setfield EnemyPingColor.PingIntensity 0
+setfield EnemyPingColor.DefaultColourFunction.Data 013401000000C10000000000000000000300FF00000000000000000000000000
+setfield AllyPingColor.PingIntensity 0
+setfield WeaponPingColor.PingIntensity 0
+setfield ObjectivePingColor.PingIntensity 0
+setfield EnvironmentPingColor.PingIntensity 0
+savetagchanges
+exit
+
