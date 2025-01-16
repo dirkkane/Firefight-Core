@@ -33,7 +33,7 @@ runcommands firefightfolder\scripts\hud\skulls.cmds
 
 echo ==Fixing AI...==
 runcommands firefightfolder\scripts\ai\vehicles.cmds
-runcommands firefightfolder\scripts\ai\weapons.cmds
+runcommands firefightfolder\scripts\ai\characterweapons.cmds
 
 echo ==Fixing ODST weapons...==
 runcommands firefightfolder\scripts\weapons\odstWeapons.cmds

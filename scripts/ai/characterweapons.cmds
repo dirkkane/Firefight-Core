@@ -1,0 +1,41 @@
+edittag ai\generic.character
+echo ==DMR...==
+copyblockelements WeaponsProperties 4 1
+pasteblockelements WeaponsProperties
+setfield WeaponsProperties[47].Weapon objects\weapons\rifle\dmr\dmr.weapon
+copyblockelements FiringPatternProperties 4 1
+pasteblockelements FiringPatternProperties
+setfield FiringPatternProperties[46].Weapon objects\weapons\rifle\dmr\dmr.weapon
+
+echo ==Assault Rifle PWR...==
+copyblockelements WeaponsProperties 8 1
+pasteblockelements WeaponsProperties
+setfield WeaponsProperties[48].Weapon objects\weapons\rifle\assault_rifle_power\assault_rifle_power.weapon
+copyblockelements FiringPatternProperties 8 1
+pasteblockelements FiringPatternProperties
+setfield FiringPatternProperties[47].Weapon objects\weapons\rifle\assault_rifle_power\assault_rifle_power.weapon
+
+echo ==Plasma Pistol PWR...== 
+copyblockelements WeaponsProperties 0 1
+pasteblockelements WeaponsProperties
+setfield WeaponsProperties[49].Weapon objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
+copyblockelements FiringPatternProperties 0 1
+pasteblockelements FiringPatternProperties
+setfield FiringPatternProperties[48].weapon objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
+
+echo ==Carbine AMMO==
+copyblockelements WeaponsProperties 4 1
+pasteblockelements WeaponsProperties
+setfield WeaponsProperties[50].weapon objects\weapons\rifle\covenant_carbine_ammo\covenant_carbine_ammo.weapon
+copyblockelements FiringPatternProperties 4 1
+pasteblockelements FiringPatternProperties
+setfield FiringPatternProperties[49].weapon objects\weapons\rifle\covenant_carbine_ammo\covenant_carbine_ammo.weapon
+
+
+
+
+
+
+
+SaveTagChanges
+Exit
