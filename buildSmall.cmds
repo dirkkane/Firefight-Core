@@ -36,6 +36,7 @@ echo ==Fixing AI...==
 runcommands firefightfolder\scripts\ai\vehicles.cmds
 runcommands firefightfolder\scripts\ai\characterweapons.cmds
 runcommands firefightfolder\scripts\ai\portelites.cmds
+cs < firefightfolder\elitesquads.cs
 
 echo ==Fixing ODST weapons...==
 runcommands firefightfolder\scripts\weapons\odstWeapons.cmds
