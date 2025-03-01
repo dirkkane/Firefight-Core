@@ -45,7 +45,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                         }
                     }
 
-                    if (fireteamname.StartsWith("4_brute_stealth"))
+                    else if (fireteamname.StartsWith("4_brute_stealth"))
                     {
                         foreach (var charactertype in designerfireteam.CharacterType)
                         {

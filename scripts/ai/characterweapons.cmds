@@ -31,11 +31,18 @@ copyblockelements FiringPatternProperties 4 1
 pasteblockelements FiringPatternProperties
 setfield FiringPatternProperties[49].weapon objects\weapons\rifle\covenant_carbine_ammo\covenant_carbine_ammo.weapon
 
-
-
-
-
-
-
+echo ==Plasma Rifle==
+copyblockelements WeaponsProperties 46 1
+PasteBlockElements WeaponsProperties
+setfield WeaponsProperties[51].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
+copyblockelements FiringPatternProperties 45 1
+PasteBlockElements FiringPatternProperties
+setfield FiringPatternProperties[50].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
 SaveTagChanges
 Exit
+
+echo ==Weapon palettes==
+ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
+ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
+ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
+ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
