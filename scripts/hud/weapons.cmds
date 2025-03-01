@@ -59,6 +59,6 @@ savetagchanges
 Exit
 
 edittag ui\chud\globals.chud_globals_definition
-setfield HudGlobals[0].HudAttributes[0].StateLeftRightOffset_HO 0 0.3
+setfield HudGlobals[0].HudAttributes[0].StateMessageOffset 0 0.3
 savetagchanges
 Exit

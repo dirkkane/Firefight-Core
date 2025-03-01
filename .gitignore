@@ -3,3 +3,4 @@
 *.csv
 *.pak
 modDescription.txt
+/tagtool/logs
