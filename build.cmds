@@ -1,6 +1,9 @@
 basecache
 
 echo ==Set variables...==
+setvariable firefightfolder path
+setvariable audiocache path
+setvariable shadercache path
 
 echo ==Porting Caches...==
 useaudiocache audiocache
