@@ -1,0 +1,8 @@
+===TO DO===
+* NEW MAPS (MCC WORKSHOP CONTENT ONCE TAGTOOL DEFS ARE FIXED)
+* New floodfight maps (Flood spawning in falling flood pods instead of phantoms?)
+* Engineer overshield effect for all enemies (WORKS FOR ENEMIES WITH PRE-EXISTING SHIELDS FML)
+* infected spartan bodies?
+* phantom turret animations
+* Allied AI
+* at least one new floodfight map that does not have engineers

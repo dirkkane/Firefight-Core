@@ -2,9 +2,5 @@
 *.dat
 *.csv
 *.pak
-/tagtool
+buildSmall.cmds
 modDescription.txt
-todo.txt
-usefulscnrscripts.txt
-buildPriv.cmds
-buildSmallPriv.cmds
