@@ -32,19 +32,19 @@ runcommands firefightfolder\scripts\hud\medals.cmds
 echo ==Skulls...==
 runcommands firefightfolder\scripts\hud\skulls.cmds
 
-echo ==AI...==
-runcommands firefightfolder\scripts\ai\vehicles.cmds
-runcommands firefightfolder\scripts\ai\characterweapons.cmds
-runcommands firefightfolder\scripts\ai\portelites.cmds
-cs < firefightfolder\elitesquads.cs
-cs < firefightfolder\eliteweapons.cs
-
 echo ==Fixing ODST weapons...==
 runcommands firefightfolder\scripts\weapons\odstWeapons.cmds
 runcommands firefightfolder\scripts\hud\weapons.cmds
 
 echo ==Floodfight...==
 runcommands firefightfolder\scripts\flood\floodfight.cmds
+
+echo ==AI...==
+runcommands firefightfolder\scripts\ai\vehicles.cmds
+runcommands firefightfolder\scripts\ai\characterweapons.cmds
+runcommands firefightfolder\scripts\ai\portelites.cmds
+cs < firefightfolder\elitesquads.cs
+cs < firefightfolder\eliteweapons.cs
 
 echo ==Gruntpocalypse...==
 runcommands firefightfolder\scripts\gruntpocalypse\gruntpocalypse.cmds
