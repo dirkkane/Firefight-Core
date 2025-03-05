@@ -9,8 +9,8 @@ using (var stream = Cache.OpenCacheReadWrite())
             {
                 Console.WriteLine("Adding weapons to squads: " + tag);
                 short plasma_rifle = -1;
-                short plasma_pistol_pwr = -1;
                 short plasma_rifle_red = -1;
+                short needler = -1;                
                 short spiker = -1;
                 short mauler = -1;
                 foreach (var weapon in scnr.WeaponPalette)
@@ -21,7 +21,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                         else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\plasma_rifle_red\\plasma_rifle_red")) plasma_rifle_red = (short)scnr.WeaponPalette.IndexOf(weapon);
                         else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\spike_rifle\\spike_rifle")) spiker = (short)scnr.WeaponPalette.IndexOf(weapon);
                         else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\excavator\\excavator")) mauler = (short)scnr.WeaponPalette.IndexOf(weapon);
-                        else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\plasma_pistol\\plasma_pistol_power")) plasma_pistol_pwr = (short)scnr.WeaponPalette.IndexOf(weapon);
+                        else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\needler\\needler")) needler = (short)scnr.WeaponPalette.IndexOf(weapon);
                     }
                 }
                 foreach (var squad in scnr.Squads)
@@ -43,14 +43,14 @@ using (var stream = Cache.OpenCacheReadWrite())
                         {
                             foreach(var primaryweapon in designerfireteam.InitialPrimaryWeapon)
                             {
-                                if (primaryweapon.ItemTypeIndex.Equals(mauler)) primaryweapon.ItemTypeIndex = plasma_pistol_pwr;
+                                if (primaryweapon.ItemTypeIndex.Equals(mauler)) primaryweapon.ItemTypeIndex = needler;
                             }
                         }
                     }
                 }
                 Console.WriteLine("Plasma Rifle: " + plasma_rifle);
                 Console.WriteLine("Plasma Rifle Red: " + plasma_rifle_red);
-                Console.WriteLine("Plasma Pistol PWR: " + plasma_pistol_pwr);
+                Console.WriteLine("Needler: " + needler);
                 Console.WriteLine("Spiker: " + spiker);
                 Console.WriteLine("Mauler: " + mauler);
             }
