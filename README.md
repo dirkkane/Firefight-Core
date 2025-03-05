@@ -20,7 +20,7 @@ Next, replace the word `path` next to `audiocache` and `shadercache` with the di
 **NOTE:** On the first build if you have no pre-existing audio and shader caches, it will take a *very* long time to build so expect to wait a while before it is finished. Once you successfully build the mod your audio and shader caches will be populated and subsequent builds should be considerably faster. It is recommended to use the audio and shader caches from the repo above if you have never compiled this mod before.
 
 ## Source Files
-This mod works by porting content from the original Xbox 360 version of Halo 3: ODST, you must provide the files needed for this mod yourself and place them in the `source_maps` folder as follows:
+This mod works by porting content from Halo 3, Halo 3 ODST, and Halo 3 ODST MCC, you must provide the files needed for this mod yourself and place them in the `source_maps` folder as follows:
 
 `source_maps\odst`:
 ```
@@ -45,14 +45,22 @@ mainmenu.map
 shared.map
 ```
 
+`source_maps\mcc`:
+```
+sc130.map
+campaign.map
+shared.map
+```
+
+`source_maps\fmod`:
+```
+paste the FMOD sounds from Halo 3 ODST MCC into this folder.
+```
+
 ***DO NOT ASK ME FOR THESE FILES, I WILL NOT PROVIDE THEM.***
 
 ## Building
-Once you have completed the above steps, place a copy of TagTool in the repository directory under a folder called `tagtool`. Then run `build.bat`.
-
-**OR**
-
-Open `build.cmds` and press CTRL-A then CTRL-C, then open tagtool and paste.
+Once you have completed the above steps, run `build.bat` and the mod will compile.
 
 # Contact
 If you have any questions, please feel free to DM @dirkkane on Discord or ping me in any ElDewrito Discord servers.
