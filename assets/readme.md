@@ -13,10 +13,12 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * NoShotz
 
 ### WIP Changelog
-* Removed engineers from Chasm Ten (Flood)
-* Fixed campaign player rep not picking up health packs
+* Added Gruntpocalypse!
+* Added enemy Elites
 * Added readme for in-game mod info
-* Removed VISR X-Ray (still happens through overlapping VISR lines, not fixable?)
+* Fixed campaign player rep not picking up health packs
+* Removed engineers from Chasm Ten (Flood)
+* Removed VISR X-Ray (mostly)
 
 ### v2.6 Changelog
 * Fixed crash on Lost Platoon
