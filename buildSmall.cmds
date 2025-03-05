@@ -46,6 +46,9 @@ runcommands firefightfolder\scripts\hud\weapons.cmds
 echo ==Floodfight...==
 runcommands firefightfolder\scripts\flood\floodfight.cmds
 
+echo ==Gruntpocalypse...==
+runcommands firefightfolder\scripts\gruntpocalypse\gruntpocalypse.cmds
+
 echo ==Shield Impacts...==
 runcommands firefightfolder\scripts\ai\shields.cmds
 
