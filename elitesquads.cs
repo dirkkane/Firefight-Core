@@ -22,7 +22,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_major")) elite_major = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops")) elite_specops = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops_commander")) elite_specops_commander = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain")) brute_captain = (short)scnr.CharacterPalette.IndexOf(character);
+                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain") && brute_captain == -1) brute_captain = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_ultra")) brute_captain_ultra = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_major")) brute_captain_major = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_stalker")) brute_stalker = (short)scnr.CharacterPalette.IndexOf(character);

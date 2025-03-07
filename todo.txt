@@ -5,7 +5,5 @@
 * infected spartan bodies?
 * phantom turret animations
 * Allied AI
-* Make elites more aggressive with the needler
 * Gold elite boss w/ sword during chieftain wave
 * Elites spawning with brute shot (swap with carbine)
-* Fix brutes spawning when they shouldn't (duplicate character palette entries, the C# only accounts for the last one found)
