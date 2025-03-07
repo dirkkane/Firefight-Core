@@ -5,6 +5,109 @@ porttag objects\characters\elite\ai\elite_specops.character
 porttag objects\characters\elite\ai\elite_specops_commander.character
 exit
 
+echo ==Uses elite minor from reach==
+edittag objects\characters\elite\ai\elite.character
+setfield VitalityProperties[0].NormalBodyVitality 70
+setfield VitalityProperties[0].NormalShieldVitality 75
+setfield VitalityProperties[0].LegendaryBodyVitality 100
+setfield VitalityProperties[0].LegendaryShieldVitality 75
+setfield VitalityProperties[0].ShieldRechargeTime 3
+setfield VitalityProperties[0].ShieldRechargeDelayTime 8
+setfield VitalityProperties[0].SoftPingShieldedThreshold 5
+setfield VitalityProperties[0].SoftPingUnshieldedThreshold 5
+setfield VitalityProperties[0].HardPingShieldedThreshold 99
+setfield VitalityProperties[0].HardPingUnshieldedThreshold 20
+setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+savetagchanges
+Exit
+
+echo ==Uses elite officer from reach==
+edittag objects\characters\elite\ai\elite_major.character
+setfield VitalityProperties[0].NormalBodyVitality 85
+setfield VitalityProperties[0].NormalShieldVitality 75
+setfield VitalityProperties[0].LegendaryBodyVitality 100
+setfield VitalityProperties[0].LegendaryShieldVitality 155
+setfield VitalityProperties[0].SoftPingShieldedThreshold 5
+setfield VitalityProperties[0].SoftPingUnshieldedThreshold 5
+setfield VitalityProperties[0].HardPingShieldedThreshold 99
+setfield VitalityProperties[0].HardPingUnshieldedThreshold 20
+setfield VitalityProperties[0].ShieldRechargeDelayTime 8
+setfield VitalityProperties[0].ShieldRechargeTime 3
+setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+SaveTagChanges
+Exit
+
+echo ==Uses elite specops from reach==
+edittag objects\characters\elite\ai\elite_specops.character
+addblockelements VitalityProperties
+setfield VitalityProperties[0].NormalBodyVitality 60
+setfield VitalityProperties[0].NormalShieldVitality 60
+setfield VitalityProperties[0].LegendaryBodyVitality 80
+setfield VitalityProperties[0].LegendaryShieldVitality 60
+setfield VitalityProperties[0].SoftPingShieldedThreshold 5
+setfield VitalityProperties[0].SoftPingUnshieldedThreshold 5
+setfield VitalityProperties[0].HardPingShieldedThreshold 99
+setfield VitalityProperties[0].HardPingUnshieldedThreshold 15
+setfield VitalityProperties[0].ShieldRechargeDelayTime 12
+setfield VitalityProperties[0].ShieldRechargeTime 3
+setfield VitalityProperties[0].ExtendedShieldDamageThreshold 0.3
+setfield VitalityProperties[0].ExtendedBodyDamageThreshold 0.3
+setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+SaveTagChanges
+Exit
+
+echo ==Uses elite ultra from reach (legendary shield reduced from 225 to 200 for fairness)==
+edittag objects\characters\elite\ai\elite_specops_commander.character
+addblockelements VitalityProperties
+setfield VitalityProperties[0].NormalBodyVitality 90
+setfield VitalityProperties[0].NormalShieldVitality 135
+setfield VitalityProperties[0].LegendaryBodyVitality 120
+setfield VitalityProperties[0].LegendaryShieldVitality 200
+setfield VitalityProperties[0].SoftPingShieldedThreshold 5
+setfield VitalityProperties[0].SoftPingUnshieldedThreshold 5
+setfield VitalityProperties[0].HardPingShieldedThreshold 99
+setfield VitalityProperties[0].HardPingUnshieldedThreshold 10
+setfield VitalityProperties[0].ShieldRechargeDelayTime 8
+setfield VitalityProperties[0].ShieldRechargeTime 3
+setfield VitalityProperties[0].ExtendedShieldDamageThreshold 0.3
+setfield VitalityProperties[0].ExtendedBodyDamageThreshold 0.3
+setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+SaveTagChanges
+Exit
+
+echo ==Needler buff for elites==
+edittag objects\characters\elite\ai\elite.character
+addblockelements WeaponsProperties
+addblockelements FiringPatternProperties
+addblockelements FiringPatternProperties[0].FiringPatterns
+setfield WeaponsProperties[0].Weapon objects\weapons\pistol\needler\needler.weapon
+setfield WeaponsProperties[0].MaximumFiringRange 15
+setfield WeaponsProperties[0].MinimumFiringRange 0.5
+setfield WeaponsProperties[0].NormalCombatRange 2.5 6
+setfield WeaponsProperties[0].MaxSpecialTargetDistance 6
+setfield WeaponsProperties[0].TimidCombatRange 4 8
+setfield WeaponsProperties[0].AggressiveCombatRange 2 4
+setfield WeaponsProperties[0].FirstBurstDelayTimeBounds 0.2 1.2
+setfield WeaponsProperties[0].SurpriseDelayTime 1
+setfield WeaponsProperties[0].DeathFireWildlyChance 0.2
+setfield WeaponsProperties[0].DeathFireWildlyTime 0.8
+setfield WeaponsProperties[0].DropWeaponLoadedBounds 0.6 0.9
+setfield WeaponsProperties[0].DropWeaponAmmoBounds 30 50
+setfield WeaponsProperties[0].NormalAccuracyBounds 0 0.5
+setfield WeaponsProperties[0].NormalAccuracyTime 9
+setfield WeaponsProperties[0].HeroicAccuracyBounds 0.25 0.75
+setfield WeaponsProperties[0].HeroicAccuracyTime 6
+setfield WeaponsProperties[0].LegendaryAccuracyBounds 0.5 1
+setfield WeaponsProperties[0].LegendaryAccuracyTime 3
+setfield FiringPatternProperties[0].Weapon objects\weapons\pistol\needler\needler.weapon
+setfield FiringPatternProperties[0].FiringPatterns[0].RateOfFire 5
+setfield FiringPatternProperties[0].FiringPatterns[0].TargetTracking 0.5
+setfield FiringPatternProperties[0].FiringPatterns[0].TargetLeading 0.25
+setfield FiringPatternProperties[0].FiringPatterns[0].BurstDurationBounds 0.4 1.1
+setfield FiringPatternProperties[0].FiringPatterns[0].BurstSeparationBounds 1.6 3.2
+SaveTagChanges
+Exit
+
 edittag levels\atlas\sc100\sc100.scenario
 foreach squads Setfield Team Covenant
 addblockelements CharacterPalette 4 *
