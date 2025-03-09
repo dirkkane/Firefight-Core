@@ -24,3 +24,8 @@ exit
 
 CreateTag skya levels\dirk\flood_h100\sky\flood_h100
 ImportTag levels\dirk\flood_h100\sky\flood_h100.skya firefightfolder\tags\flood_h100.sky_atm_parameters
+
+edittag objects\characters\floodcombat_brute\floodcombat_brute.model_animation_graph
+addanimation firefightfolder\anims\_BruteFloodPhantom
+SaveTagChanges
+Exit
