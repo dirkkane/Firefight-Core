@@ -1,5 +1,5 @@
 # Firefight Core
-Core firefight mod for ElDewrito 0.7. This is intended to be used as the basis for any firefight mods the community wishes to make. It includes scripts to fix issues that occur out of the box, enhance gameplay, and add some bonus content such as Flood firefight. This repository contains most of the scripts, assets and assets that you need to modify and build the pak for yourself. Some extra setup is required though, so follow the guide below.
+Core firefight mod for ElDewrito 0.7. This is intended to be used as the basis for any firefight mods the community wishes to make. It includes scripts to fix issues that occur out of the box, enhance gameplay, and add some bonus content such as Flood firefight. This repository contains most of the data that you need to modify and build the pak for yourself, but you'll need to supply some files yourself.
 
 # Configuration
 ## Variables
