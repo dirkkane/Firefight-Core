@@ -46,3 +46,5 @@ ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
 ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
 ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
 ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
+ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
+ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\melee\energy_blade\energy_blade.weapon

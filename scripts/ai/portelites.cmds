@@ -108,82 +108,119 @@ setfield FiringPatternProperties[0].FiringPatterns[0].BurstSeparationBounds 1.6 
 SaveTagChanges
 Exit
 
+echo ==Add gold elite boss==
+stringid add boss_gold
+edittag objects\characters\elite\elite.biped
+addblockelements ChangeColors[0].InitialPermutations
+setfield ChangeColors[0].InitialPermutations[11].Weight 1
+setfield ChangeColors[0].InitialPermutations[11].VariantName boss_gold
+setfield ChangeColors[0].InitialPermutations[11].ColorLowerBound 0.6515298 0.5548695 0.1152776
+setfield ChangeColors[0].InitialPermutations[11].ColorUpperBound 0.7460173 0.6446585 0.1836997
+savetagchanges
+Exit
+
+addblockelements ChangeColors[1].InitialPermutations
+setfield ChangeColors[1].InitialPermutations[11].Weight 1
+setfield ChangeColors[1].InitialPermutations[11].VariantName boss_gold
+setfield ChangeColors[1].InitialPermutations[11].ColorLowerBound 0.6515298 0.5548695 0.1152776
+setfield ChangeColors[1].InitialPermutations[11].ColorUpperBound 0.7460173 0.6446585 0.1836997
+savetagchanges
+Exit
+
+duplicatetag objects\characters\elite\ai\elite_specops_commander.character objects\characters\elite\ai\elite_gold_boss
+edittag objects\characters\elite\ai\elite_gold_boss.character
+setfield ParentCharacter objects\characters\elite\ai\elite_major.character
+setfield Style objects\characters\elite\ai\elite.style
+setfield Variants[0].VariantName boss_gold
+setfield VitalityProperties[0].LegendaryShieldVitality 225
+savetagchanges
+Exit
+
+echo ==Character palettes==
 edittag levels\atlas\sc100\sc100.scenario
 foreach squads Setfield Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[35].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[36].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[37].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[38].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[39].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
 
 EditTag levels\atlas\sc110\sc110.scenario
 foreach squads SetField Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[32].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[33].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[34].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[35].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[36].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
 
 EditTag levels\atlas\sc120\sc120.scenario
 foreach squads SetField Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[33].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[34].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[35].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[36].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[37].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
 
 EditTag levels\atlas\sc130\sc130.scenario
 foreach squads SetField Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[35].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[36].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[37].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[38].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[39].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
 
 EditTag levels\atlas\sc140\sc140.scenario
 foreach squads SetField Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[36].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[37].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[38].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[39].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[40].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
 
 EditTag levels\atlas\h100\h100.scenario
 foreach squads SetField Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[32].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[33].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[34].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[35].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[36].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
 
 EditTag levels\atlas\l200\l200.scenario
 foreach squads SetField Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[36].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[37].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[38].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[39].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[40].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
 
 EditTag levels\atlas\l300\l300.scenario
 foreach squads SetField Team Covenant
-addblockelements CharacterPalette 4 *
+addblockelements CharacterPalette 5 *
 setfield CharacterPalette[41].Instance objects\characters\elite\ai\elite.character
 setfield CharacterPalette[42].Instance objects\characters\elite\ai\elite_major.character
 setfield CharacterPalette[43].Instance objects\characters\elite\ai\elite_specops.character
 setfield CharacterPalette[44].Instance objects\characters\elite\ai\elite_specops_commander.character
+setfield CharacterPalette[45].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit

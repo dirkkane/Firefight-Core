@@ -10,6 +10,7 @@ using (var stream = Cache.OpenCacheReadWrite())
             short elite_major = -1;
             short elite_specops = -1;
             short elite_specops_commander = -1;
+            short elite_gold_boss = -1;
             short brute_captain = -1;
             short brute_captain_ultra = -1;
             short brute_captain_major = -1;
@@ -22,6 +23,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_major")) elite_major = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops")) elite_specops = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops_commander")) elite_specops_commander = (short)scnr.CharacterPalette.IndexOf(character);
+                    else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_gold_boss")) elite_gold_boss = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain") && brute_captain == -1) brute_captain = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_ultra")) brute_captain_ultra = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_major")) brute_captain_major = (short)scnr.CharacterPalette.IndexOf(character);
@@ -53,12 +55,18 @@ using (var stream = Cache.OpenCacheReadWrite())
                         }
                     }
 
+                   //else if (fireteamname.StartsWith("1_hammer"))
+                   //{
+                   //    designerfireteam.CharacterType.;
+                   //}
+
                 }
             }
             Console.WriteLine("Elite: " + elite);
             Console.WriteLine("Elite Major: " + elite_major);
             Console.WriteLine("Elite SpecOps: " + elite_specops);
             Console.WriteLine("Elite Specops Commander: " + elite_specops_commander);
+            Console.WriteLine("Elite Gold Boss: " + elite_gold_boss);
             Console.WriteLine("Brute Captain: " + brute_captain);
             Console.WriteLine("Brute Captain Major: " + brute_captain_major);
             Console.WriteLine("Brute Captain Ultra: " + brute_captain_ultra);

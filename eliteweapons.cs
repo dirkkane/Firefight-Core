@@ -15,6 +15,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                 short mauler = -1;
                 short carbine = -1;
                 short brute_shot = -1;
+                short energy_sword = -1;
                 foreach (var weapon in scnr.WeaponPalette)
                 {
                     if (weapon.Object != null)
@@ -26,6 +27,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                         else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\needler\\needler")) needler = (short)scnr.WeaponPalette.IndexOf(weapon);
                         else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\covenant_carbine\\covenant_carbine.weapon")) carbine = (short)scnr.WeaponPalette.IndexOf(weapon);
                         else if (weapon.Object.Name.Equals("objects\\weapons\\support_low\\brute_shot\\brute_shot.weapon")) brute_shot = (short)scnr.WeaponPalette.IndexOf(weapon);
+                        else if (weapon.Object.Name.Equals("objects\\weapons\\melee\\energy_blade\\energy_blade.weapon")) energy_sword = (short)scnr.WeaponPalette.IndexOf(weapon);
                     }
                 }
                 foreach (var squad in scnr.Squads)
@@ -65,6 +67,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                 Console.WriteLine("Mauler: " + mauler);
                 Console.WriteLine("Brute Shot: " + brute_shot);
                 Console.WriteLine("Carbine: " + carbine);
+                Console.WriteLine("Energy Sword: " + energy_sword);
             }
         }
         Cache.Serialize(stream, tag, scnr);
