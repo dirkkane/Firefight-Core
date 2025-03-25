@@ -4,6 +4,5 @@
 * Engineer overshield effect for all enemies (WORKS FOR ENEMIES WITH PRE-EXISTING SHIELDS FML)
 * infected spartan bodies?
 * phantom turret animations
-* Allied AI
 * Gold elite boss w/ sword during chieftain wave
-* Elites spawning with brute shot (swap with carbine)
+* elites have no dialogue for some stupid reason
