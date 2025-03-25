@@ -1,7 +1,5 @@
 *.map
-*.dat
-*.csv
-*.pak
 modDescription.txt
+/paks
 /tagtool/logs
 /source_maps/fmod
