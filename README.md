@@ -15,7 +15,7 @@ setvariable firefightfolder path
 ```
 
 Replace `basecache` with the full path to your clean ElDewrito 0.7 map files 
-(ex. C:\Users\User\Games\ElDewrito\maps\tags.dat).
+`(ex. C:\Users\User\Games\ElDewrito\maps\tags.dat)`.
 
 Then replace the word `path` next to `firefightfolder` with the full path to the folder you saved this repository.
 
