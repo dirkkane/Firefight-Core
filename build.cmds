@@ -1,13 +1,9 @@
-basecache
+D:\Games\Eldewrito\0.7\game\ElDewrito\maps\tags.dat
 
-echo ==Set variables...==
-setvariable firefightfolder path
-setvariable audiocache path
-setvariable shadercache path
+setvariable firefightfolder F:\Documents\eldewrito_modding\dew_ff
 
-echo ==Porting Caches...==
-useaudiocache audiocache
-useshadercache shadercache
+useaudiocache firefightfolder\caches\audiocache
+useshadercache firefightfolder\caches\shadercache
 
 echo ==Pak Setup...==
 createmodpackage 1 large
