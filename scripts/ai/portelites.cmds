@@ -116,8 +116,6 @@ setfield ChangeColors[0].InitialPermutations[11].Weight 1
 setfield ChangeColors[0].InitialPermutations[11].VariantName boss_gold
 setfield ChangeColors[0].InitialPermutations[11].ColorLowerBound 0.6515298 0.5548695 0.1152776
 setfield ChangeColors[0].InitialPermutations[11].ColorUpperBound 0.7460173 0.6446585 0.1836997
-savetagchanges
-Exit
 
 addblockelements ChangeColors[1].InitialPermutations
 setfield ChangeColors[1].InitialPermutations[11].Weight 1
