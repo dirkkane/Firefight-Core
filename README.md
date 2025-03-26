@@ -14,10 +14,9 @@ basecache
 setvariable firefightfolder path
 ```
 
-Replace `basecache` with the full path to your clean ElDewrito 0.7 map files 
-`(ex. C:\Users\User\Games\ElDewrito\maps\tags.dat)`.
+Replace `basecache` with the full path to your clean ElDewrito 0.7 map files <br> (ex. `C:\Users\User\Games\ElDewrito\maps\tags.dat`).
 
-Then replace the word `path` next to `firefightfolder` with the full path to the folder you saved this repository.
+Then replace the word `path` next to `firefightfolder` with the full path to the folder where you saved this repository.
 
 ## Source Files
 This mod works by porting content from Halo 3, Halo 3 ODST, and Halo 3 ODST MCC. You must provide the files needed for this mod yourself and place them in the `source_maps` folder as follows:
