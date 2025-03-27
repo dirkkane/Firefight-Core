@@ -18,6 +18,20 @@ setfield VitalityProperties[0].SoftPingUnshieldedThreshold 5
 setfield VitalityProperties[0].HardPingShieldedThreshold 99
 setfield VitalityProperties[0].HardPingUnshieldedThreshold 20
 setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+addblockelements GrenadesProperties
+setfield GrenadesProperties[0].GrenadeType CovenantPlasma
+setfield GrenadesProperties[0].MinimumEnemyCount 1
+setfield GrenadesProperties[0].EnemyRadius 3
+setfield GrenadesProperties[0].GrenadeIdealVelocity 4
+setfield GrenadesProperties[0].GrenadeVelocity 8
+setfield GrenadesProperties[0].GrenadeRange 3 20
+setfield GrenadesProperties[0].CollateralDamageRadius 2
+setfield GrenadesProperties[0].GrenadeChance 0.4
+setfield GrenadesProperties[0].GrenadeThrowCooldown 6
+setfield GrenadesProperties[0].GrenadeUncoverChance 0.4
+setfield GrenadesProperties[0].AntiVehicleGrenadeChance 0.4
+setfield GrenadesProperties[0].GrenadeCount 1 2
+setfield GrenadesProperties[0].NoGrenadesDroppedChance 0.5
 savetagchanges
 Exit
 
@@ -110,6 +124,7 @@ Exit
 
 echo ==Add gold elite boss==
 stringid add boss_gold
+stringid add 1_sword
 edittag objects\characters\elite\elite.biped
 addblockelements ChangeColors[0].InitialPermutations
 setfield ChangeColors[0].InitialPermutations[11].Weight 1
