@@ -16,7 +16,7 @@ setfield WeaponPalette[8].Object objects\weapons\pistol\plasma_pistol\plasma_pis
 setfield WeaponPalette[9].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
 setfield WeaponPalette[10].Object objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
 setfield WeaponPalette[12].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
-setfield CharacterPalette[4].Instance objects\characters\grunt\ai\grunt_specops.character
+setfield CharacterPalette[4].Instance null
 setfield CharacterPalette[5].Instance objects\characters\grunt\ai\grunt.character
 setfield CharacterPalette[6].Instance objects\characters\grunt\ai\grunt_major.character
 setfield CharacterPalette[7].Instance objects\characters\grunt\ai\grunt.character
@@ -64,7 +64,7 @@ setfield CharacterPalette[7].Instance objects\characters\grunt\ai\grunt_ultra.ch
 setfield CharacterPalette[8].Instance objects\characters\grunt\ai\grunt.character
 setfield CharacterPalette[9].Instance objects\characters\grunt\ai\grunt_specops.character
 setfield CharacterPalette[11].Instance objects\characters\grunt\ai\grunt.character
-setfield CharacterPalette[12].Instance objects\characters\grunt\ai\grunt.character
+setfield CharacterPalette[12].Instance null
 setfield CharacterPalette[13].Instance null
 setfield CharacterPalette[14].Instance objects\characters\grunt\ai\grunt_ultra.character
 setfield CharacterPalette[15].Instance objects\characters\grunt\ai\grunt_major.character
@@ -107,7 +107,7 @@ setfield CharacterPalette[1].Instance objects\characters\grunt\ai\grunt.characte
 setfield CharacterPalette[2].Instance objects\characters\grunt\ai\grunt.character
 setfield CharacterPalette[3].Instance objects\characters\grunt\ai\grunt_major.character
 setfield CharacterPalette[5].Instance objects\characters\grunt\ai\grunt.character
-setfield CharacterPalette[6].Instance objects\characters\grunt\ai\grunt.character
+setfield CharacterPalette[6].Instance null
 setfield CharacterPalette[10].Instance objects\characters\grunt\ai\grunt_ultra.character
 setfield CharacterPalette[11].Instance objects\characters\grunt\ai\grunt_major.character
 setfield CharacterPalette[12].Instance objects\characters\grunt\ai\grunt_ultra.character
@@ -155,7 +155,7 @@ setfield CharacterPalette[3].Instance objects\characters\grunt\ai\grunt_major.ch
 setfield CharacterPalette[4].Instance objects\characters\grunt\ai\grunt_ultra.character
 setfield CharacterPalette[5].Instance objects\characters\grunt\ai\grunt_ultra.character
 setfield CharacterPalette[6].Instance objects\characters\grunt\ai\grunt.character
-setfield CharacterPalette[7].Instance objects\characters\grunt\ai\grunt.character
+setfield CharacterPalette[7].Instance null
 setfield CharacterPalette[12].Instance objects\characters\grunt\ai\grunt_heavy.character
 setfield CharacterPalette[14].Instance objects\characters\grunt\ai\grunt_ultra.character
 setfield CharacterPalette[15].Instance objects\characters\grunt\ai\grunt_major.character
@@ -192,7 +192,7 @@ setfield WeaponPalette[12].Object objects\weapons\support_high\flak_cannon\flak_
 setfield WeaponPalette[14].Object objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
 setfield WeaponPalette[15].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
 setfield WeaponPalette[16].Object objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
-setfield CharacterPalette[2].Instance objects\characters\grunt\ai\grunt.character
+setfield CharacterPalette[2].Instance null
 setfield CharacterPalette[3].Instance objects\characters\grunt\ai\grunt.character
 setfield CharacterPalette[5].Instance objects\characters\grunt\ai\grunt.character
 setfield CharacterPalette[6].Instance objects\characters\grunt\ai\grunt_major.character
@@ -237,7 +237,7 @@ setfield CharacterPalette[0].Instance objects\characters\grunt\ai\grunt.characte
 setfield CharacterPalette[1].Instance objects\characters\grunt\ai\grunt_major.character
 setfield CharacterPalette[3].Instance objects\characters\grunt\ai\grunt_heavy.character
 setfield CharacterPalette[4].Instance objects\characters\grunt\ai\grunt.character
-setfield CharacterPalette[5].Instance objects\characters\grunt\ai\grunt.character
+setfield CharacterPalette[5].Instance null
 setfield CharacterPalette[10].Instance objects\characters\grunt\ai\grunt_major.character
 setfield CharacterPalette[11].Instance objects\characters\grunt\ai\grunt_major.character
 setfield CharacterPalette[12].Instance objects\characters\grunt\ai\grunt_ultra.character
@@ -276,7 +276,7 @@ setfield WeaponPalette[17].Object objects\weapons\pistol\plasma_pistol\plasma_pi
 setfield CharacterPalette[0].Instance objects\characters\grunt\ai\grunt_major.character
 setfield CharacterPalette[1].Instance objects\characters\grunt\ai\grunt.character
 setfield CharacterPalette[3].Instance objects\characters\grunt\ai\grunt.character
-setfield CharacterPalette[4].Instance objects\characters\grunt\ai\grunt.character
+setfield CharacterPalette[4].Instance null
 setfield CharacterPalette[5].Instance null
 setfield CharacterPalette[7].Instance objects\characters\grunt\ai\grunt_heavy.character
 setfield CharacterPalette[8].Instance objects\characters\grunt\ai\grunt.character
@@ -317,7 +317,7 @@ setfield CharacterPalette[0].Instance objects\characters\grunt\ai\grunt.characte
 setfield CharacterPalette[1].Instance objects\characters\grunt\ai\grunt.character
 setfield CharacterPalette[2].Instance objects\characters\grunt\ai\grunt_ultra.character
 setfield CharacterPalette[3].Instance objects\characters\grunt\ai\grunt.character
-setfield CharacterPalette[4].Instance objects\characters\grunt\ai\grunt.character
+setfield CharacterPalette[4].Instance null
 setfield CharacterPalette[8].Instance objects\characters\grunt\ai\grunt_ultra.character
 setfield CharacterPalette[9].Instance null
 setfield CharacterPalette[10].Instance objects\characters\grunt\ai\grunt_heavy.character
