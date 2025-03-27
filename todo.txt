@@ -8,7 +8,6 @@
 * some elites still have brute shots
 * elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
 * Invincibility despawns from player inventory on new round start
-* grunts spawn in jackal sniper spawns
 * enemies randomly stop spawning on alpha site
 * elites have trouble spawning in phantoms
 * Make elites jump into empty vehicles
