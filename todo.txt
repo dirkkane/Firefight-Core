@@ -1,8 +1,20 @@
 ===TO DO===
-* NEW MAPS (MCC WORKSHOP CONTENT ONCE TAGTOOL DEFS ARE FIXED)
-* New floodfight maps (Flood spawning in falling flood pods instead of phantoms?)
-* Engineer overshield effect for all enemies (WORKS FOR ENEMIES WITH PRE-EXISTING SHIELDS FML)
+* New floodfight maps (Wait for flood animations OR set spawn points in squads)
+* Fix Engineer overshield effect for all enemies (WORKS FOR ENEMIES WITH PRE-EXISTING SHIELDS FML)
 * infected spartan bodies?
 * phantom turret animations
 * Gold elite boss w/ sword during chieftain wave
 * elites have no dialogue for some stupid reason
+* some elites still have brute shots
+* elite ultra doesn't pull sword out when stuck, still charges the player
+* make it so only high ranking elites pull out swords when stuck
+* elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
+* Minor and Major elites dont throw nades and dont throw more when catch is enabled
+* Give drones with brute plasma rifles regular blue ones instead
+* Invincibility despawns from player inventory on new round start
+* elites sometimes spawn on brute waves
+* swap brute flood weapons from power AR to something stronger
+* grunts spawn in jackal sniper spawns
+* enemies randomly stop spawning on alpha site
+* elites have trouble spawning in phantoms
+* 
