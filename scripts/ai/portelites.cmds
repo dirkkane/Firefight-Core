@@ -40,10 +40,10 @@ Exit
 echo ==Uses elite specops from reach==
 edittag objects\characters\elite\ai\elite_specops.character
 addblockelements VitalityProperties
-setfield VitalityProperties[0].NormalBodyVitality 60
-setfield VitalityProperties[0].NormalShieldVitality 60
-setfield VitalityProperties[0].LegendaryBodyVitality 80
-setfield VitalityProperties[0].LegendaryShieldVitality 60
+setfield VitalityProperties[0].NormalBodyVitality 75
+setfield VitalityProperties[0].NormalShieldVitality 80
+setfield VitalityProperties[0].LegendaryBodyVitality 90
+setfield VitalityProperties[0].LegendaryShieldVitality 100
 setfield VitalityProperties[0].SoftPingShieldedThreshold 5
 setfield VitalityProperties[0].SoftPingUnshieldedThreshold 5
 setfield VitalityProperties[0].HardPingShieldedThreshold 99
