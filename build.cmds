@@ -13,6 +13,11 @@ Dirkkane
 2.7
 firefight
 
+editmodmetadata
+setfield metadata.URL https://github.com/dirkkane/Firefight-Core/tree/dev
+savemodmetadata
+exit
+
 echo ==Port Maps...==
 runcommands firefightfolder\scripts\portODST.cmds
 
