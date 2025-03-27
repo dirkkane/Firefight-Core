@@ -51,6 +51,10 @@ using (var stream = Cache.OpenCacheReadWrite())
                                 if (primaryweapon.ItemTypeIndex.Equals(mauler)) primaryweapon.ItemTypeIndex = needler;
                             }
                         }
+                        else if (fireteamname.StartsWith("1_bugger_captain") || fireteamname.StartsWith("4_buggers") || fireteamname.StartsWith("3_buggers"))
+                        {
+                            if (primaryweapon.ItemTypeIndex.Equals(plasma_rifle_red)) primaryweapon.ItemTypeIndex = plasma_rifle;
+                        }
                         else
                         {
                             foreach (var primaryweapon in designerfireteam.InitialPrimaryWeapon)

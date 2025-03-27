@@ -6,9 +6,7 @@
 * Gold elite boss w/ sword during chieftain wave
 * elites have no dialogue for some stupid reason
 * some elites still have brute shots
-* make it so only high ranking elites pull out swords when stuck
 * elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
-* Give drones with brute plasma rifles regular blue ones instead
 * Invincibility despawns from player inventory on new round start
 * elites sometimes spawn on brute waves
 * swap brute flood weapons from power AR to something stronger
