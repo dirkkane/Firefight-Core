@@ -32,6 +32,7 @@ setfield GrenadesProperties[0].GrenadeUncoverChance 0.4
 setfield GrenadesProperties[0].AntiVehicleGrenadeChance 0.4
 setfield GrenadesProperties[0].GrenadeCount 1 2
 setfield GrenadesProperties[0].NoGrenadesDroppedChance 0.5
+removeblockelements ChargeProperties 0 *
 savetagchanges
 Exit
 
@@ -86,6 +87,30 @@ setfield VitalityProperties[0].ShieldRechargeTime 3
 setfield VitalityProperties[0].ExtendedShieldDamageThreshold 0.3
 setfield VitalityProperties[0].ExtendedBodyDamageThreshold 0.3
 setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+addblockelements ChargeProperties
+setfield ChargeProperties[0].MeleeConsiderRange 1.35
+setfield ChargeProperties[0].MeleeChance 0.5
+setfield ChargeProperties[0].MeleeAttackRange 1.25
+setfield ChargeProperties[0].MeleeAbortRange 1.75
+setfield ChargeProperties[0].MeleeAttackTimeout 2
+setfield ChargeProperties[0].MeleeAttackDelayTimer 4
+setfield ChargeProperties[0].ShieldDownBerserkChance 0.75 1
+setfield ChargeProperties[0].ShielddownBerserkRanges 5 2.5
+setfield ChargeProperties[0].BerserkWeapon objects\weapons\melee\energy_blade\energy_blade.weapon
+setfield ChargeProperties[0].BeserkCooldown 3
+copyblockelements ChargeProperties 0 1
+pasteblockelements ChargeProperties
+setfield ChargeProperties[1].MeleeChance 0.25
+setfield ChargeProperties[1].ShieldDownBerserkChance 0 0
+setfield ChargeProperties[1].ShielddownBerserkRanges 0 0
+setfield ChargeProperties[1].BeserkCooldown 0
+copyblockelements ChargeProperties 1 1
+pasteblockelements ChargeProperties
+setfield ChargeProperties[2].MeleeChance 0.75
+setfield ChargeProperties[2].MeleeAttackDelayTimer 2
+setfield ChargeProperties[2].ShieldDownBerserkChance 0.75 1
+setfield ChargeProperties[2].ShielddownBerserkRanges 3 6
+setfield ChargeProperties[2].BeserkCooldown 6
 SaveTagChanges
 Exit
 
