@@ -35,8 +35,9 @@ using (var stream = Cache.OpenCacheReadWrite())
                 foreach (var designerfireteam in squad.DesignerFireteams)
                 {
                     var fireteamname = Cache.StringTable.GetString(designerfireteam.Name);
+                    var ModuleID = Cache.StringTable.GetString(squad.ModuleID);
 
-                    if (fireteamname.StartsWith("1_brute"))
+                    if (fireteamname.StartsWith("1_brute_captain") && ModuleID.StartsWith("sq_sur_covenant"))
                     {
                         foreach (var charactertype in designerfireteam.CharacterType)
                         {
