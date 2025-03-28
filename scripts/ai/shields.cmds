@@ -119,13 +119,13 @@ SaveTagChanges
 exit
 
 edittag objects\characters\elite\elite.model
-setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
+setfield ShieldImpactThirdPerson fx\shield_impacts\elite_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 Exit
 
 edittag objects\characters\elite\elite_lite\elite_lite.model
-setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
+setfield ShieldImpactThirdPerson fx\shield_impacts\elite_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 Exit
