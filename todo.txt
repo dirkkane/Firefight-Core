@@ -5,9 +5,9 @@
 * phantom turret animations
 * Gold elite boss w/ sword during chieftain wave
 * elites have no dialogue for some stupid reason
-* some elites still have brute shots
 * elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
 * Invincibility despawns from player inventory on new round start
-* enemies randomly stop spawning on alpha site
+* enemies randomly stop spawning on alpha site (PHANTOM PROBLEM)
 * elites have trouble spawning in phantoms
 * Make elites jump into empty vehicles
+* Update readme with instructions for buildmaps
