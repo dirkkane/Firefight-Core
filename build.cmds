@@ -8,7 +8,7 @@ useshadercache firefightfolder\caches\shadercache
 echo ==Pak Setup...==
 createmodpackage 1 large
 Firefight Core
-The definitive firefight experience for ElDewrito. Survive as long as you can against hordes of Covenant and Flood hostiles. Featuring 13 maps to choose from, 10 from Halo 3: ODST and 3 modified maps for you to endure against the Flood infestation. Good luck, Spartan. Thank you to all the members of the ElDewrito modding community for their help, this mod would not have been possible without it. FOR MULTIPLAYER: DO NOT USE COSMETIC MODS, THE NETWORKING WILL GIVE AN ERROR.
+The definitive firefight experience for ElDewrito. Survive as long as you can against hordes of Covenant and Flood hostiles. Good luck, Spartan. Thank you to all the members of the ElDewrito modding community for their help, this mod would not have been possible without it.
 Dirkkane
 2.7
 firefight
@@ -18,8 +18,12 @@ setfield metadata.URL https://github.com/dirkkane/Firefight-Core/tree/dev
 savemodmetadata
 exit
 
-echo ==Port Maps...==
-runcommands firefightfolder\scripts\portODST.cmds
+openmodpackage firefightfolder\paks\maps.pak
+ApplyModPackage
+exitmodpackage
+
+# echo ==Port Maps...==
+# runcommands firefightfolder\scripts\portODST.cmds
 
 echo ==Enabling VISR...==
 runcommands firefightfolder\scripts\hud\visr.cmds
@@ -44,8 +48,7 @@ echo ==AI...==
 runcommands firefightfolder\scripts\ai\vehicles.cmds
 runcommands firefightfolder\scripts\ai\characterweapons.cmds
 runcommands firefightfolder\scripts\ai\portelites.cmds
-cs < firefightfolder\elitesquads.cs
-cs < firefightfolder\enemyweapons.cs
+cs < firefightfolder\WeaponsandSquads.cs
 
 echo ==Gruntpocalypse...==
 runcommands firefightfolder\scripts\gruntpocalypse\gruntpocalypse.cmds

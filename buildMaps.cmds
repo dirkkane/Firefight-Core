@@ -1,0 +1,18 @@
+basecache
+
+setvariable firefightfolder path
+
+useaudiocache firefightfolder\caches\audiocache
+useshadercache firefightfolder\caches\shadercache
+
+createmodpackage 1 large
+Firefight Maps
+Maps component of Firefight Core. Meant for pak building only.
+Dirkkane
+1.0
+firefight
+
+runcommands firefightfolder\scripts\portODST.cmds
+
+savemodpackage firefightfolder\paks\maps.pak
+Exitmodpackage
