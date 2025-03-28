@@ -5,8 +5,8 @@ using (var stream = Cache.OpenCacheReadWrite())
         var scnr = Cache.Deserialize<TagTool.Tags.Definitions.Scenario>(stream, tag);
         if (tag.Name.StartsWith("levels\\atlas"))
         {
-            // Squads
-            Console.WriteLine("Adding elites to squads: " + tag);
+            
+            Console.WriteLine("Modifying Squads: " + tag);
             short elite = -1;
             short elite_major = -1;
             short elite_specops = -1;
@@ -15,7 +15,16 @@ using (var stream = Cache.OpenCacheReadWrite())
             short brute_captain = -1;
             short brute_captain_ultra = -1;
             short brute_captain_major = -1;
-            short brute_stalker = -1;
+            short brute_stalker = -1
+            short plasma_rifle = -1;
+            short plasma_rifle_red = -1;
+            short plasma_rifle_gold = -1;
+            short needler = -1;
+            short spiker = -1;
+            short mauler = -1;
+            short carbine = -1;
+            short brute_shot = -1;
+            short energy_sword = -1;
             foreach (var character in scnr.CharacterPalette)
             {
                 if (character.Instance != null)
@@ -31,59 +40,13 @@ using (var stream = Cache.OpenCacheReadWrite())
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_stalker")) brute_stalker = (short)scnr.CharacterPalette.IndexOf(character);
                 }
             }
-            foreach (var squad in scnr.Squads)
-            {
-                foreach (var designerfireteam in squad.DesignerFireteams)
-                {
-                    var fireteamname = Cache.StringTable.GetString(designerfireteam.Name);
-                    var ModuleID = Cache.StringTable.GetString(squad.ModuleId
-                    if (fireteamname.StartsWith("1_brute_captain") && ModuleID.StartsWith("sq_sur_covenant"))
-                    {
-                        foreach (var charactertype in designerfireteam.CharacterType)
-                        {
-                            if (charactertype.CharacterTypeIndex.Equals(brute_captain)) charactertype.CharacterTypeIndex = elite;
-                            else if (charactertype.CharacterTypeIndex.Equals(brute_captain_major)) charactertype.CharacterTypeIndex = elite_major;
-                            else if (charactertype.CharacterTypeIndex.Equals(brute_captain_ultra)) charactertype.CharacterTypeIndex = elite_specops_commande
-                        }
-                
-                    else if (fireteamname.StartsWith("4_brute_stealth"))
-                    {
-                        foreach (var charactertype in designerfireteam.CharacterType)
-                        {
-                            if (charactertype.CharacterTypeIndex.Equals(brute_stalker)) charactertype.CharacterTypeIndex = elite_specops;
-                        }
-                
-                    //else if (fireteamname.StartsWith("1_hammer"))
-                    //{
-                    //    designerfireteam.characterblock = new List<TagRef
-                    /
-                }
-            }
-            Console.WriteLine("Elite: " + elite);
-            Console.WriteLine("Elite Major: " + elite_major);
-            Console.WriteLine("Elite SpecOps: " + elite_specops);
-            Console.WriteLine("Elite Specops Commander: " + elite_specops_commander);
-            Console.WriteLine("Elite Gold Boss: " + elite_gold_boss);
-            Console.WriteLine("Brute Captain: " + brute_captain);
-            Console.WriteLine("Brute Captain Major: " + brute_captain_major);
-            Console.WriteLine("Brute Captain Ultra: " + brute_captain_ultra);
-            Console.WriteLine("Brute Stalker: " + brute_stalker
-            // Weapons
-            Console.WriteLine("Adding weapons to squads: " + tag);
-            short plasma_rifle = -1;
-            short plasma_rifle_red = -1;
-            short needler = -1;
-            short spiker = -1;
-            short mauler = -1;
-            short carbine = -1;
-            short brute_shot = -1;
-            short energy_sword = -1;
             foreach (var weapon in scnr.WeaponPalette)
             {
                 if (weapon.Object != null)
                 {
                     if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\plasma_rifle\\plasma_rifle")) plasma_rifle = (short)scnr.WeaponPalette.IndexOf(weapon);
                     else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\plasma_rifle_red\\plasma_rifle_red")) plasma_rifle_red = (short)scnr.WeaponPalette.IndexOf(weapon);
+                    else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\plasma_rifle\\plasma_rifle_power")) plasma_rifle_gold = (short)scnr.WeaponPalette.IndexOf(weapon);
                     else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\spike_rifle\\spike_rifle")) spiker = (short)scnr.WeaponPalette.IndexOf(weapon);
                     else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\excavator\\excavator")) mauler = (short)scnr.WeaponPalette.IndexOf(weapon);
                     else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\needler\\needler")) needler = (short)scnr.WeaponPalette.IndexOf(weapon);
@@ -97,8 +60,16 @@ using (var stream = Cache.OpenCacheReadWrite())
                 foreach (var designerfireteam in squad.DesignerFireteams)
                 {
                     var fireteamname = Cache.StringTable.GetString(designerfireteam.Name);
-                    if (fireteamname.StartsWith("1_brute"))
+                    var ModuleID = Cache.StringTable.GetString(squad.ModuleId
+                    if (fireteamname.StartsWith("1_brute_captain") && ModuleID.StartsWith("sq_sur_covenant"))
                     {
+                        foreach (var charactertype in designerfireteam.CharacterType)
+                        {
+                            if (charactertype.CharacterTypeIndex.Equals(brute_captain)) charactertype.CharacterTypeIndex = elite;
+                            else if (charactertype.CharacterTypeIndex.Equals(brute_captain_major)) charactertype.CharacterTypeIndex = elite_major;
+                            else if (charactertype.CharacterTypeIndex.Equals(brute_captain_ultra)) charactertype.CharacterTypeIndex = elite_specops_commander;
+                        }
+                    
                         foreach (var primaryweapon in designerfireteam.InitialPrimaryWeapon)
                         {
                             if (primaryweapon.ItemTypeIndex.Equals(plasma_rifle_red)) primaryweapon.ItemTypeIndex = plasma_rifle;
@@ -107,9 +78,13 @@ using (var stream = Cache.OpenCacheReadWrite())
                     }
                     else if (fireteamname.StartsWith("4_brute_stealth"))
                     {
+                        foreach (var charactertype in designerfireteam.CharacterType)
+                        {
+                            if (charactertype.CharacterTypeIndex.Equals(brute_stalker)) charactertype.CharacterTypeIndex = elite_specops;
+                        }
                         foreach (var primaryweapon in designerfireteam.InitialPrimaryWeapon)
                         {
-                            if (primaryweapon.ItemTypeIndex.Equals(mauler)) primaryweapon.ItemTypeIndex = needler;
+                            if (primaryweapon.ItemTypeIndex.Equals(mauler)) primaryweapon.ItemTypeIndex = plasma_rifle_gold;
                         }
                     }
                     else if (fireteamname.StartsWith("1_bugger_captain") || fireteamname.StartsWith("4_buggers") || fireteamname.StartsWith("3_buggers"))
@@ -119,17 +94,36 @@ using (var stream = Cache.OpenCacheReadWrite())
                             if (primaryweapon.ItemTypeIndex.Equals(plasma_rifle_red)) primaryweapon.ItemTypeIndex = plasma_rifle;
                         }
                     }
-                    else //temporary catch all
+                    foreach (var charactertype in designerfireteam.CharacterType)
                     {
-                        foreach (var primaryweapon in designerfireteam.InitialPrimaryWeapon)
+                        if (charactertype.CharacterTypeIndex.Equals(elite) || charactertype.CharacterTypeIndex.Equals(elite_major) || charactertype.CharacterTypeIndex.Equals(elite_specops_commander))
                         {
-                            if (primaryweapon.ItemTypeIndex.Equals(brute_shot)) primaryweapon.ItemTypeIndex = carbine;
+                            foreach (var primaryweapon in designerfireteam.InitialPrimaryWeapon)
+                            {
+                                if (primaryweapon.ItemTypeIndex.Equals(brute_shot)) primaryweapon.ItemTypeIndex = carbine;
+                            }
                         }
                     }
+                    //else if (fireteamname.StartsWith("1_hammer"))
+                    //{
+                    //    designerfireteam.characterblock = new List<TagRef
+                    
                 }
             }
+            Console.WriteLine("CHARACTER PALETTE INDEXES: ");
+            Console.WriteLine("Elite: " + elite);
+            Console.WriteLine("Elite Major: " + elite_major);
+            Console.WriteLine("Elite SpecOps: " + elite_specops);
+            Console.WriteLine("Elite Specops Commander: " + elite_specops_commander);
+            Console.WriteLine("Elite Gold Boss: " + elite_gold_boss);
+            Console.WriteLine("Brute Captain: " + brute_captain);
+            Console.WriteLine("Brute Captain Major: " + brute_captain_major);
+            Console.WriteLine("Brute Captain Ultra: " + brute_captain_ultra);
+            Console.WriteLine("Brute Stalker: " + brute_stalker
+            Console.WriteLine("WEAPON PALETTE INDEXES: ");
             Console.WriteLine("Plasma Rifle: " + plasma_rifle);
             Console.WriteLine("Plasma Rifle Red: " + plasma_rifle_red);
+            Console.WriteLine("Plasma Rifle PWR: " + plasma_rifle_gold);
             Console.WriteLine("Needler: " + needler);
             Console.WriteLine("Spiker: " + spiker);
             Console.WriteLine("Mauler: " + mauler);

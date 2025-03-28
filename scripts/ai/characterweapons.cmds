@@ -23,21 +23,21 @@ copyblockelements FiringPatternProperties 0 1
 pasteblockelements FiringPatternProperties
 setfield FiringPatternProperties[48].weapon objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
 
-echo ==Carbine AMMO==
-copyblockelements WeaponsProperties 4 1
-pasteblockelements WeaponsProperties
-setfield WeaponsProperties[50].weapon objects\weapons\rifle\covenant_carbine_ammo\covenant_carbine_ammo.weapon
-copyblockelements FiringPatternProperties 4 1
-pasteblockelements FiringPatternProperties
-setfield FiringPatternProperties[49].weapon objects\weapons\rifle\covenant_carbine_ammo\covenant_carbine_ammo.weapon
-
 echo ==Plasma Rifle==
 copyblockelements WeaponsProperties 46 1
 PasteBlockElements WeaponsProperties
-setfield WeaponsProperties[51].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
+setfield WeaponsProperties[50].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
 copyblockelements FiringPatternProperties 45 1
 PasteBlockElements FiringPatternProperties
-setfield FiringPatternProperties[50].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
+setfield FiringPatternProperties[49].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
+
+echo ==Plasma Rifle PWR==
+copyblockelements WeaponsProperties 46 1
+PasteBlockElements WeaponsProperties
+setfield WeaponsProperties[51].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle_power.weapon
+copyblockelements FiringPatternProperties 45 1
+PasteBlockElements FiringPatternProperties
+setfield FiringPatternProperties[50].weapon objects\weapons\rifle\plasma_rifle\plasma_rifle_power.weapon
 SaveTagChanges
 Exit
 
@@ -48,3 +48,5 @@ ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
 ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
 ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
 ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\melee\energy_blade\energy_blade.weapon
+ForEach scnr contains: "levels\atlas" AddBlockElements weaponpalette 1 *
+ForEach scnr contains: "levels\atlas" setfield weaponpalette[*].Object objects\weapons\rifle\plasma_rifle\plasma_rifle_power.weapon
