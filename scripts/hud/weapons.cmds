@@ -1,5 +1,3 @@
-importfonts firefightfolder\fonts\font_package.bin
-
 importtag ui\chud\smg_silenced.chdt firefightfolder\tags\smg_silenced.chud_definition
 importtag ui\chud\automag.chdt firefightfolder\tags\automag.chud_definition
 
@@ -62,3 +60,11 @@ edittag ui\chud\globals.chud_globals_definition
 setfield HudGlobals[0].HudAttributes[0].StateMessageOffset 0 0.3
 savetagchanges
 Exit
+
+edittag ui\chud\beam_rifle.chud_definition
+setfield HudWidgets[4].BitmapWidgets[0].Bitmap ui\chud\bitmaps\weapon_scematics.bitmap
+setfield HudWidgets[4].BitmapWidgets[0].BitmapSequenceIndex 2
+setfield HudWidgets[6].BitmapWidgets[0].Bitmap ui\chud\bitmaps\weapon_scematics.bitmap
+setfield HudWidgets[6].BitmapWidgets[0].BitmapSequenceIndex 2
+savetagchanges
+exit
