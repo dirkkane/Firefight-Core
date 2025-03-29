@@ -1,0 +1,17 @@
+echo ==Fix vaseline on camera==
+edittag levels\atlas\h100\sky\h100_sky.camera_fx_settings
+setfield bloomintensity.strength 0.1
+savetagchanges
+exit
+
+edittag levels\atlas\l200\sky\l200.camera_fx_settings
+setfield bloomintensity.strength 0.2
+savetagchanges
+exit
+
+echo ==Remove slipspace fallout==
+edittag levels\atlas\sc100\sky\sc100_sky.sky_atm_parameters
+setfield AtmosphereSettings[4].WeatherEffect null
+setfield AtmosphereSettings[0].WeatherEffect null
+savetagchanges
+exit
