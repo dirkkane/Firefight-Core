@@ -60,7 +60,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                 foreach (var designerfireteam in squad.DesignerFireteams)
                 {
                     var fireteamname = Cache.StringTable.GetString(designerfireteam.Name);
-                    var ModuleID = Cache.StringTable.GetString(squad.ModuleId
+                    var ModuleID = Cache.StringTable.GetString(squad.ModuleId);
                     if (fireteamname.StartsWith("1_brute_captain") && ModuleID.StartsWith("sq_sur_covenant"))
                     {
                         foreach (var charactertype in designerfireteam.CharacterType)
@@ -120,7 +120,7 @@ using (var stream = Cache.OpenCacheReadWrite())
             Console.WriteLine("Brute Captain: " + brute_captain);
             Console.WriteLine("Brute Captain Major: " + brute_captain_major);
             Console.WriteLine("Brute Captain Ultra: " + brute_captain_ultra);
-            Console.WriteLine("Brute Stalker: " + brute_stalker
+            Console.WriteLine("Brute Stalker: " + brute_stalker);
 
             Console.WriteLine("\nWEAPON PALETTE INDEXES: \n");
             Console.WriteLine("Plasma Rifle: " + plasma_rifle);
