@@ -12,7 +12,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Fyzure
 * NoShotz
 
-### WIP Changelog
+### v2.7 Changelog
 * Added Gruntpocalypse!
 * Added enemy Elites
 * Added readme for in-game mod info

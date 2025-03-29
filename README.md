@@ -1,12 +1,12 @@
 ![cover photo](https://github.com/dirkkane/Firefight-Core/blob/dev/assets/preview.png?raw=true)
 
-A firefight mod for ElDewrito 0.7. This is intended to be used as the basis for any firefight mods the community wishes to make. It includes scripts to fix issues that occur out of the box, enhance gameplay, and add some bonus content such as Flood firefight. This repository contains most of the data that you need to build the pak for yourself.
+A firefight mod for ElDewrito 0.7. This is intended to be used as the basis for any firefight mods the community wishes to make. It includes scripts to fix issues that occur out of the box, enhance gameplay, and add some bonus content such as Flood firefight. Download completed builds from [ZGAF Fileshare](https://fileshare.zgaf.io/api_v2/modview?modId=71) or the [ElDewrito Modding Discord server.](https://discord.gg/KGZ6uGXX)
 
 If you're going to use my mod as a basis for yours, please make both of our lives easier and add your changes to the scripts in this repo and build it that way. Don't take the finished compiled pak and add stuff on top of it, it's just going to create issues and cause you to lose your progress at some point.
 
 # How To Build
 ## Variables
-The first thing you need to do is change the following lines at the beginning of `build.cmds`:
+The first thing you need to do is change the following lines at the beginning of `build.cmds` and `buildMaps.cmds`:
 
 ```
 basecache
@@ -59,7 +59,7 @@ paste the FMOD sounds from Halo 3 ODST MCC into this folder.
 ***DO NOT ASK ME FOR THESE FILES, I WILL NOT PROVIDE THEM.***
 
 ## Building
-Once you have completed the above steps, run `build.bat` and the mod will build.
+Once you have completed the above steps run `buildMaps.bat`, this will create a mod package in the `paks` folder that contains most of the ported data from Halo 3: ODST to save time on future builds. When that finishes run `build.bat` to create the actual firefight mod, the complete mod package will be saved to the mods folder in your ElDewrito installation.
 
 # Contact
 If you have any questions, please feel free to DM @dirkkane on Discord or ping me in any ElDewrito Discord servers.
