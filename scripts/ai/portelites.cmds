@@ -262,3 +262,9 @@ setfield CharacterPalette[44].Instance objects\characters\elite\ai\elite_specops
 setfield CharacterPalette[45].Instance objects\characters\elite\ai\elite_gold_boss.character
 savetagchanges
 Exit
+
+echo ==Animation inheritance for phantoms==
+edittag objects\characters\elite\elite.model_animation_graph
+setinheritance vehicles objects\characters\brute\brute.model_animation_graph TightenNodes
+savetagchanges
+exit
