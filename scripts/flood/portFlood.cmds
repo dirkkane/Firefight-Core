@@ -25,7 +25,18 @@ exit
 CreateTag skya levels\dirk\flood_h100\sky\flood_h100
 ImportTag levels\dirk\flood_h100\sky\flood_h100.skya firefightfolder\tags\flood_h100.sky_atm_parameters
 
+echo ==Animation Inheritance (For phantoms)==
 edittag objects\characters\floodcombat_brute\floodcombat_brute.model_animation_graph
-addanimation firefightfolder\anims\_BruteFloodPhantom
-SaveTagChanges
-Exit
+setinheritance vehicles objects\characters\brute\brute.model_animation_graph TightenNodes
+savetagchanges
+exit
+
+edittag objects\characters\floodcombat_elite\floodcombat_elite.model_animation_graph
+setinheritance vehicles objects\characters\brute\brute.model_animation_graph TightenNodes
+savetagchanges
+exit
+
+edittag objects\characters\floodcombat_human\floodcombat_human.model_animation_graph
+setinheritance vehicles objects\characters\jackal\jackal.model_animation_graph TightenNodes
+savetagchanges
+exit
