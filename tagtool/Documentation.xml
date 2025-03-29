@@ -2054,9 +2054,10 @@
             <param name="cachePlatform"></param>
             <param name="pluginsDirectory">The path to save the plugin files to.</param>
         </member>
-        <member name="M:TagTool.Commands.ModelAnimationGraphs.SetInheritanceCommand.ComputeNewGraphIndexForMapping(System.Int16)">
+        <member name="T:TagTool.Commands.ModelAnimationGraphs.FixGraphForInheritanceCommand">
             <summary>
-            Compute the new GraphIndex for mapping: donorGraphIndex + 1.
+            Removes all ObjectSpaceParentNodes from every animation’s animation data.
+            Doing so prevents inherited animations from twisting to odd angles if the inherited graphs don't have the exact nodes.
             </summary>
         </member>
         <member name="T:TagTool.Commands.ParseResult">
@@ -3673,7 +3674,7 @@
             <summary>
             Export geometry to 3D model file.
             </summary>
-            <param name="exportFileFormat">AMF, DAE or OBJ</param>
+            <param name="exportFileFormat">AMF, DAE, FBX or OBJ</param>
             <param name="exportFilePath">File to write 3D model to.</param>
             <param name="exportBitmapsFolder">If set, used diffuse bitmaps will be exported as DDS to this folder.</param>
             <param name="filterVariant">If set, only this variant will be exported.</param>
