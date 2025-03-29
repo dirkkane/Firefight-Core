@@ -6,7 +6,7 @@ using (var stream = Cache.OpenCacheReadWrite())
         if (tag.Name.StartsWith("levels\\atlas"))
         {
             
-            Console.WriteLine("Modifying Squads: " + tag);
+            Console.WriteLine("\nModifying Squads: " + tag);
             short elite = -1;
             short elite_major = -1;
             short elite_specops = -1;
@@ -15,7 +15,7 @@ using (var stream = Cache.OpenCacheReadWrite())
             short brute_captain = -1;
             short brute_captain_ultra = -1;
             short brute_captain_major = -1;
-            short brute_stalker = -1
+            short brute_stalker = -1;
             short plasma_rifle = -1;
             short plasma_rifle_red = -1;
             short plasma_rifle_gold = -1;
@@ -110,7 +110,8 @@ using (var stream = Cache.OpenCacheReadWrite())
                     
                 }
             }
-            Console.WriteLine("CHARACTER PALETTE INDEXES: ");
+            
+            Console.WriteLine("\nCHARACTER PALETTE INDEXES: \n");
             Console.WriteLine("Elite: " + elite);
             Console.WriteLine("Elite Major: " + elite_major);
             Console.WriteLine("Elite SpecOps: " + elite_specops);
@@ -120,7 +121,8 @@ using (var stream = Cache.OpenCacheReadWrite())
             Console.WriteLine("Brute Captain Major: " + brute_captain_major);
             Console.WriteLine("Brute Captain Ultra: " + brute_captain_ultra);
             Console.WriteLine("Brute Stalker: " + brute_stalker
-            Console.WriteLine("WEAPON PALETTE INDEXES: ");
+
+            Console.WriteLine("\nWEAPON PALETTE INDEXES: \n");
             Console.WriteLine("Plasma Rifle: " + plasma_rifle);
             Console.WriteLine("Plasma Rifle Red: " + plasma_rifle_red);
             Console.WriteLine("Plasma Rifle PWR: " + plasma_rifle_gold);
