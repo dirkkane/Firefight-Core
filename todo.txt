@@ -12,4 +12,6 @@
 * Make elites jump into empty vehicles
 * decrease elite melee range/aggressiveness
 * minor and major elites still dont throw grenades (maybe squad issue???)
-* add h2a beam rifle from ramp
+* spawn gauss hog on lost platoon
+* give elites equipment (regen fields?)
+* fix beam rifle hud icon being too crunchy

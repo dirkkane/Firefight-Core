@@ -37,7 +37,11 @@ runcommands firefightfolder\scripts\hud\medals.cmds
 echo ==Skulls...==
 runcommands firefightfolder\scripts\hud\skulls.cmds
 
-echo ==Fixing ODST weapons...==
+echo ==Weapons...==
+importfonts firefightfolder\fonts\font_package.bin
+openmodpackage firefightfolder\paks\h2amp_beam_rifle.pak
+ApplyModPackage
+exitmodpackage
 runcommands firefightfolder\scripts\weapons\odstWeapons.cmds
 runcommands firefightfolder\scripts\hud\weapons.cmds
 
@@ -57,7 +61,7 @@ echo ==Shield Impacts...==
 runcommands firefightfolder\scripts\ai\shields.cmds
 
 echo ==Fix nighttime blur...==
-runcommands firefightfolder\scripts\fixbloom.cmds
+runcommands firefightfolder\scripts\bloomandweather.cmds
 
 echo ==Menu setup...==
 # runcommands firefightfolder\scripts\menu\mainmenu.cmds
@@ -66,7 +70,7 @@ echo ==Update mapinfo...==
 generatecampaignfile firefightfolder\mapinfo
 UpdateMapFiles firefightfolder\mapinfo
 
-echo ==Add images...==
+echo ==Add assets...==
 addmodfiles firefightfolder\assets
 
 savemodpackage
