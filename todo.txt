@@ -15,3 +15,4 @@
 * spawn gauss hog on lost platoon
 * give elites equipment (regen fields?)
 * fix beam rifle hud icon being too crunchy
+* fix wraiths not dying when grenades are planted

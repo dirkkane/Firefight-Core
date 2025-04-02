@@ -1,5 +1,5 @@
 ## Firefight Core
-The base firefight experience for ElDewrito. Prove your might and hold out as long as possible against unending hordes of Covenant and Flood hostiles. Good luck, spartan.
+The definitive firefight experience for ElDewrito. Survive as long as you can against hordes of Covenant and Flood hostiles. Good luck, Spartan. Thank you to all the members of the ElDewrito modding community for their help, this mod would not have been possible without it.
 
 ### IMPORTANT NOTE FOR MULTIPLAYER!
 Do not use cosmetic mods when playing with others, differences in game data causes the networking to have errors and end the game. To remove cosmetic mods, open the ElDewrito launcher, go to settings, then files, and click verify files to restore the game to its default state. You may reapply your cosmetic mods when not playing firefight.
@@ -7,8 +7,9 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 ### Contributors
 * Dirkkane
 * Minelelol
-* Newbie / Toasty
+* TwistedFlog
 * MtnDewIt
+* Newbie / Toasty
 * Fyzure
 * NoShotz
 
@@ -16,9 +17,12 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Added Gruntpocalypse!
 * Added enemy Elites
 * Added readme for in-game mod info
+* Added H2A Beam Rifle
 * Fixed campaign player rep not picking up health packs
+* Fixed Flood fronds shader
 * Removed engineers from Chasm Ten (Flood)
 * Removed VISR X-Ray (mostly)
+* Removed slipspace fallout from Crater
 
 ### v2.6 Changelog
 * Fixed crash on Lost Platoon
