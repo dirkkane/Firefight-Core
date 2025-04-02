@@ -1,12 +1,12 @@
 opencachefile firefightfolder\source_maps\h3\110_hc.map
 
-ignoreblamtag objects\characters\flood_infection\shaders\flood_fronds.shader
-ignoreblamtag objects\characters\floodcombat_elite\shaders\flood_fronds.shader
-ignoreblamtag objects\characters\floodcombat_brute\shaders\flood_fronds.shader
-ignoreblamtag objects\characters\floodcombat_human\shaders\flood_fronds.shader
-ignoreblamtag objects\characters\flood_tank\shaders\flood_fronds.shader
-ignoreblamtag objects\characters\flood_stalker\shaders\flood_fronds.shader
-ignoreblamtag objects\characters\flood_ranged\shaders\flood_fronds.shader
+#ignoreblamtag objects\characters\flood_infection\shaders\flood_fronds.shader
+#ignoreblamtag objects\characters\floodcombat_elite\shaders\flood_fronds.shader
+#ignoreblamtag objects\characters\floodcombat_brute\shaders\flood_fronds.shader
+#ignoreblamtag objects\characters\floodcombat_human\shaders\flood_fronds.shader
+#ignoreblamtag objects\characters\flood_tank\shaders\flood_fronds.shader
+#ignoreblamtag objects\characters\flood_stalker\shaders\flood_fronds.shader
+#ignoreblamtag objects\characters\flood_ranged\shaders\flood_fronds.shader
 
 porttag objects\characters\flood_infection\ai\flood_infection.character
 porttag objects\characters\flood_ranged\ai\flood_pureform_ranged.character
