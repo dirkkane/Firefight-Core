@@ -44,6 +44,12 @@ ApplyModPackage
 exitmodpackage
 runcommands firefightfolder\scripts\weapons\odstWeapons.cmds
 runcommands firefightfolder\scripts\hud\weapons.cmds
+foreach scnr foreach PlayerStartingProfile setfield PrimaryWeapon objects\weapons\rifle\assault_rifle\assault_rifle.weapon
+foreach scnr foreach PlayerStartingProfile setfield SecondaryWeapon objects\weapons\pistol\magnum\magnum.weapon
+foreach scnr foreach PlayerStartingProfile setfield PrimaryRoundsLoaded 32
+foreach scnr foreach PlayerStartingProfile setfield PrimaryRoundsTotal 256
+foreach scnr foreach PlayerStartingProfile setfield SecondaryRoundsLoaded 8
+foreach scnr foreach PlayerStartingProfile setfield SecondaryRoundsTotal 40
 
 echo ==Floodfight...==
 runcommands firefightfolder\scripts\flood\floodfight.cmds

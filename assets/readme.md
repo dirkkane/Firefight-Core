@@ -19,10 +19,11 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Added readme for in-game mod info
 * Added H2A Beam Rifle
 * Fixed campaign player rep not picking up health packs
-* Fixed Flood fronds shader
+* Fixed Flood fronds shader (Thanks mtn)
 * Removed engineers from Chasm Ten (Flood)
 * Removed VISR X-Ray (mostly)
 * Removed slipspace fallout from Crater
+* Players now spawn with Assault Rifles and Magnums
 
 ### v2.6 Changelog
 * Fixed crash on Lost Platoon
