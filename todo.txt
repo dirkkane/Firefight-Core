@@ -1,18 +1,20 @@
 ===TO DO===
 * New floodfight maps (Wait for flood animations OR set spawn points in squads)
-* Fix Engineer overshield effect for all enemies (WORKS FOR ENEMIES WITH PRE-EXISTING SHIELDS FML)
-* infected spartan bodies?
-* phantom turret animations
 * Gold elite boss w/ sword during chieftain wave
 * elites have no dialogue for some stupid reason
 * elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
-* Invincibility despawns from player inventory on new round start
-* enemies randomly stop spawning on alpha site (PHANTOM PROBLEM)
+* Invincibility despawns from player inventory on new round start (only sometimes???)
+* enemies randomly stop spawning on alpha site (PHANTOM PROBLEM?)
 * elites have trouble spawning in phantoms
-* Make elites jump into empty vehicles
 * decrease elite melee range/aggressiveness
-* minor and major elites still dont throw grenades (maybe squad issue???)
+* minor and major elites still dont throw grenades (maybe squad/loadout issue???)
 * spawn gauss hog on lost platoon
-* give elites equipment (regen fields?)
 * fix beam rifle hud icon being too crunchy
 * fix wraiths not dying when grenades are planted
+
+
+===MAYBE TO DO===
+* friendly engineers in flood mode?
+* give elites equipment (regen fields?)
+* Make elites jump into empty vehicles
+* infected spartan bodies?
