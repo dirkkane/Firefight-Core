@@ -32,7 +32,7 @@ savetagchanges
 exit
 
 edittag objects\characters\floodcombat_elite\floodcombat_elite.model_animation_graph
-setinheritance vehicles objects\characters\brute\brute.model_animation_graph TightenNodes
+setinheritance vehicles objects\characters\elite\elite.model_animation_graph TightenNodes
 savetagchanges
 exit
 
@@ -40,3 +40,19 @@ edittag objects\characters\floodcombat_human\floodcombat_human.model_animation_g
 setinheritance vehicles objects\characters\jackal\jackal.model_animation_graph TightenNodes
 savetagchanges
 exit
+
+edittag objects\characters\floodcarrier\floodcarrier.model_animation_graph
+setinheritance vehicles objects\characters\grunt\grunt.model_animation_graph TightenNodes
+SaveTagChanges
+Exit
+
+edittag objects\characters\flood_tank\flood_tank.model_animation_graph
+setinheritance vehicles objects\characters\hunter\hunter.model_animation_graph TightenNodes
+savetagchanges
+Exit
+
+edittag objects\characters\flood_stalker\flood_stalker.model_animation_graph
+setinheritance vehicles objects\characters\bugger\bugger.model_animation_graph TightenNodes
+savetagchanges
+Exit
+
