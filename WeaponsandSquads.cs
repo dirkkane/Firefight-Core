@@ -12,6 +12,7 @@ using (var stream = Cache.OpenCacheReadWrite())
             short elite_specops = -1;
             short elite_specops_commander = -1;
             short elite_gold_boss = -1;
+            short brute = -1;
             short brute_captain = -1;
             short brute_captain_ultra = -1;
             short brute_captain_major = -1;
@@ -34,6 +35,7 @@ using (var stream = Cache.OpenCacheReadWrite())
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops")) elite_specops = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops_commander")) elite_specops_commander = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_gold_boss")) elite_gold_boss = (short)scnr.CharacterPalette.IndexOf(character);
+                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute")) brute = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain") && brute_captain == -1) brute_captain = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_ultra")) brute_captain_ultra = (short)scnr.CharacterPalette.IndexOf(character);
                     else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_major")) brute_captain_major = (short)scnr.CharacterPalette.IndexOf(character);
@@ -61,11 +63,12 @@ using (var stream = Cache.OpenCacheReadWrite())
                 {
                     var fireteamname = Cache.StringTable.GetString(designerfireteam.Name);
                     var ModuleID = Cache.StringTable.GetString(squad.ModuleId);
-                    if (fireteamname.StartsWith("1_brute_captain") && ModuleID.StartsWith("sq_sur_covenant"))
+                    if (ModuleID.StartsWith("sq_sur_covenant") || ModuleID.StartsWith("sq_sur_brute_pack"))
                     {
                         foreach (var charactertype in designerfireteam.CharacterType)
                         {
                             if (charactertype.CharacterTypeIndex.Equals(brute_captain)) charactertype.CharacterTypeIndex = elite;
+                            else if (charactertype.CharacterTypeIndex.Equals(brute)) charactertype.CharacterTypeIndex = elite;
                             else if (charactertype.CharacterTypeIndex.Equals(brute_captain_major)) charactertype.CharacterTypeIndex = elite_major;
                             else if (charactertype.CharacterTypeIndex.Equals(brute_captain_ultra)) charactertype.CharacterTypeIndex = elite_specops_commander;
                         }
