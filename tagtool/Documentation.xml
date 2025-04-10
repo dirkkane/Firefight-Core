@@ -2060,6 +2060,13 @@
             Doing so prevents inherited animations from twisting to odd angles if the inherited graphs don't have the exact nodes.
             </summary>
         </member>
+        <member name="T:TagTool.Commands.ModelAnimationGraphs.RemoveInheritanceCommand">
+            <summary>
+            Removes all blocks from modes sub blocks that have GraphIndex above -1.
+            Additionally, if a main block (WeaponType, WeaponClass, or Mode) becomes empty,
+            it is removed. Also clears the InheritanceList and sets ParentAnimationGraph to null.
+            </summary>
+        </member>
         <member name="T:TagTool.Commands.ParseResult">
             <summary>
             Helper class for parsing a RuntimeCommand, identifying its arguments (if applicable), and validating the RuntimeCommand as a whole.
