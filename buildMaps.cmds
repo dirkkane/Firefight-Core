@@ -12,7 +12,49 @@ Dirkkane
 1.0
 firefight
 
-runcommands firefightfolder\scripts\portODST.cmds
+echo ==h100==
+opencachefile firefightfolder\source_maps\odst\h100.map
+porttag !updatemapfiles *.scnr
+exit
+
+echo ==l200==
+opencachefile firefightfolder\source_maps\odst\l200.map
+porttag !updatemapfiles *.scnr
+Exit
+
+echo ==l300==
+opencachefile firefightfolder\source_maps\odst\l300.map
+porttag !updatemapfiles *.scnr
+Exit
+
+echo ==sc100==
+opencachefile firefightfolder\source_maps\odst\sc100.map
+porttag !updatemapfiles *.scnr
+Exit
+
+echo ==sc110==
+opencachefile firefightfolder\source_maps\odst\sc110.map
+porttag !updatemapfiles *.scnr
+Exit
+
+echo ==sc120==
+opencachefile firefightfolder\source_maps\odst\sc120.map
+porttag !updatemapfiles *.scnr
+Exit
+EditTag levels\atlas\sc120\sky\sc120_sky.sky_atm_parameters
+setfield TransparentSortDistance 200
+SaveTagChanges
+Exit
+
+echo ==sc130==
+opencachefile firefightfolder\source_maps\odst\sc130.map
+porttag !updatemapfiles *.scnr
+Exit
+
+echo ==sc140==
+opencachefile firefightfolder\source_maps\odst\sc140.map
+porttag !updatemapfiles *.scnr
+Exit
 
 savemodpackage firefightfolder\paks\maps.pak
 Exitmodpackage

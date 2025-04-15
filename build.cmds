@@ -22,9 +22,6 @@ openmodpackage firefightfolder\paks\maps.pak
 ApplyModPackage
 exitmodpackage
 
-# echo ==Port Maps...==
-# runcommands firefightfolder\scripts\portODST.cmds
-
 echo ==Enabling VISR...==
 runcommands firefightfolder\scripts\hud\visr.cmds
 
