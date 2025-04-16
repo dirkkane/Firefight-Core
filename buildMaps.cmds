@@ -14,31 +14,105 @@ firefight
 
 echo ==h100==
 opencachefile firefightfolder\source_maps\odst\h100.map
+ignoreblamtag sound\dialog\atlas\h100\h100.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 exit
 
 echo ==l200==
 opencachefile firefightfolder\source_maps\odst\l200.map
+ignoreblamtag sound\dialog\atlas\l200\l200.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\cop1.dialogue
+ignoreblamtag sound\dialog\combat\cop2.dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine1.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine4.dialogue
+ignoreblamtag sound\dialog\combat\marine5.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 Exit
 
 echo ==l300==
 opencachefile firefightfolder\source_maps\odst\l300.map
+ignoreblamtag sound\dialog\atlas\l300\l300.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine1.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine4.dialogue
+ignoreblamtag sound\dialog\combat\marine5.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 Exit
 
 echo ==sc100==
 opencachefile firefightfolder\source_maps\odst\sc100.map
+ignoreblamtag sound\dialog\atlas\sc100\sc100.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine1.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine1.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine4.dialogue
+ignoreblamtag sound\dialog\combat\marine5.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 Exit
 
 echo ==sc110==
 opencachefile firefightfolder\source_maps\odst\sc110.map
+ignoreblamtag sound\dialog\atlas\sc110\sc110.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine1.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine1.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine4.dialogue
+ignoreblamtag sound\dialog\combat\marine5.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 Exit
 
 echo ==sc120==
 opencachefile firefightfolder\source_maps\odst\sc120.map
+ignoreblamtag sound\dialog\atlas\sc120\sc120.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine1.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine1.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine4.dialogue
+ignoreblamtag sound\dialog\combat\marine5.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge1.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 Exit
 EditTag levels\atlas\sc120\sky\sc120_sky.sky_atm_parameters
@@ -48,11 +122,40 @@ Exit
 
 echo ==sc130==
 opencachefile firefightfolder\source_maps\odst\sc130.map
+ignoreblamtag sound\dialog\atlas\sc130\sc130.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\cop1.dialogue
+ignoreblamtag sound\dialog\combat\cop2.dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine1.dialogue
+ignoreblamtag sound\dialog\combat\fem_marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine1.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine4.dialogue
+ignoreblamtag sound\dialog\combat\marine5.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge1.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 Exit
 
 echo ==sc140==
 opencachefile firefightfolder\source_maps\odst\sc140.map
+ignoreblamtag sound\dialog\atlas\sc140\sc140.ai_mission_dialogue
+ignoreblamtag sound\dialog\combat\cop1.dialogue
+ignoreblamtag sound\dialog\combat\cop2.dialogue
+ignoreblamtag sound\dialog\combat\dare.dialogue
+ignoreblamtag sound\dialog\combat\marine1.dialogue
+ignoreblamtag sound\dialog\combat\marine2.dialogue
+ignoreblamtag sound\dialog\combat\marine3.dialogue
+ignoreblamtag sound\dialog\combat\marine4.dialogue
+ignoreblamtag sound\dialog\combat\marine5.dialogue
+ignoreblamtag sound\dialog\combat\marine6.dialogue
+ignoreblamtag sound\dialog\combat\rookie.dialogue
+ignoreblamtag sound\dialog\combat\sarge2.dialogue
+ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
 porttag !updatemapfiles *.scnr
 Exit
 
