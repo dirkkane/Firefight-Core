@@ -5,7 +5,7 @@ runcommands firefightfolder\scripts\flood\skybox.cmds
 echo ==h100 floodfight==
 DuplicateTag levels\atlas\h100\h100.scenario levels\dirk\flood_h100\flood_h100.scenario
 edittag levels\dirk\flood_h100\flood_h100.scenario
-setfield mapid 80085
+setfield mapid 10006
 runcommands firefightfolder\scripts\flood\h100\disablePhantoms.cmds
 runcommands firefightfolder\scripts\flood\h100\floodCharPalette.cmds
 runcommands firefightfolder\scripts\flood\h100\floodWeapPalette.cmds
@@ -18,26 +18,42 @@ Exit
 echo ==l200 floodfight==
 DuplicateTag levels\atlas\l200\l200.scenario levels\dirk\flood_l200\flood_l200.scenario
 edittag levels\dirk\flood_l200\flood_l200.scenario
-setfield mapid 80083
+setfield mapid 10004
 runcommands firefightfolder\scripts\flood\l200\floodCharPalette.cmds
 runcommands firefightfolder\scripts\flood\l200\floodWeapPalette.cmds
-# runcommands firefightfolder\scripts\flood\l200\engineerAIFlood.cmds
 setfield skyreferences[0].skyobject levels\dirk\flood_h100\sky\sky.scenery
 setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 SaveTagChanges
 Exit
 
+echo ==l300 floodfight==
+DuplicateTag levels\atlas\l300\l300.scenario levels\dirk\flood_l300\flood_l300.scenario
+edittag levels\dirk\flood_l300\flood_l300.scenario
+setfield mapid 10005
+runcommands firefightfolder\scripts\flood\l300\floodCharPalette.cmds
+runcommands firefightfolder\scripts\flood\l300\floodWeapPalette.cmds
+setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
+SaveTagChanges
+Exit
+
+echo ==sc110 floodfight==
+DuplicateTag levels\atlas\sc110\sc110.scenario levels\dirk\flood_sc110\flood_sc110.scenario
+edittag levels\dirk\flood_sc110\flood_sc110.scenario
+setfield mapid 10001
+SaveTagChanges
+Exit
+
 echo ==sc130 floodfight==
-# DuplicateTag levels\atlas\sc130\sc130.scenario levels\dirk\flood_sc130\flood_sc130.scenario
-# edittag levels\dirk\flood_sc130\flood_sc130.scenario
-# setfield mapid 80081
-# SaveTagChanges
-# Exit
+DuplicateTag levels\atlas\sc130\sc130.scenario levels\dirk\flood_sc130\flood_sc130.scenario
+edittag levels\dirk\flood_sc130\flood_sc130.scenario
+setfield mapid 10002
+SaveTagChanges
+Exit
 
 echo ==sc140 floodfight==
-# DuplicateTag levels\atlas\sc140\sc140.scenario levels\dirk\flood_sc140\flood_sc140.scenario
-# edittag levels\dirk\flood_sc140\flood_sc140.scenario
-# setfield mapid 80082
+DuplicateTag levels\atlas\sc140\sc140.scenario levels\dirk\flood_sc140\flood_sc140.scenario
+edittag levels\dirk\flood_sc140\flood_sc140.scenario
+setfield mapid 10003
 # runcommands firefightfolder\scripts\flood\sc140\disablePhantoms.cmds
-# SaveTagChanges
-# Exit
+SaveTagChanges
+Exit
