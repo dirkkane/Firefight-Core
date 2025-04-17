@@ -5,13 +5,12 @@
 * elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
 * Invincibility despawns from player inventory on new round start (only sometimes???)
 * enemies randomly stop spawning on alpha site (PHANTOM PROBLEM?)
-* elites have trouble spawning in phantoms
 * decrease elite melee range/aggressiveness
 * minor and major elites still dont throw grenades (maybe squad/loadout issue???)
 * spawn gauss hog on lost platoon
 * fix beam rifle hud icon being too crunchy
 * fix wraiths not dying when grenades are planted
-
+* weapon lockers in map spawns
 
 ===MAYBE TO DO===
 * friendly engineers in flood mode?

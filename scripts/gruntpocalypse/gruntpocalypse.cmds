@@ -9,7 +9,7 @@ duplicatetag levels\atlas\l300\l300.scenario levels\dirk\grunt_l300\grunt_l300
 
 echo ==Grunt h100==
 edittag levels\dirk\grunt_h100\grunt_h100.scenario
-setfield MapId 80087
+setfield MapId 20008
 setfield WeaponPalette[5].Object objects\weapons\pistol\needler\needler.weapon
 setfield WeaponPalette[6].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
 setfield WeaponPalette[8].Object objects\weapons\pistol\plasma_pistol\plasma_pistol.weapon
@@ -53,7 +53,7 @@ Exit
 
 echo ==Grunt l200==
 edittag levels\dirk\grunt_l200\grunt_l200.scenario
-setfield MapId 80088
+setfield MapId 20006
 setfield CharacterPalette[0].Instance null
 setfield CharacterPalette[1].Instance null
 setfield CharacterPalette[2].Instance null
@@ -96,7 +96,7 @@ Exit
 
 echo ==Grunt l300==
 edittag levels\dirk\grunt_l300\grunt_l300.scenario
-setfield MapId 80089
+setfield MapId 20007
 setfield WeaponPalette[2].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
 setfield WeaponPalette[3].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
 setfield WeaponPalette[5].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
@@ -142,7 +142,7 @@ Exit
 
 echo ==Grunt sc100==
 edittag levels\dirk\grunt_sc100\grunt_sc100.scenario
-setfield MapId 80086
+setfield MapId 20001
 setfield WeaponPalette[7].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
 setfield WeaponPalette[8].Object objects\weapons\pistol\needler\needler.weapon
 setfield WeaponPalette[9].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
@@ -185,7 +185,7 @@ Exit
 
 echo ==Grunt sc110==
 edittag levels\dirk\grunt_sc110\grunt_sc110.scenario
-setfield MapId 80090
+setfield MapId 20002
 setfield WeaponPalette[1].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
 setfield WeaponPalette[6].Object objects\weapons\pistol\needler\needler.weapon
 setfield WeaponPalette[12].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
@@ -226,7 +226,7 @@ Exit
 
 echo ==Grunt sc120==
 edittag levels\dirk\grunt_sc120\grunt_sc120.scenario
-setfield MapId 80091
+setfield MapId 20003
 setfield WeaponPalette[4].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
 setfield WeaponPalette[9].Object objects\weapons\pistol\needler\needler.weapon
 setfield WeaponPalette[13].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
@@ -266,7 +266,7 @@ Exit
 
 echo ==Grunt sc130==
 edittag levels\dirk\grunt_sc130\grunt_sc130.scenario
-setfield MapId 80092
+setfield MapId 20004
 setfield WeaponPalette[0].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
 setfield WeaponPalette[1].Object objects\weapons\pistol\needler\needler.weapon
 setfield WeaponPalette[8].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
@@ -306,7 +306,7 @@ Exit
 
 echo ==Grunt sc140==
 edittag levels\dirk\grunt_sc140\grunt_sc140.scenario
-setfield MapId 80093
+setfield MapId 20005
 setfield WeaponPalette[2].Object objects\weapons\pistol\plasma_pistol\plasma_pistol_power.weapon
 setfield WeaponPalette[4].Object objects\weapons\support_high\flak_cannon\flak_cannon.weapon
 setfield WeaponPalette[8].Object objects\weapons\rifle\plasma_rifle\plasma_rifle.weapon
