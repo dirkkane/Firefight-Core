@@ -11,6 +11,7 @@
 * fix beam rifle hud icon being too crunchy
 * fix wraiths not dying when grenades are planted
 * weapon lockers in map spawns
+* rework flood cmds 
 
 ===MAYBE TO DO===
 * friendly engineers in flood mode?
