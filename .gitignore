@@ -1,6 +1,5 @@
 *.map
 *.pak
 !/paks/h2amp_beam_rifle.pak
-modDescription.txt
 /tagtool/logs
 /source_maps/fmod
