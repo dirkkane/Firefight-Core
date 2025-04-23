@@ -1,4 +1,3 @@
-edittag levels\dirk\flood_l300\flood_l300.scenario
 setfield CharacterPalette[1].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
 setfield CharacterPalette[2].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
 setfield CharacterPalette[3].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
@@ -33,5 +32,3 @@ setfield CharacterPalette[36].Instance objects\characters\flood_tank\ai\flood_pu
 setfield CharacterPalette[37].Instance null
 setfield CharacterPalette[38].Instance null
 setfield CharacterPalette[39].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
-savetagchanges
-exit
