@@ -1,4 +1,4 @@
-![cover photo](https://github.com/dirkkane/Firefight-Core/blob/dev/assets/preview.png?raw=true)
+![cover photo](https://raw.githubusercontent.com/dirkkane/Firefight-Core/refs/heads/main/assets/preview.png)
 
 A firefight mod for ElDewrito 0.7. This is intended to be used as the basis for any firefight mods the community wishes to make. It includes scripts to fix issues that occur out of the box, enhance gameplay, and add some bonus content such as Flood firefight. Download completed builds from [ZGAF Fileshare](https://fileshare.zgaf.io/api_v2/modview?modId=71) or the [ElDewrito Modding Discord server.](https://discord.gg/KGZ6uGXX)
 
@@ -59,7 +59,7 @@ paste the FMOD sounds from Halo 3 ODST MCC into this folder.
 ***DO NOT ASK ME FOR THESE FILES, I WILL NOT PROVIDE THEM.***
 
 ## Patch Source Maps (OPTIONAL)
-In order to save space, there are patches for the source maps included in the `assembly_patches` folder. These remove BSP references in the scenario tags so only the BSPs used in firefight are ported into the mod. <br> Open [Assembly](https://github.com/XboxChaos/Assembly), click `Create, Apply, or Poke Patch...`, then follow the instructions on screen for every map: <br> ![Assembly Patcher Screenshot](https://raw.githubusercontent.com/dirkkane/Firefight-Core/refs/heads/dev/assembly_patches/assembly.png)
+In order to save space, there are patches for the source maps included in the `assembly_patches` folder. These remove BSP references in the scenario tags so only the BSPs used in firefight are ported into the mod. <br> Open [Assembly](https://github.com/XboxChaos/Assembly), click `Create, Apply, or Poke Patch...`, then follow the instructions on screen for every map: <br> ![Assembly Patcher Screenshot](https://raw.githubusercontent.com/dirkkane/Firefight-Core/refs/heads/main/assembly_patches/assembly.png)
 
 ## Building
 Once you have completed the above steps run `buildMaps.bat`, this will create a mod package in the `paks` folder that contains most of the ported data from Halo 3: ODST to save time on future builds. When that finishes run `build.bat` to create the actual firefight mod, the complete mod package will be saved to the mods folder in your ElDewrito installation. Any subsequent builds of the mod only require `build.bat` to be run, though it's recommended to run `buildMaps.bat` again after major TagTool updates.
