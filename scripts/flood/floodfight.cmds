@@ -30,7 +30,8 @@ echo ==l300 floodfight==
 DuplicateTag levels\atlas\l300\l300.scenario levels\dirk\flood_l300\flood_l300.scenario
 edittag levels\dirk\flood_l300\flood_l300.scenario
 setfield mapid 10005
-setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
+setfield skyparameters levels\dirk\flood_l300\sky\flood_l300.skya
+runcommands firefightfolder\scripts\flood\l300\floodCharPalette.cmds
 SaveTagChanges
 Exit
 
@@ -38,6 +39,7 @@ echo ==sc110 floodfight==
 DuplicateTag levels\atlas\sc110\sc110.scenario levels\dirk\flood_sc110\flood_sc110.scenario
 edittag levels\dirk\flood_sc110\flood_sc110.scenario
 setfield mapid 10001
+setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 SaveTagChanges
 Exit
 
@@ -45,6 +47,7 @@ echo ==sc130 floodfight==
 DuplicateTag levels\atlas\sc130\sc130.scenario levels\dirk\flood_sc130\flood_sc130.scenario
 edittag levels\dirk\flood_sc130\flood_sc130.scenario
 setfield mapid 10002
+setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 SaveTagChanges
 Exit
 
@@ -52,6 +55,7 @@ echo ==sc140 floodfight==
 DuplicateTag levels\atlas\sc140\sc140.scenario levels\dirk\flood_sc140\flood_sc140.scenario
 edittag levels\dirk\flood_sc140\flood_sc140.scenario
 setfield mapid 10003
+setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 # runcommands firefightfolder\scripts\flood\sc140\disablePhantoms.cmds
 SaveTagChanges
 Exit

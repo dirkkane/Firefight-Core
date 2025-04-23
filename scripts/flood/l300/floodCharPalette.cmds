@@ -1,0 +1,37 @@
+edittag levels\dirk\flood_l300\flood_l300.scenario
+setfield CharacterPalette[1].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[2].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[3].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[4].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
+setfield CharacterPalette[5].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
+setfield CharacterPalette[6].Instance null
+setfield CharacterPalette[10].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
+setfield CharacterPalette[11].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
+setfield CharacterPalette[12].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
+setfield CharacterPalette[13].Instance null
+setfield CharacterPalette[14].Instance null
+setfield CharacterPalette[15].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
+setfield CharacterPalette[16].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
+setfield CharacterPalette[17].Instance null
+setfield CharacterPalette[18].Instance null
+setfield CharacterPalette[21].Instance null
+setfield CharacterPalette[22].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
+setfield CharacterPalette[23].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
+setfield CharacterPalette[24].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
+setfield CharacterPalette[25].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
+setfield CharacterPalette[26].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
+setfield CharacterPalette[27].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[28].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[29].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
+setfield CharacterPalette[30].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[31].Instance null
+setfield CharacterPalette[32].Instance null
+setfield CharacterPalette[33].Instance null
+setfield CharacterPalette[34].Instance null
+setfield CharacterPalette[35].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[36].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
+setfield CharacterPalette[37].Instance null
+setfield CharacterPalette[38].Instance null
+setfield CharacterPalette[39].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+savetagchanges
+exit
