@@ -14,7 +14,7 @@ Dirkkane
 firefight
 
 editmodmetadata
-setfield metadata.URL https://github.com/dirkkane/Firefight-Core/tree/dev
+setfield metadata.URL https://github.com/dirkkane/Firefight-Core
 savemodmetadata
 exit
 
