@@ -1,6 +1,6 @@
-C:\Users\User\Desktop\eldewrito\maps\tags.dat
+basecache
 
-setvariable firefightfolder C:\Users\User\Documents\eldewrito_modding\dew_firefight_dev
+setvariable firefightfolder path
 
 useaudiocache firefightfolder\caches\audiocache
 useshadercache firefightfolder\caches\shadercache
