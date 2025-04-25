@@ -6,7 +6,7 @@ If you're going to use my mod as a basis for yours, please make both of our live
 
 # How To Build
 ## Variables
-The first thing you need to do is change the following lines at the beginning of `build.cmds` and `buildMaps.cmds`:
+Change the following lines at the beginning of `build.cmds` and `buildMaps.cmds`:
 
 ```
 basecache
@@ -19,7 +19,10 @@ Replace `basecache` with the full path to your clean ElDewrito 0.7 map files <br
 Then replace the word `path` next to `firefightfolder` with the full path to the folder where you saved this repository.
 
 ## Source Files
-This mod works by porting content from Halo 3, Halo 3 ODST, and Halo 3 ODST MCC. You must provide the files needed for this mod yourself and place them in the `source_maps` folder as follows:
+This mod works by porting content from Xbox 360 versions of Halo 3 and Halo 3: ODST as well as the MCC PC version of Halo 3: ODST. Place the files listed below into the respective subfolders as shown.
+> [!IMPORTANT]  
+> You must provide the files listed below from your own legally obtained and backed up copies of these games.
+> <br> ***DO NOT ASK ME FOR THESE FILES, I WILL NOT PROVIDE THEM.***
 
 `source_maps\odst`:
 ```
@@ -56,13 +59,13 @@ shared.map
 paste the FMOD sounds from Halo 3 ODST MCC into this folder.
 ```
 
-***DO NOT ASK ME FOR THESE FILES, I WILL NOT PROVIDE THEM.***
-
 ## Patch Source Maps (OPTIONAL)
 In order to save space, there are patches for the source maps included in the `assembly_patches` folder. These remove BSP references in the scenario tags so only the BSPs used in firefight are ported into the mod. <br> Open [Assembly](https://github.com/XboxChaos/Assembly), click `Create, Apply, or Poke Patch...`, then follow the instructions on screen for every map: <br> ![Assembly Patcher Screenshot](https://raw.githubusercontent.com/dirkkane/Firefight-Core/refs/heads/main/assembly_patches/assembly.png)
 
 ## Building
-Once you have completed the above steps run `buildMaps.bat`, this will create a mod package in the `paks` folder that contains most of the ported data from Halo 3: ODST to save time on future builds. When that finishes run `build.bat` to create the actual firefight mod, the complete mod package will be saved to the mods folder in your ElDewrito installation. Any subsequent builds of the mod only require `build.bat` to be run, though it's recommended to run `buildMaps.bat` again after major TagTool updates.
+Once you have completed the above steps run `buildMaps.bat`, this will create a mod package in the `paks` folder that contains most of the ported data from Halo 3: ODST to save time on future builds. When that finishes run `build.bat` to create the actual firefight mod, the complete mod package will be saved to the mods folder in your ElDewrito installation.
+> [!TIP]
+> Any subsequent builds of the mod only require `build.bat` to be run, though it's recommended to run `buildMaps.bat` again after major TagTool updates.
 
 # Contact
 If you have any questions, please feel free to DM @dirkkane on Discord or ping me in any ElDewrito Discord servers.
