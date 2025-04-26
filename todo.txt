@@ -12,6 +12,9 @@
 * fix wraiths not dying when grenades are planted
 * weapon lockers in map spawns
 * rework flood cmds 
+* fix l300 flood skya
+* flood version of phantom
+* fix flood tanks spawning with weapons (use C# so you dont take weapons from other enemies)
 
 ===MAYBE TO DO===
 * friendly engineers in flood mode?

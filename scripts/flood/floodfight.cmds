@@ -32,6 +32,7 @@ edittag levels\dirk\flood_l300\flood_l300.scenario
 setfield mapid 10005
 setfield skyparameters levels\dirk\flood_l300\sky\flood_l300.skya
 runcommands firefightfolder\scripts\flood\l300\floodCharPalette.cmds
+runcommands firefightfolder\scripts\flood\l300\floodWeapPalette.cmds
 SaveTagChanges
 Exit
 
