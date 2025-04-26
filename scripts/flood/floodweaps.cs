@@ -34,12 +34,11 @@ using (var stream = Cache.OpenCacheReadWrite())
                         {
                             foreach (var primaryweapon in designerfireteam.InitialPrimaryWeapon)
                             {
-                                if (primaryweapon.ItemTypeIndex.Equals(flak_cannon) || primaryweapon.ItemTypeIndex.Equals(grav_hammer)) primaryweapon.ItemTypeIndex = -1;
+                                if (primaryweapon.ItemTypeIndex.Equals(flak_cannon) || primaryweapon.ItemTypeIndex.Equals(grav_hammer)) primaryweapon.ItemTypeIndex = null;
                             }
                         }
                     }
                 }
-                
             }
         Console.WriteLine("\nCHARACTER PALETTE INDEXES: \n");
         Console.WriteLine("Flood Tank: " + flood_tank);
