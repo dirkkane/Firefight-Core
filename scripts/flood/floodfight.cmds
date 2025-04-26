@@ -60,3 +60,5 @@ setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 # runcommands firefightfolder\scripts\flood\sc140\disablePhantoms.cmds
 SaveTagChanges
 Exit
+
+cs < firefightfolder\scripts\flood\floodweaps.cs
