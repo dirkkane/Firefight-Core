@@ -24,8 +24,10 @@ exit
 
 CreateTag skya levels\dirk\flood_h100\sky\flood_h100
 CreateTag skya levels\dirk\flood_l300\sky\flood_l300
+CreateTag skya levels\dirk\flood_sc110\sky\flood_sc110
 ImportTag levels\dirk\flood_h100\sky\flood_h100.skya firefightfolder\tags\flood_h100.sky_atm_parameters
 ImportTag levels\dirk\flood_l300\sky\flood_l300.skya firefightfolder\tags\flood_l300.sky_atm_parameters
+ImportTag levels\dirk\flood_sc110\sky\flood_sc110.skya firefightfolder\tags\flood_sc110.sky_atm_parameters
 
 echo ==Animation Inheritance (For phantoms)==
 edittag objects\characters\floodcombat_brute\floodcombat_brute.model_animation_graph

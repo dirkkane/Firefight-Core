@@ -40,7 +40,9 @@ echo ==sc110 floodfight==
 DuplicateTag levels\atlas\sc110\sc110.scenario levels\dirk\flood_sc110\flood_sc110.scenario
 edittag levels\dirk\flood_sc110\flood_sc110.scenario
 setfield mapid 10001
-setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
+setfield skyparameters levels\dirk\flood_sc110\sky\flood_sc110.skya
+runcommands firefightfolder\scripts\flood\sc110\floodWeapPalette.cmds
+runcommands firefightfolder\scripts\flood\sc110\floodCharPalette.cmds
 SaveTagChanges
 Exit
 
