@@ -23,8 +23,8 @@ SetField characterpalette[21].Instance objects\characters\floodcombat_elite\ai\f
 SetField characterpalette[22].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
 SetField characterpalette[23].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
 SetField characterpalette[24].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
-SetField characterpalette[25].Instance objects\characters\engineer\ai\engineer_slaveform.character
-SetField characterpalette[26].Instance objects\characters\engineer\ai\engineer_freeform.character
+setfield CharacterPalette[25].Instance null
+setfield CharacterPalette[26].Instance null
 SetField characterpalette[27].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
 SetField characterpalette[28].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
 SetField characterpalette[29].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
