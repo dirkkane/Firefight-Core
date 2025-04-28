@@ -15,12 +15,13 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 
 ### v2.7 Changelog
 * Added Gruntpocalypse!
+* Added Floodfight to all remaining maps
 * Added enemy Elites
 * Added readme for in-game mod info
 * Added H2A Beam Rifle
 * Fixed campaign player rep not picking up health packs
 * Fixed Flood fronds shader (Thanks mtn)
-* Removed engineers from Chasm Ten (Flood)
+* Removed engineers from Floodfight
 * Removed VISR X-Ray (mostly)
 * Removed slipspace fallout from Crater
 * Players now spawn with Assault Rifles and Magnums
