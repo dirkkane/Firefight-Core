@@ -1,0 +1,5 @@
+setfield WeaponPalette[5].Object objects\weapons\rifle\smg\smg.weapon
+setfield WeaponPalette[8].Object objects\weapons\rifle\dmr\dmr.weapon
+setfield WeaponPalette[13].Object null
+setfield WeaponPalette[14].Object objects\weapons\rifle\assault_rifle_power\assault_rifle_power.weapon
+setfield WeaponPalette[16].Object null

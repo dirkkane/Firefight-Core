@@ -6,12 +6,12 @@ echo ==h100 floodfight==
 DuplicateTag levels\atlas\h100\h100.scenario levels\dirk\flood_h100\flood_h100.scenario
 edittag levels\dirk\flood_h100\flood_h100.scenario
 setfield mapid 10006
+setfield skyreferences[0].skyobject levels\dirk\flood_h100\sky\sky.scenery
+setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 runcommands firefightfolder\scripts\flood\h100\disablePhantoms.cmds
 runcommands firefightfolder\scripts\flood\h100\floodCharPalette.cmds
 runcommands firefightfolder\scripts\flood\h100\floodWeapPalette.cmds
 runcommands firefightfolder\scripts\flood\h100\engineerAIFlood.cmds
-setfield skyreferences[0].skyobject levels\dirk\flood_h100\sky\sky.scenery
-setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 SaveTagChanges
 Exit
 
@@ -19,10 +19,10 @@ echo ==l200 floodfight==
 DuplicateTag levels\atlas\l200\l200.scenario levels\dirk\flood_l200\flood_l200.scenario
 edittag levels\dirk\flood_l200\flood_l200.scenario
 setfield mapid 10004
-runcommands firefightfolder\scripts\flood\l200\floodCharPalette.cmds
-runcommands firefightfolder\scripts\flood\l200\floodWeapPalette.cmds
 setfield skyreferences[0].skyobject levels\dirk\flood_h100\sky\sky.scenery
 setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
+runcommands firefightfolder\scripts\flood\l200\floodCharPalette.cmds
+runcommands firefightfolder\scripts\flood\l200\floodWeapPalette.cmds
 SaveTagChanges
 Exit
 
@@ -41,8 +41,8 @@ DuplicateTag levels\atlas\sc110\sc110.scenario levels\dirk\flood_sc110\flood_sc1
 edittag levels\dirk\flood_sc110\flood_sc110.scenario
 setfield mapid 10001
 setfield skyparameters levels\dirk\flood_sc110\sky\flood_sc110.skya
-runcommands firefightfolder\scripts\flood\sc110\floodWeapPalette.cmds
 runcommands firefightfolder\scripts\flood\sc110\floodCharPalette.cmds
+runcommands firefightfolder\scripts\flood\sc110\floodWeapPalette.cmds
 SaveTagChanges
 Exit
 
@@ -50,7 +50,9 @@ echo ==sc130 floodfight==
 DuplicateTag levels\atlas\sc130\sc130.scenario levels\dirk\flood_sc130\flood_sc130.scenario
 edittag levels\dirk\flood_sc130\flood_sc130.scenario
 setfield mapid 10002
-setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
+setfield skyparameters levels\dirk\flood_sc130\sky\flood_sc130.sky_atm_parameters
+runcommands firefightfolder\scripts\flood\sc130\floodCharPalette.cmds
+runcommands firefightfolder\scripts\flood\sc130\floodWeapPalette.cmds
 SaveTagChanges
 Exit
 
@@ -62,5 +64,3 @@ setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
 # runcommands firefightfolder\scripts\flood\sc140\disablePhantoms.cmds
 SaveTagChanges
 Exit
-
-cs < firefightfolder\scripts\flood\floodweaps.cs
