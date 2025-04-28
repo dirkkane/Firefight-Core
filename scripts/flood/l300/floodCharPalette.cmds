@@ -7,12 +7,12 @@ setfield CharacterPalette[6].Instance null
 setfield CharacterPalette[10].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
 setfield CharacterPalette[11].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
 setfield CharacterPalette[12].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
-setfield CharacterPalette[13].Instance null
-setfield CharacterPalette[14].Instance null
+setfield CharacterPalette[13].Instance objects\characters\flood_ranged\ai\flood_pureform_ranged.character
+setfield CharacterPalette[14].Instance objects\characters\flood_stalker\ai\flood_pureform_stalker.character
 setfield CharacterPalette[15].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
 setfield CharacterPalette[16].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
-setfield CharacterPalette[17].Instance null
-setfield CharacterPalette[18].Instance null
+setfield CharacterPalette[17].Instance objects\characters\flood_ranged\ai\flood_pureform_ranged.character
+setfield CharacterPalette[18].Instance objects\characters\flood_stalker\ai\flood_pureform_stalker.character
 setfield CharacterPalette[21].Instance null
 setfield CharacterPalette[22].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
 setfield CharacterPalette[23].Instance objects\characters\floodcarrier\ai\flood_carrier.character
