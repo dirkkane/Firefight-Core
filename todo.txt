@@ -12,6 +12,7 @@
 * weapon lockers in map spawns
 * rework flood cmds 
 * flood version of phantom
+* flood get stuck in spawn rooms on windward
 
 ===MAYBE TO DO===
 * friendly engineers in flood mode?

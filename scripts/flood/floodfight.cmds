@@ -60,7 +60,8 @@ echo ==sc140 floodfight==
 DuplicateTag levels\atlas\sc140\sc140.scenario levels\dirk\flood_sc140\flood_sc140.scenario
 edittag levels\dirk\flood_sc140\flood_sc140.scenario
 setfield mapid 10003
-setfield skyparameters levels\dirk\flood_h100\sky\flood_h100.skya
-# runcommands firefightfolder\scripts\flood\sc140\disablePhantoms.cmds
+# setfield skyparameters levels\dirk\flood_sc140\sky\flood_sc140.sky_atm_parameters
+runcommands firefightfolder\scripts\flood\sc140\floodCharPalette.cmds
+runcommands firefightfolder\scripts\flood\sc140\floodWeapPalette.cmds
 SaveTagChanges
 Exit
