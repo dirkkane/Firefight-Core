@@ -25,6 +25,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Removed VISR X-Ray (mostly)
 * Removed slipspace fallout from Crater
 * Players now spawn with Assault Rifles and Magnums
+* Reduced file size (~470MB smaller)
 
 ### v2.6 Changelog
 * Fixed crash on Lost Platoon
