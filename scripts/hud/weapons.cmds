@@ -61,6 +61,11 @@ setfield HudGlobals[0].HudAttributes[0].StateMessageOffset 0 0.3
 savetagchanges
 Exit
 
+EditTag ui\chud\bitmaps\weapon_scematics.bitmap
+importbitmap 0 firefightfolder\scripts\hud\weapon_scematics.dds
+SaveTagChanges
+Exit
+
 edittag ui\chud\beam_rifle.chud_definition
 setfield HudWidgets[4].BitmapWidgets[0].Bitmap ui\chud\bitmaps\weapon_scematics.bitmap
 setfield HudWidgets[4].BitmapWidgets[0].BitmapSequenceIndex 2

@@ -7,7 +7,6 @@
 * decrease elite melee range/aggressiveness
 * minor and major elites still dont throw grenades (maybe squad/loadout issue???)
 * spawn gauss hog on lost platoon
-* fix beam rifle hud icon being too crunchy
 * fix wraiths not dying when grenades are planted
 * weapon lockers in map spawns
 * rework flood cmds 
