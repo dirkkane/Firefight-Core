@@ -1,6 +1,6 @@
 ![cover photo](https://raw.githubusercontent.com/dirkkane/Firefight-Core/refs/heads/main/assets/preview.png)
 
-A firefight mod for ElDewrito 0.7. This is intended to be used as the basis for any firefight mods the community wishes to make. It includes scripts to fix issues that occur out of the box, enhance gameplay, and add some bonus content such as Flood firefight. Download completed builds from [ZGAF Fileshare](https://fileshare.zgaf.io/api_v2/modview?modId=71) or the [ElDewrito Modding Discord server.](https://discord.gg/KGZ6uGXX)
+A firefight mod for ElDewrito 0.7. This is intended to be used as the basis for any firefight mods the community wishes to make. It includes scripts to fix issues that occur out of the box, enhance gameplay, and add some bonus content such as Flood firefight. Download completed builds from [ZGAF Fileshare](https://fileshare.zgaf.io/api_v2/modview?modId=112) or the [ElDewrito Modding Discord server.](https://discord.gg/KGZ6uGXX)
 
 If you're going to use my mod as a basis for yours, please make both of our lives easier and add your changes to the scripts in this repo and build it that way. Don't take the finished compiled pak and add stuff on top of it, it's just going to create issues and cause you to lose your progress at some point.
 
