@@ -1,7 +1,0 @@
-edittag ui\chud\globals.chud_globals_definition
-setfield CampaignMetagame.MedalChudAnchor Crosshair
-setfield CampaignMetagame.MedalScale 1.25
-setfield CampaignMetagame.MedalSpacing 65
-setfield CampaignMetagame.MedalOffset -25 75
-SaveTagChanges
-Exit

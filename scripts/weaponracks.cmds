@@ -1,0 +1,14 @@
+edittag levels\atlas\l200\l200.scenario
+addblockelements Crates
+addblockelements CratePalette
+setfield CratePalette[46].Object objects\gear\human\industrial\garbage_can_large\garbage_can_large.crate
+setfield Crates[567].PaletteIndex 46
+setfield Crates[567].PlacementFlags.Flags CreateAtRest
+setfield Crates[567].Position 181.702 0 -36.4998
+setfield Crates[567].ObjectId.Type.Halo3ODST Crate
+setfield Crates[567].ObjectId.Source Editor
+setfield Crates[567].BspPolicy AlwaysPlaced
+setfield Crates[567].CanAttachToBspFlags 32767
+
+savetagchanges
+Exit

@@ -1,6 +1,28 @@
-echo ==FloodFight config...==
 runcommands firefightfolder\scripts\flood\portFlood.cmds
-runcommands firefightfolder\scripts\flood\skybox.cmds
+echo ==Flood Skybox==
+DuplicateTag levels\multi\guardian\sky\sky.scenery levels\dirk\flood_h100\sky\sky.scenery
+DuplicateTag levels\multi\guardian\sky\sky.model levels\dirk\flood_h100\sky\sky.model
+DuplicateTag levels\multi\guardian\sky\sky.render_model levels\dirk\flood_h100\sky\sky.render_model
+
+EditTag levels\dirk\flood_h100\sky\sky.render_model
+SetField materials[0].RenderMethod levels\multi\guardian\sky\shaders\skydome_dark.shader
+SetField materials[1].RenderMethod levels\multi\guardian\sky\shaders\guardian_sky_tree_branches.shader
+SetField materials[2].RenderMethod levels\solo\110_hc\shaders\flood_tendon.shader
+SetField materials[3].RenderMethod levels\multi\guardian\sky\shaders\guardian_sky_tree_strip.shader
+SetField materials[4].RenderMethod fx\null_object\shaders\invisible.shader
+SetField materials[5].RenderMethod levels\multi\guardian\sky\shaders\fog_plane.shader
+SaveTagChanges
+Exit
+
+EditTag levels\dirk\flood_h100\sky\sky.model
+SetField RenderModel levels\dirk\flood_h100\sky\sky.render_model
+SaveTagChanges
+Exit
+
+EditTag levels\dirk\flood_h100\sky\sky.scenery
+SetField Model levels\dirk\flood_h100\sky\sky.model
+SaveTagChanges
+Exit
 
 echo ==h100 floodfight==
 DuplicateTag levels\atlas\h100\h100.scenario levels\dirk\flood_h100\flood_h100.scenario

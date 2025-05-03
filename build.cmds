@@ -26,10 +26,36 @@ echo ==Enabling VISR...==
 runcommands firefightfolder\scripts\hud\visr.cmds
 
 echo ==Emblem and scoring UI...==
-runcommands firefightfolder\scripts\hud\scoring.cmds
+generatebitmap ui\chud\bitmaps\lives firefightfolder\scripts\hud\lives.dds
+edittag ui\eldewrito\common\common_bitmaps\emblem.bitmap
+setfield Images[0].Width 32
+setfield Images[0].Height 28
+savetagchanges
+exit
+edittag ui\chud\survival_scoreboard.chud_definition
+setfield HudWidgets[1].BitmapWidgets[1].Bitmap ui\eldewrito\common\common_bitmaps\emblem.bitmap
+setfield HudWidgets[2].BitmapWidgets[1].Bitmap ui\eldewrito\common\common_bitmaps\emblem.bitmap
+setfield HudWidgets[3].BitmapWidgets[1].Bitmap ui\eldewrito\common\common_bitmaps\emblem.bitmap
+setfield HudWidgets[4].BitmapWidgets[1].Bitmap ui\eldewrito\common\common_bitmaps\emblem.bitmap
+setfield HudWidgets[1].BitmapWidgets[0].RenderData[0].LocalColorA 141 10 19 32
+setfield HudWidgets[1].BitmapWidgets[0].RenderData[0].OutputColorA LocalA
+setfield HudWidgets[2].BitmapWidgets[0].RenderData[0].LocalColorA 141 10 19 32
+setfield HudWidgets[2].BitmapWidgets[0].RenderData[0].OutputColorA LocalA
+setfield HudWidgets[3].BitmapWidgets[0].RenderData[0].LocalColorA 141 10 19 32
+setfield HudWidgets[3].BitmapWidgets[0].RenderData[0].OutputColorA LocalA
+setfield HudWidgets[4].BitmapWidgets[0].RenderData[0].LocalColorA 141 10 19 32
+setfield HudWidgets[4].BitmapWidgets[0].RenderData[0].OutputColorA LocalA
+SaveTagChanges
+Exit
 
 echo ==Medals...==
-runcommands firefightfolder\scripts\hud\medals.cmds
+edittag ui\chud\globals.chud_globals_definition
+setfield CampaignMetagame.MedalChudAnchor Crosshair
+setfield CampaignMetagame.MedalScale 1.25
+setfield CampaignMetagame.MedalSpacing 65
+setfield CampaignMetagame.MedalOffset -25 75
+SaveTagChanges
+Exit
 
 echo ==Skulls...==
 runcommands firefightfolder\scripts\hud\skulls.cmds
@@ -58,7 +84,7 @@ runcommands firefightfolder\scripts\ai\portelites.cmds
 cs < firefightfolder\WeaponsandSquads.cs
 
 echo ==Gruntpocalypse...==
-runcommands firefightfolder\scripts\gruntpocalypse\gruntpocalypse.cmds
+runcommands firefightfolder\scripts\gruntpocalypse.cmds
 
 echo ==Shield Impacts...==
 runcommands firefightfolder\scripts\ai\shields.cmds
