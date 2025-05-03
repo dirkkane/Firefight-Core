@@ -37,7 +37,9 @@ setfield GrenadesProperties[0].GrenadeUncoverChance 0.4
 setfield GrenadesProperties[0].AntiVehicleGrenadeChance 0.4
 setfield GrenadesProperties[0].GrenadeCount 1 2
 setfield GrenadesProperties[0].NoGrenadesDroppedChance 0.5
-removeblockelements ChargeProperties 0 *
+setfield ChargeProperties[0].BerserkWeapon null
+setfield ChargeProperties[1].BerserkWeapon null
+setfield ChargeProperties[2].BerserkWeapon null
 setfield Variants[0].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
 setfield Variants[0].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
 setfield Variants[1].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
