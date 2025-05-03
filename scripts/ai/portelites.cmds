@@ -1,8 +1,13 @@
 opencachefile firefightfolder\source_maps\mcc\sc130.map
-porttag objects\characters\elite\ai\elite.character
-porttag objects\characters\elite\ai\elite_major.character
-porttag objects\characters\elite\ai\elite_specops.character
-porttag objects\characters\elite\ai\elite_specops_commander.character
+porttag !dialogue objects\characters\elite\ai\elite.character
+porttag !dialogue objects\characters\elite\ai\elite_major.character
+porttag !dialogue objects\characters\elite\ai\elite_specops.character
+porttag !dialogue objects\characters\elite\ai\elite_specops_commander.character
+exit
+
+opencachefile firefightfolder\source_maps\h3\110_hc.map
+porttag sound\dialog\combat\elite1.dialogue
+porttag sound\dialog\combat\elite2.dialogue
 exit
 
 echo ==Uses elite minor from reach==
@@ -33,6 +38,12 @@ setfield GrenadesProperties[0].AntiVehicleGrenadeChance 0.4
 setfield GrenadesProperties[0].GrenadeCount 1 2
 setfield GrenadesProperties[0].NoGrenadesDroppedChance 0.5
 removeblockelements ChargeProperties 0 *
+setfield Variants[0].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[0].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
+setfield Variants[1].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[1].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
+setfield Voice[0].DialogueVariations[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Voice[0].DialogueVariations[1].Dialogue sound\dialog\combat\elite2.dialogue
 savetagchanges
 Exit
 
@@ -49,6 +60,10 @@ setfield VitalityProperties[0].HardPingUnshieldedThreshold 20
 setfield VitalityProperties[0].ShieldRechargeDelayTime 8
 setfield VitalityProperties[0].ShieldRechargeTime 3
 setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+setfield Variants[0].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[0].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
+setfield Variants[1].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[1].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
 SaveTagChanges
 Exit
 
@@ -68,6 +83,10 @@ setfield VitalityProperties[0].ShieldRechargeTime 3
 setfield VitalityProperties[0].ExtendedShieldDamageThreshold 0.3
 setfield VitalityProperties[0].ExtendedBodyDamageThreshold 0.3
 setfield VitalityProperties[0].RuntimeShieldRechargeVelocity 0.3333
+setfield Variants[0].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[0].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
+setfield Variants[1].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[1].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
 SaveTagChanges
 Exit
 
@@ -111,6 +130,8 @@ setfield ChargeProperties[2].MeleeAttackDelayTimer 2
 setfield ChargeProperties[2].ShieldDownBerserkChance 0.75 1
 setfield ChargeProperties[2].ShielddownBerserkRanges 3 6
 setfield ChargeProperties[2].BeserkCooldown 6
+setfield Variants[0].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[0].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
 SaveTagChanges
 Exit
 
@@ -171,6 +192,8 @@ setfield ParentCharacter objects\characters\elite\ai\elite_major.character
 setfield Style objects\characters\elite\ai\elite.style
 setfield Variants[0].VariantName boss_gold
 setfield VitalityProperties[0].LegendaryShieldVitality 225
+setfield Variants[0].Voices[0].Dialogue sound\dialog\combat\elite1.dialogue
+setfield Variants[0].Voices[1].Dialogue sound\dialog\combat\elite2.dialogue
 savetagchanges
 Exit
 
