@@ -21,6 +21,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Added H2A Beam Rifle
 * Fixed campaign player rep not picking up health packs
 * Fixed Flood fronds shader (Thanks mtn)
+* Fixed skull icons clipping off screen when in third person
 * Removed engineers from Floodfight
 * Removed VISR X-Ray (mostly)
 * Removed slipspace fallout from Crater

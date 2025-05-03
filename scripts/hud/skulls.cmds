@@ -15,7 +15,20 @@ setfield HudWidgets[7].BitmapWidgets[10].RenderData[0].OutputColorA HighlightFor
 setfield HudWidgets[7].BitmapWidgets[11].RenderData[0].OutputColorA HighlightForeground
 setfield HudWidgets[7].BitmapWidgets[12].RenderData[0].OutputColorA HighlightForeground
 setfield HudWidgets[7].BitmapWidgets[13].RenderData[0].OutputColorA HighlightForeground
-
+setfield HudWidgets[7].BitmapWidgets[0].PlacementData[0].Offset -180 -10
+setfield HudWidgets[7].BitmapWidgets[1].PlacementData[0].Offset -120 -10
+setfield HudWidgets[7].BitmapWidgets[2].PlacementData[0].Offset -60 -10
+setfield HudWidgets[7].BitmapWidgets[3].PlacementData[0].Offset 0 -10
+setfield HudWidgets[7].BitmapWidgets[4].PlacementData[0].Offset 60 -10
+setfield HudWidgets[7].BitmapWidgets[5].PlacementData[0].Offset 120 -10
+setfield HudWidgets[7].BitmapWidgets[6].PlacementData[0].Offset 180 -10
+setfield HudWidgets[7].BitmapWidgets[7].PlacementData[0].Offset -180 -10
+setfield HudWidgets[7].BitmapWidgets[8].PlacementData[0].Offset -120 -10
+setfield HudWidgets[7].BitmapWidgets[9].PlacementData[0].Offset -60 -10
+setfield HudWidgets[7].BitmapWidgets[10].PlacementData[0].Offset 0 -10
+setfield HudWidgets[7].BitmapWidgets[11].PlacementData[0].Offset 60 -10
+setfield HudWidgets[7].BitmapWidgets[12].PlacementData[0].Offset 120 -10
+setfield HudWidgets[7].BitmapWidgets[13].PlacementData[0].Offset 180 -10
 echo ==Skull descriptions...==
 echo
 setfield HudWidgets[6].TextWidgets[1].RenderData[0].OutputColorA HighlightForeground
@@ -66,20 +79,20 @@ echo
 setfield HudWidgets[6].PlacementData[0].Anchor BottomCenter
 setfield HudWidgets[6].PlacementData[0].Offset 0 50
 setfield HudWidgets[6].PlacementData[0].Scale 0.77 0.77
-setfield HudWidgets[6].BitmapWidgets[0].PlacementData[0].Offset -180 0
-setfield HudWidgets[6].BitmapWidgets[1].PlacementData[0].Offset -180 0
-setfield HudWidgets[6].BitmapWidgets[2].PlacementData[0].Offset -120 0
-setfield HudWidgets[6].BitmapWidgets[3].PlacementData[0].Offset -120 0
-setfield HudWidgets[6].BitmapWidgets[4].PlacementData[0].Offset -60 0
-setfield HudWidgets[6].BitmapWidgets[5].PlacementData[0].Offset -60 0
-setfield HudWidgets[6].BitmapWidgets[6].PlacementData[0].Offset 0 0
-setfield HudWidgets[6].BitmapWidgets[7].PlacementData[0].Offset 0 0
-setfield HudWidgets[6].BitmapWidgets[8].PlacementData[0].Offset 60 0
-setfield HudWidgets[6].BitmapWidgets[9].PlacementData[0].Offset 60 0
-setfield HudWidgets[6].BitmapWidgets[10].PlacementData[0].Offset 120 0
-setfield HudWidgets[6].BitmapWidgets[11].PlacementData[0].Offset 120 0
-setfield HudWidgets[6].BitmapWidgets[12].PlacementData[0].Offset 180 0
-setfield HudWidgets[6].BitmapWidgets[13].PlacementData[0].Offset 180 0
+setfield HudWidgets[6].BitmapWidgets[0].PlacementData[0].Offset -180 -10
+setfield HudWidgets[6].BitmapWidgets[1].PlacementData[0].Offset -180 -10
+setfield HudWidgets[6].BitmapWidgets[2].PlacementData[0].Offset -120 -10
+setfield HudWidgets[6].BitmapWidgets[3].PlacementData[0].Offset -120 -10
+setfield HudWidgets[6].BitmapWidgets[4].PlacementData[0].Offset -60 -10
+setfield HudWidgets[6].BitmapWidgets[5].PlacementData[0].Offset -60 -10
+setfield HudWidgets[6].BitmapWidgets[6].PlacementData[0].Offset 0 -10
+setfield HudWidgets[6].BitmapWidgets[7].PlacementData[0].Offset 0 -10
+setfield HudWidgets[6].BitmapWidgets[8].PlacementData[0].Offset 60 -10
+setfield HudWidgets[6].BitmapWidgets[9].PlacementData[0].Offset 60 -10
+setfield HudWidgets[6].BitmapWidgets[10].PlacementData[0].Offset 120 -10
+setfield HudWidgets[6].BitmapWidgets[11].PlacementData[0].Offset 120 -10
+setfield HudWidgets[6].BitmapWidgets[12].PlacementData[0].Offset 180 -10
+setfield HudWidgets[6].BitmapWidgets[13].PlacementData[0].Offset 180 -10
 
 
 echo ==Skull indicators...==
