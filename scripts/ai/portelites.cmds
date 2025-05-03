@@ -48,6 +48,10 @@ setfield Voice[0].DialogueVariations[0].Dialogue sound\dialog\combat\elite1.dial
 setfield Voice[0].DialogueVariations[1].Dialogue sound\dialog\combat\elite2.dialogue
 savetagchanges
 Exit
+edittag objects\characters\elite\ai\elite.style
+setfield Behaviors[1] 2143274517
+savetagchanges
+Exit
 
 echo ==Uses elite officer from reach==
 edittag objects\characters\elite\ai\elite_major.character
