@@ -74,6 +74,22 @@ foreach scnr contains: "levels\atlas" foreach PlayerStartingProfile setfield Pri
 foreach scnr contains: "levels\atlas" foreach PlayerStartingProfile setfield SecondaryRoundsLoaded 8
 foreach scnr contains: "levels\atlas" foreach PlayerStartingProfile setfield SecondaryRoundsTotal 48
 
+echo ==Vehicles...==
+edittag levels\atlas\sc110\sc110.scenario
+addblockelements VehiclePalette
+setfield VehiclePalette[*].Object objects\vehicles\warthog\warthog_gauss.vehicle
+copyblockelements Vehicles 20 1
+pasteblockelements Vehicles
+setfield Vehicles[27].PaletteIndex 12
+setfield Vehicles[27].PlacementFlags.Flags None
+setfield Vehicles[27].CanAttachToBspFlags 32767
+setfield Vehicles[27].ObjectId.UniqueId 0 0
+setfield Vehicles[27].BspPolicy AlwaysPlaced
+setfield Vehicles[27].NameIndex 0
+setfield Vehicles[27].Position -218.2514 -508.4238 6.283329
+SaveTagChanges
+Exit
+
 echo ==Floodfight...==
 runcommands firefightfolder\scripts\flood\floodfight.cmds
 
