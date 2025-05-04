@@ -49,7 +49,7 @@ setfield Voice[0].DialogueVariations[1].Dialogue sound\dialog\combat\elite2.dial
 savetagchanges
 Exit
 edittag objects\characters\elite\ai\elite.style
-setfield Behaviors[1] 2143274517
+SetField Behaviors2 GrenadeImpulse,Stalk,BerserkWanderImpulse,PerimeterAtTimeoutMorph,PerimeterAtInfectionSpew,StuckWithGrenadeBerserk,______PRESEARCH______,Presearch,PresearchUncover,DestroyCover,SuppressingFire,LeapOnCover,SearchSync,EngageSync,______SEARCH______,Search,Uncover,Investigate,Pursuit_sync,Pursuit
 savetagchanges
 Exit
 
