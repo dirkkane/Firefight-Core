@@ -4165,7 +4165,7 @@
             <param name="vertexCount">The vertex count.</param>
             <exception cref="T:System.InvalidOperationException">Cannot define a part if no mesh is active</exception>
         </member>
-        <member name="M:TagTool.Geometry.RenderModelBuilder.DefineSubPart(System.UInt16,System.UInt16,System.UInt16)">
+        <member name="M:TagTool.Geometry.RenderModelBuilder.DefineSubPart(System.Int32,System.UInt16,System.UInt16)">
             <summary>
             Defines a subpart in the current mesh part.
             </summary>
