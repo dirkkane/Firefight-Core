@@ -295,5 +295,6 @@ Exit
 echo ==Animation inheritance for phantoms==
 edittag objects\characters\elite\elite.model_animation_graph
 setinheritance vehicles objects\characters\brute\brute.model_animation_graph TightenNodes
+SortModes
 savetagchanges
 exit
