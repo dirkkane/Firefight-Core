@@ -1,0 +1,59 @@
+# ONLY RUN THIS WITH MTNDEWIT TAGTOOL RELEASE 1.0.190 OR OLDER (PRE-STYLE BEHAVIOR DATA ADDITION)
+# https://github.com/MtnDewIt/TagTool-NET-Test/releases
+# THIS IS A TEMPORARY SOLUTION UNTIL STYLE PORTING IS IMPROVED
+
+basecache
+
+setvariable firefightfolder path
+
+useaudiocache firefightfolder\caches\audiocache
+useshadercache firefightfolder\caches\shadercache
+
+createmodpackage styles
+
+OpenCacheFile firefightfolder\source_maps\h3\110_hc.map
+porttag !recursive objects\characters\flood_infection\ai\flood_infection.style
+porttag !recursive objects\characters\flood_pureforms\ai\pureform.style
+porttag !recursive objects\characters\flood_tank\ai\pureform_tank.style
+porttag !recursive objects\characters\flood_stalker\ai\pureform_stalked.style
+porttag !recursive objects\characters\flood_ranged\ai\pureform_ranged.style
+porttag !recursive objects\characters\floodcarrier\ai\flood_carrier.style
+porttag !recursive objects\characters\floodcombat_base\ai\floodcombat_base.style
+Exit
+
+OpenCacheFile firefightfolder\source_maps\odst\h100.map
+porttag !recursive ai\bunkering.style
+porttag !recursive ai\assaulting.style
+porttag !recursive ai\patrol.style
+porttag !recursive ai\normal.style
+porttag !recursive objects\vehicles\banshee\ai\banshee.style
+porttag !recursive objects\vehicles\ghost\ai\ghost.style
+porttag !recursive objects\vehicles\wraith\ai\wraith.style
+porttag !recursive objects\vehicles\brute_chopper\ai\chopper.style
+porttag !recursive objects\vehicles\mauler\ai\mauler.style
+porttag !recursive objects\vehicles\phantom\ai\phantom.style
+porttag !recursive ai\integrated_turret.style
+porttag !recursive objects\characters\grunt\ai\grunt.style
+porttag !recursive objects\characters\jackal\ai\jackal.style
+porttag !recursive objects\characters\jackal\ai\jackal_sniper.style
+porttag !recursive objects\characters\bugger\ai\bugger.style
+porttag !recursive objects\characters\brute\ai\brute.style
+porttag !recursive objects\characters\brute\ai\brute_bodyguard.style
+porttag !recursive objects\characters\brute\ai\brute_captain.style
+porttag !recursive objects\characters\brute\ai\brute_chieftain_armor.style
+porttag !recursive objects\characters\brute\ai\brute_chieftain_weapon.style
+porttag !recursive objects\characters\brute\ai\brute_stalker.style
+porttag !recursive objects\characters\brute\ai\brute_tracker.style
+porttag !recursive objects\characters\engineer\ai\engineer_slaveform.style
+porttag !recursive objects\characters\engineer\ai\engineer_freeform.style
+porttag !recursive objects\characters\hunter\ai\hunter.style
+Exit
+
+OpenCacheFile firefightfolder\source_maps\mcc\sc130.map
+porttag !recursive objects\characters\elite\ai\elite.style
+porttag !recursive objects\characters\elite\ai\elite_specops.style
+porttag !recursive objects\characters\elite\ai\elite_specops_commander.style
+Exit
+
+savemodpackage firefightfolder\paks\styles.pak
+DumpLog styles.log

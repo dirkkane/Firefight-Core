@@ -15,6 +15,7 @@
 * flood can't move out of spawns, they just stand around
 * grunt variants shoot plasma pistol too fast (the pale colored one)
 * test AI with older tagtool, new style defs may have broken flood ai (they stand still always now)
+* investigate gauss hog respawns on lost platoon (possibly doesnt work)
 
 ===MAYBE TO DO===
 * friendly engineers in flood mode?
