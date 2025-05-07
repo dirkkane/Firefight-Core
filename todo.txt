@@ -1,9 +1,8 @@
 ===TO DO===
 * Gold elite boss w/ sword during chieftain wave
 * elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
-* Invincibility despawns from player inventory on new round start (only sometimes???)
+* Equipment despawns from player inventory on new round start (only sometimes???)
 * enemies randomly stop spawning on alpha site (PHANTOM PROBLEM?) (https://discord.com/channels/415700035398008843/1190031935829983242/1368812131910287400)
-* spawn gauss hog on lost platoon
 * fix wraiths not dying when grenades are planted
 * weapon lockers in map spawns
 * rework flood cmds 
@@ -12,10 +11,9 @@
 * replace more brute flood with elite flood (cus of vehicle animations)
 * do something with the mission objectives text in pause menu
 * fix invisible weapon crate (spawns on alpha site, also needed for weapon racks)
-* flood can't move out of spawns, they just stand around
 * grunt variants shoot plasma pistol too fast (the pale colored one)
-* test AI with older tagtool, new style defs may have broken flood ai (they stand still always now)
 * investigate gauss hog respawns on lost platoon (possibly doesnt work)
+* decrease flood carrier spawn rate
 
 ===MAYBE TO DO===
 * friendly engineers in flood mode?
