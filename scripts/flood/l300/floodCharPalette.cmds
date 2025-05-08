@@ -15,7 +15,7 @@ setfield CharacterPalette[17].Instance objects\characters\flood_ranged\ai\flood_
 setfield CharacterPalette[18].Instance objects\characters\flood_stalker\ai\flood_pureform_stalker.character
 setfield CharacterPalette[21].Instance null
 setfield CharacterPalette[22].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
-setfield CharacterPalette[23].Instance objects\characters\floodcarrier\ai\flood_carrier.character
+setfield CharacterPalette[23].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
 setfield CharacterPalette[24].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
 setfield CharacterPalette[25].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
 setfield CharacterPalette[26].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite_shielded.character
