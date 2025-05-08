@@ -18,7 +18,13 @@ setfield metadata.URL https://github.com/dirkkane/Firefight-Core
 savemodmetadata
 exit
 
+echo ==Apply most ported content...==
 openmodpackage firefightfolder\paks\maps.pak
+ApplyModPackage
+exitmodpackage
+
+echo ==Apply working styles (temporary addition)...==
+openmodpackage firefightfolder\paks\styles.pak
 ApplyModPackage
 exitmodpackage
 
