@@ -1,3 +1,6 @@
+# Run using the Game.ScenarioScript command in the ElDewrito console
+
 survival_clear_skulls
 survival_bonus_all_skulls
 test_bonus_round
+survival_respawn_weapons

@@ -1,7 +1,7 @@
 setfield CharacterPalette[2].Instance null
 setfield CharacterPalette[3].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
 setfield CharacterPalette[4].Instance objects\characters\floodcombat_human\ai\flood_combat_human.character
-setfield CharacterPalette[5].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
+setfield CharacterPalette[5].Instance objects\characters\floodcombat_elite\ai\floodcombat_elite.character
 setfield CharacterPalette[6].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
 setfield CharacterPalette[7].Instance objects\characters\flood_tank\ai\flood_pureform_tank.character
 setfield CharacterPalette[8].Instance objects\characters\floodcombat_brute\ai\floodcombat_brute.character
