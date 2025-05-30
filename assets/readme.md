@@ -1,8 +1,9 @@
 ## Firefight Core
-The definitive firefight experience for ElDewrito. Survive as long as you can against hordes of Covenant and Flood hostiles. Good luck, Spartan. Thank you to all the members of the ElDewrito modding community for their help, this mod would not have been possible without it.
+The definitive firefight experience for ElDewrito. Survive as long as you can against hordes of Covenant and Flood hostiles. Good luck, Spartan.
+Thank you to all the members of the ElDewrito modding community for their help, this mod would not have been possible without it.
 
 ### IMPORTANT NOTE FOR MULTIPLAYER!
-Do not use cosmetic mods when playing with others, differences in game data causes the networking to have errors and end the game. To remove cosmetic mods, open the ElDewrito launcher, go to settings, then files, and click verify files to restore the game to its default state. You may reapply your cosmetic mods when not playing firefight.
+Do not use cosmetic mods when playing with others, differences in game data causes the networking to have errors and end the game. To remove cosmetic mods, open the ElDewrito launcher, go to settings, then files, and click verify files to restore the game to its default state. You may reapply your cosmetic mods when not playing multiplayer firefight.
 
 ### Contributors
 * Dirkkane
@@ -27,6 +28,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Removed slipspace fallout from Crater
 * Players now spawn with Assault Rifles and Magnums
 * Reduced file size (~470MB smaller)
+* Other stuff I've probably forgotten
 
 ### v2.6 Changelog
 * Fixed crash on Lost Platoon
