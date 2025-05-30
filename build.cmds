@@ -103,6 +103,10 @@ echo ==AI...==
 runcommands firefightfolder\scripts\ai\vehicles.cmds
 runcommands firefightfolder\scripts\ai\characterweapons.cmds
 runcommands firefightfolder\scripts\ai\portelites.cmds
+edittag objects\characters\grunt\ai\grunt_ultra.character
+removeblockelements FiringPatternProperties 0 1
+SaveTagChanges
+Exit
 cs < firefightfolder\WeaponsandSquads.cs
 
 echo ==Gruntpocalypse...==

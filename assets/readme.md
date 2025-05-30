@@ -23,6 +23,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 * Fixed campaign player rep not picking up health packs
 * Fixed Flood fronds shader (Thanks mtn)
 * Fixed skull icons clipping off screen when in third person
+* Fixed Grunt Ultras burst firing the Plasma Pistol too aggressively
 * Removed engineers from Floodfight
 * Removed VISR X-Ray (mostly)
 * Removed slipspace fallout from Crater

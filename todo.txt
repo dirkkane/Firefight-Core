@@ -8,7 +8,6 @@
 * flood version of phantom
 * flood get stuck in spawn rooms on windward
 * fix invisible weapon crate (spawns on alpha site, also needed for weapon racks)
-* grunt variants shoot plasma pistol too fast (the pale colored one)
 * gauss hog on lost platoon doesnt respawn
 * Automag crosshair bloom stuff
 * firing effects disappear when shooting at specific angles
