@@ -4,7 +4,6 @@
 * Equipment despawns from player inventory on new round start (only sometimes???)
 * enemies randomly stop spawning on alpha site (PHANTOM PROBLEM?) (https://discord.com/channels/415700035398008843/1190031935829983242/1368812131910287400)
 * fix wraiths not dying when grenades are planted
-* weapon lockers in map spawns
 * flood version of phantom
 * flood get stuck in spawn rooms on windward
 * fix invisible weapon crate (spawns on alpha site, also needed for weapon racks)
@@ -19,3 +18,4 @@
 * infected spartan bodies?
 * do something with the mission objectives text in pause menu
 * rework flood cmds 
+* weapon lockers in map spawns
