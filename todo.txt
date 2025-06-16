@@ -2,13 +2,12 @@
 * Gold elite boss w/ sword during chieftain wave
 * elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
 * Equipment despawns from player inventory on new round start (only sometimes???)
-* enemies randomly stop spawning on alpha site (PHANTOM PROBLEM?) (https://discord.com/channels/415700035398008843/1190031935829983242/1368812131910287400)
+* enemies randomly stop spawning sometimes (PHANTOM PROBLEM) (https://discord.com/channels/415700035398008843/1190031935829983242/1368812131910287400)
 * fix wraiths not dying when grenades are planted
 * flood version of phantom
 * flood get stuck in spawn rooms on windward
 * fix invisible weapon crate (spawns on alpha site, also needed for weapon racks)
 * gauss hog on lost platoon doesnt respawn
-* Automag crosshair bloom stuff
 * firing effects disappear when shooting at specific angles
 
 ===MAYBE TO DO===
