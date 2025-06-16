@@ -1,21 +1,18 @@
 edittag objects\characters\masterchief\mp_masterchief\mp_masterchief.biped
-setfield Attachments[1].Type objects\characters\odst_recon\fx\vision_mode\vision_mode.effect
-setfield Attachments[1].Marker invalid
-setfield Attachments[1].PrimaryScale invalid
-setfield Attachments[1].AtlasFlags GameplayVisionMode
+AddBlockElements Attachments
+setfield Attachments[1].Type objects\characters\odst_recon\recon_flashlight_1p.light
+setfield Attachments[*].Type objects\characters\odst_recon\fx\vision_mode\vision_mode.effect
+setfield Attachments[*].AtlasFlags GameplayVisionMode
 savetagchanges
 exit
 
 edittag objects\characters\masterchief\masterchief.biped
 setfield Functions[2].ExportName flashlight_intensity
-setfield Attachments[1].Type objects\characters\masterchief\fx\flashlight.effect
-setfield Attachments[1].AtlasFlags None
-setfield Attachments[1].PrimaryScale integrated_light_power
-setfield Attachments[1].Marker invalid
-setfield Attachments[2].PrimaryScale integrated_light_power
-setfield Attachments[3].PrimaryScale invalid
-setfield Attachments[3].Type objects\characters\odst_recon\fx\vision_mode\vision_mode.effect
-setfield Attachments[3].AtlasFlags GameplayVisionMode
+AddBlockElements Attachments
+setfield Attachments[1].Type objects\characters\odst_recon\recon_flashlight_1p.light
+setfield Attachments[1].PrimaryScale flashlight_intensity
+setfield Attachments[*].Type objects\characters\odst_recon\fx\vision_mode\vision_mode.effect
+setfield Attachments[*].AtlasFlags GameplayVisionMode
 savetagchanges
 exit
 
