@@ -21,6 +21,10 @@ setfield CenteredFirstPersonWeaponOffset 0 0 -0.01
 savetagchanges
 exit
 
+edittag objects\weapons\rifle\smg\bitmaps\smg.bitmap
+importbitmap 0 firefightfolder\bitmaps\smg_pbr_diffuse.dds
+exit
+
 edittag objects\weapons\pistol\automag\automag.weapon
 setfield WeaponFlags.NewFlags CanBeDualWielded
 setfield Barrels[0].DualWeaponError.DualWieldDamageScale 0.8
@@ -28,5 +32,20 @@ setfield CenteredFirstPersonWeaponOffset 0 0 -0.005
 setfield WeaponTypeName offset_magnum
 savetagchanges
 exit
+
+edittag objects\weapons\pistol\automag\bitmaps\automag.bitmap
+importbitmap 0 firefightfolder\bitmaps\automag_pbr_diffuse.dds
+exit
+
+#edittag objects\weapons\pistol\automag\fp_automag\fp_automag.render_model
+#setfield Materials[3].RenderMethod objects\weapons\pistol\magnum\shaders\magnum_dull.shader
+#savetagchanges
+#exit
+
+edittag objects\weapons\pistol\automag\shaders\automag.shader
+setargument specular_coefficient 0.25
+savetagchanges
+exit
+
 runcommands firefightfolder\scripts\weapons\automagAnims.cmds
 runcommands firefightfolder\scripts\weapons\powerups.cmds
