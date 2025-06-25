@@ -298,3 +298,13 @@ setinheritance vehicles objects\characters\brute\brute.model_animation_graph Tig
 SortModes
 savetagchanges
 exit
+
+echo ==Remove Carbine melee==
+EditTag objects\characters\elite\elite.model_animation_graph
+AddBlockElements Modes[3].WeaponClass[5].WeaponType[6].Set.Actions
+SetField Modes[3].WeaponClass[5].WeaponType[6].Set.Actions[0].Label melee
+SetField Modes[3].WeaponClass[5].WeaponType[6].Set.Actions[0].GraphIndex -1
+SetField Modes[3].WeaponClass[5].WeaponType[6].Set.Actions[0].Animation 164
+SortModes
+SaveTagChanges
+Exit

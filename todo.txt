@@ -1,6 +1,5 @@
 ===TO DO===
 * Gold elite boss w/ sword during chieftain wave
-* elites use player melee animations instead of AI animations for carbine (melee almost never hits because of it)
 * Equipment despawns from player inventory on new round start (only sometimes???)
 * enemies randomly stop spawning sometimes (PHANTOM PROBLEM) (https://discord.com/channels/415700035398008843/1190031935829983242/1368812131910287400)
 * fix wraiths not dying when grenades are planted
@@ -18,3 +17,4 @@
 * do something with the mission objectives text in pause menu
 * rework flood cmds 
 * weapon lockers in map spawns
+* make enemies spawn with weapon variants
