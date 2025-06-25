@@ -1,0 +1,44 @@
+basecache
+
+setvariable firefightfolder path
+
+useaudiocache firefightfolder\caches\audiocache
+useshadercache firefightfolder\caches\shadercache
+
+createmodpackage crates
+
+openmodpackage path-to-ODSTAMP.pak
+
+applymodpackagetags
+\
+/
+.
++-objects\gear\human\military\crate_h_gun_rack_0\crate_h_gun_rack_0.crate
++-objects\gear\human\military\crate_h_gun_rack_0\crate_h_gun_rack_0.render_model
++-objects\gear\human\military\crate_h_gun_rack_0\crate_h_gun_rack_0.model
++-objects\gear\human\military\shaders\military_equipment.shader
++-objects\gear\human\military\shaders\military_equipment_2.shader
++-objects\gear\human\military\shaders\human_military_decals.shader_decal
++-objects\gear\human\military\crate_h_gun_rack_0\crate_h_gun_rack_0.collision_model
++-objects\gear\human\military\crate_h_gun_rack_0\crate_h_gun_rack_0.physics_model
++-objects\gear\human\military\crate_h_gun_rack_1\crate_h_gun_rack_1.crate
++-objects\gear\human\military\crate_h_gun_rack_1\crate_h_gun_rack_1.model
++-objects\gear\human\military\crate_h_gun_rack_1\crate_h_gun_rack_1.render_model
++-objects\gear\human\military\shaders\beacon.shader
++-objects\gear\human\military\bitmaps\beacon.bitmap
++-objects\gear\human\military\bitmaps\beacon_illum.bitmap
++-objects\gear\human\military\bitmaps\beacon_illum_detail.bitmap
++-objects\gear\human\military\crate_h_gun_rack_1\crate_h_gun_rack_1.collision_model
++-objects\gear\human\military\crate_h_gun_rack_1\crate_h_gun_rack_1.physics_model
++-objects\gear\human\military\crate_h_gun_rack_2\crate_h_gun_rack_2.crate
++-objects\gear\human\military\crate_h_gun_rack_2\crate_h_gun_rack_2.render_model
++-objects\gear\human\military\crate_h_gun_rack_2\crate_h_gun_rack_2.collision_mod
++-objects\gear\human\military\crate_h_gun_rack_2\crate_h_gun_rack_2.physics_mod
+Done
+
+exitmodpackage
+
+deletemodfiles
+importfonts firefightfolder\fonts\font_package.bin
+
+savemodpackage firefightfolder\paks\crates.pak

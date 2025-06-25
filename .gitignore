@@ -2,5 +2,6 @@
 *.pak
 !/paks/h2amp_beam_rifle.pak
 !/paks/styles.pak
+!/paks/crates.pak
 /tagtool/logs
 /source_maps/fmod

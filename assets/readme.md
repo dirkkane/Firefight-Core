@@ -26,6 +26,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 - Fixed Flood fronds shader (Thanks mtn)
 - Fixed skull icons clipping off screen when in third person
 - Fixed Grunt Ultras burst firing the Plasma Pistol too aggressively
+- Fixed invisible military crates on some maps
 - Removed crosshair animations when dual wielding Automags
 - Removed engineers from Floodfight
 - Removed VISR X-Ray (mostly)

@@ -2,10 +2,8 @@
 * Gold elite boss w/ sword during chieftain wave
 * Equipment despawns from player inventory on new round start (only sometimes???)
 * enemies randomly stop spawning sometimes (PHANTOM PROBLEM) (https://discord.com/channels/415700035398008843/1190031935829983242/1368812131910287400)
-* fix wraiths not dying when grenades are planted
 * flood version of phantom
 * flood get stuck in spawn rooms on windward
-* fix invisible weapon crate (spawns on alpha site, also needed for weapon racks)
 * gauss hog on lost platoon doesnt respawn
 * firing effects disappear when shooting at specific angles
 
@@ -18,3 +16,4 @@
 * rework flood cmds 
 * weapon lockers in map spawns
 * make enemies spawn with weapon variants
+* fix wraiths not dying when grenades are planted
