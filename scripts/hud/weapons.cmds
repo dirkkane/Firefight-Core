@@ -62,7 +62,7 @@ savetagchanges
 Exit
 
 EditTag ui\chud\bitmaps\weapon_scematics.bitmap
-importbitmap 0 firefightfolder\scripts\hud\weapon_scematics.dds
+importbitmap 0 firefightfolder\bitmaps\weapon_scematics.dds
 SaveTagChanges
 Exit
 

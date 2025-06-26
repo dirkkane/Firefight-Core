@@ -37,7 +37,7 @@ echo ==Enabling VISR...==
 runcommands firefightfolder\scripts\hud\visr.cmds
 
 echo ==Emblem and scoring UI...==
-generatebitmap ui\chud\bitmaps\lives firefightfolder\scripts\hud\lives.dds
+generatebitmap ui\chud\bitmaps\lives firefightfolder\bitmaps\lives.dds
 edittag ui\eldewrito\common\common_bitmaps\emblem.bitmap
 setfield Images[0].Width 32
 setfield Images[0].Height 28
