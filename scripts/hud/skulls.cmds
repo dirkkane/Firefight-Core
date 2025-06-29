@@ -110,7 +110,7 @@ exit
 echo ==Strings==
 edittag multiplayer\in_game_survival_messages.multilingual_unicode_string_list
 setstring english survival_welcome "Current Objective: Survive"
-setstring english survival_skull_black_eye "\uE084   Melee to recharge your Stamina."
+setstring english survival_skull_black_eye "\uE084   Melee to recharge your Shields."
 setstring english survival_skull_famine "\uE084   Enemies drop low-ammo weapons."
 setstring english survival_skull_catch "\uE084   Enemies love to throw grenades."
 setstring english survival_skull_iron "\uE084   Respawning is disabled. Be Careful!"
