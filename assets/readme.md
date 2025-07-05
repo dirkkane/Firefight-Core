@@ -31,9 +31,12 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 - Removed engineers from Floodfight
 - Removed VISR X-Ray (mostly)
 - Removed slipspace fallout from Crater
+- Rebrand to "Firefight Core"
 - Restored VISR flashlight
-- Players now spawn with Assault Rifles and Magnums
+- Restored skull indicators
 - Reduced file size (~470MB smaller)
+- Players now spawn with Assault Rifles and Magnums
+- New cover photo
 - Other stuff I've probably forgotten
 
 ### v2.6 Changelog
