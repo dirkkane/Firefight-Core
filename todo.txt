@@ -6,6 +6,7 @@
 * flood get stuck in spawn rooms on windward
 * gauss hog on lost platoon doesnt respawn
 * firing effects disappear when shooting at specific angles
+* skull indicators clip off screen when in third person
 
 ===MAYBE TO DO===
 * friendly engineers in flood mode?
@@ -16,4 +17,4 @@
 * rework flood cmds 
 * weapon lockers in map spawns
 * make enemies spawn with weapon variants
-* fix wraiths not dying when grenades are planted
+* fix wraiths not dying when grenades are planted (based on biped health)

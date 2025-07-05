@@ -1,3 +1,8 @@
+edittag ui\chud\bitmaps\survival_skulls.bitmap
+importbitmap 0 firefightfolder\bitmaps\survival_skulls.dds
+SaveTagChanges
+Exit
+
 edittag ui\chud\survival_scoreboard.chud_definition
 echo ==Skull icons...==
 echo
@@ -97,13 +102,20 @@ setfield HudWidgets[6].BitmapWidgets[13].PlacementData[0].Offset 180 -10
 
 echo ==Skull indicators...==
 echo
-setfield HudWidgets[7].BitmapWidgets[14].Bitmap null
-setfield HudWidgets[7].BitmapWidgets[15].Bitmap null
-setfield HudWidgets[7].BitmapWidgets[16].Bitmap null
-setfield HudWidgets[7].BitmapWidgets[17].Bitmap null
-setfield HudWidgets[7].BitmapWidgets[18].Bitmap null
-setfield HudWidgets[7].BitmapWidgets[19].Bitmap null
-setfield HudWidgets[7].BitmapWidgets[20].Bitmap null
+SetField HudWidgets[7].BitmapWidgets[14].PlacementData[0].Offset -182 20
+SetField HudWidgets[7].BitmapWidgets[14].RenderData[0].OutputColorA HighlightForeground
+SetField HudWidgets[7].BitmapWidgets[15].PlacementData[0].Offset -122 20
+SetField HudWidgets[7].BitmapWidgets[15].RenderData[0].OutputColorA HighlightForeground
+SetField HudWidgets[7].BitmapWidgets[16].PlacementData[0].Offset -62 20
+SetField HudWidgets[7].BitmapWidgets[16].RenderData[0].OutputColorA HighlightForeground
+SetField HudWidgets[7].BitmapWidgets[17].PlacementData[0].Offset -2 20
+SetField HudWidgets[7].BitmapWidgets[17].RenderData[0].OutputColorA HighlightForeground
+SetField HudWidgets[7].BitmapWidgets[18].PlacementData[0].Offset 58 20
+SetField HudWidgets[7].BitmapWidgets[18].RenderData[0].OutputColorA HighlightForeground
+SetField HudWidgets[7].BitmapWidgets[19].PlacementData[0].Offset 118 20
+SetField HudWidgets[7].BitmapWidgets[19].RenderData[0].OutputColorA HighlightForeground
+SetField HudWidgets[7].BitmapWidgets[20].PlacementData[0].Offset 178 20
+SetField HudWidgets[7].BitmapWidgets[20].RenderData[0].OutputColorA HighlightForeground
 savetagchanges
 exit
 
