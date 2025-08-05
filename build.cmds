@@ -28,11 +28,6 @@ openmodpackage firefightfolder\paks\crates.pak
 ApplyModPackage
 exitmodpackage
 
-echo ==Apply working styles (temporary addition)...==
-openmodpackage firefightfolder\paks\styles.pak
-ApplyModPackage
-exitmodpackage
-
 echo ==Enabling VISR...==
 runcommands firefightfolder\scripts\hud\visr.cmds
 
