@@ -17,7 +17,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 
 ### v2.7 Changelog
 - Added Gruntpocalypse!
-- Added Floodfight to all remaining maps
+- Added more Floodfight maps
 - Added enemy Elites
 - Added readme for in-game mod info
 - Added H2A Beam Rifle
