@@ -22,6 +22,14 @@ ignoreblamtag sound\dialog\combat\marine6.dialogue
 ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\h100\h100_000.scenario_structure_bsp
+ignoreblamtag levels\atlas\h100\h100_030.scenario_structure_bsp
+ignoreblamtag levels\atlas\h100\h100_040.scenario_structure_bsp
+ignoreblamtag levels\atlas\h100\h100_060.scenario_structure_bsp
+ignoreblamtag levels\atlas\h100\h100_080.scenario_structure_bsp
+ignoreblamtag levels\atlas\h100\h100_090.scenario_structure_bsp
+ignoreblamtag levels\atlas\h100\h100_oni.scenario_structure_bsp
+ignoreblamtag levels\atlas\h100\h100_shaft.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 exit
 
@@ -41,6 +49,14 @@ ignoreblamtag sound\dialog\combat\marine6.dialogue
 ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\l200\l200_000.scenario_structure_bsp
+ignoreblamtag levels\atlas\l200\l200_002.scenario_structure_bsp
+ignoreblamtag levels\atlas\l200\l200_004.scenario_structure_bsp
+ignoreblamtag levels\atlas\l200\l200_006.scenario_structure_bsp
+ignoreblamtag levels\atlas\l200\l200_010.scenario_structure_bsp
+ignoreblamtag levels\atlas\l200\l200_020.scenario_structure_bsp
+ignoreblamtag levels\atlas\l200\l200_050.scenario_structure_bsp
+ignoreblamtag levels\atlas\l200\l200_060.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 Exit
 
@@ -58,6 +74,11 @@ ignoreblamtag sound\dialog\combat\marine6.dialogue
 ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\l300\l300_010.scenario_structure_bsp
+ignoreblamtag levels\atlas\l300\h100_010.scenario_structure_bsp
+ignoreblamtag levels\atlas\l300\h100_shared.scenario_structure_bsp
+ignoreblamtag levels\atlas\l300\l300_020.scenario_structure_bsp
+ignoreblamtag levels\atlas\l300\h100_l200.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 Exit
 
@@ -76,6 +97,8 @@ ignoreblamtag sound\dialog\combat\marine6.dialogue
 ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\sc100\h100_060.scenario_structure_bsp
+ignoreblamtag levels\atlas\sc100\h100_080.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 Exit
 
@@ -94,6 +117,11 @@ ignoreblamtag sound\dialog\combat\marine6.dialogue
 ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\sc110\sc110_000.scenario_structure_bsp
+ignoreblamtag levels\atlas\sc110\sc110_005.scenario_structure_bsp
+ignoreblamtag levels\atlas\sc110\sc110_010.scenario_structure_bsp
+ignoreblamtag levels\atlas\sc110\sc110_030.scenario_structure_bsp
+ignoreblamtag levels\atlas\sc110\h100_090.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 Exit
 
@@ -113,6 +141,8 @@ ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge1.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\sc120\h100_030.scenario_structure_bsp
+ignoreblamtag levels\atlas\sc120\h100_040.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 Exit
 EditTag levels\atlas\sc120\sky\sc120_sky.sky_atm_parameters
@@ -138,6 +168,7 @@ ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge1.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\sc130\sc130_005.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 Exit
 
@@ -156,6 +187,7 @@ ignoreblamtag sound\dialog\combat\marine6.dialogue
 ignoreblamtag sound\dialog\combat\rookie.dialogue
 ignoreblamtag sound\dialog\combat\sarge2.dialogue
 ignoreblamtag sound\dialog\combat\sgt_johnson.dialogue
+ignoreblamtag levels\atlas\sc140\sc140_020.scenario_structure_bsp
 porttag !updatemapfiles *.scnr
 Exit
 
