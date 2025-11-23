@@ -1,1 +1,2 @@
-tagtool/* linguist-vendored=true
+tagtool/** linguist-vendored=true
+*.cmds linguist-language=TagToolScript
