@@ -15,6 +15,9 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 - Fyzure
 - NoShotz
 
+### v2.8 Changelog
+- Removed Herobrine
+
 ### v2.7 Changelog
 - Added Gruntpocalypse!
 - Added more Floodfight maps
