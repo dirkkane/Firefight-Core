@@ -2,7 +2,6 @@ basecache
 
 setvariable firefightfolder path
 
-useaudiocache firefightfolder\caches\audiocache
 useshadercache firefightfolder\caches\shadercache
 
 createmodpackage 1 large
