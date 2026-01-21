@@ -17,7 +17,6 @@ void distort_off_ps(in float2 texcoord, out float2 sfx_distort, out float2 disto
 
 void distort_on_ps(in float2 texcoord, out float2 sfx_distort, out float2 distort_raw)
 {
-    float2 distort = sample2D(distort_map, transform_texcoord(texcoord, distort_map_xform)).yw;
-    distort_raw = BUMP_CONVERT(distort);
+    distort_raw = bump_sample_unnormalized(distort_map, transform_texcoord(texcoord, distort_map_xform)).xy;
     sfx_distort = distort_raw * distort_scale;
 }

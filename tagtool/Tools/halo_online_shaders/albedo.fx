@@ -29,6 +29,8 @@
 #define ALBEDO_TYPE_calc_albedo_custom_cube_ps									120
 #define ALBEDO_TYPE_calc_albedo_two_color_ps									121
 #define ALBEDO_TYPE_calc_albedo_emblem_ps										122
+#define ALBEDO_TYPE_calc_albedo_base_ps											123	
+#define ALBEDO_TYPE_calc_albedo_detail_ps										124
 
 PARAM(float, blend_alpha);
 PARAM(float4, albedo_color);
@@ -39,6 +41,9 @@ PARAM_SAMPLER_2D(base_map);
 PARAM(float4, base_map_xform);
 PARAM_SAMPLER_2D(detail_map);
 PARAM(float4, detail_map_xform);
+PARAM_SAMPLER_2D(camouflage_change_color_map);
+PARAM(float4, camouflage_change_color_map_xform);
+PARAM(float, camouflage_scale);
 
 #ifdef pc
 PARAM(float4, debug_tint);
@@ -117,6 +122,57 @@ void calc_albedo_simple_ps(
     albedo.rgba= base.rgba*albedo_color.rgba;
 
     apply_pc_albedo_modifier(albedo, normal);
+}
+
+void calc_albedo_two_change_color_tex_overlay_ps(
+	in float2 texcoord,
+	out float4 albedo,
+	in float3 normal,
+	in float4 misc,
+	in float3 view_dir,
+	in float2 vPos)
+{
+	// For the time being we will just use the default function, as this function does not have any implementation by default
+	float4	base=	sample2D(base_map,   transform_texcoord(texcoord, base_map_xform));
+	float4	detail=	sample2D(detail_map, transform_texcoord(texcoord, detail_map_xform));
+
+	albedo.rgb= base.rgb * (detail.rgb * DETAIL_MULTIPLIER) * albedo_color.rgb;
+	albedo.w= base.w*detail.w*albedo_color.w;
+
+	apply_pc_albedo_modifier(albedo, normal);
+}
+
+void calc_albedo_base_ps(
+	in float2 texcoord,
+	out float4 albedo,
+	in float3 normal,
+	in float4 misc,
+	in float3 view_dir,
+	in float2 vPos)
+{
+	albedo=	sample2D(base_map, transform_texcoord(texcoord, base_map_xform));
+
+	apply_pc_albedo_modifier(albedo, normal);
+}
+
+void calc_albedo_detail_ps(
+	in float2 texcoord,
+	out float4 albedo,
+	in float3 normal,
+	in float4 misc,
+	in float3 view_dir,
+	in float2 vPos)
+{
+#ifndef pc
+	[isolate]
+#endif
+	float4	base=	sample2D(base_map, transform_texcoord(texcoord, base_map_xform));
+	float4	detail=	sample2D(detail_map, transform_texcoord(texcoord, detail_map_xform));
+
+	albedo.rgb= base.rgb * (detail.rgb * DETAIL_MULTIPLIER);
+	albedo.w= base.w*detail.w;
+
+	apply_pc_albedo_modifier(albedo, normal);
 }
 
 void calc_albedo_default_ps(

@@ -93,7 +93,7 @@ float sample_depth_reach(float2 texcoord)
 	// fp32 depth buffer stores w, we need to convert to z
 //#ifdef pc
 	float depth = tex2D(depth_buffer, texcoord).r;
-	return 1.0f - (k_ps_water_view_depth_constant.x / depth + k_ps_water_view_depth_constant.y); // Zbuf = -FN/(F-N) / z + F/(F-N)
+	return 1.0f - (k_water_view_depth_constant.x / depth + k_water_view_depth_constant.y); // Zbuf = -FN/(F-N) / z + F/(F-N)
 //#else // xenon
 //	float4 result;
 //	asm
@@ -207,6 +207,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 	float3 color_refraction;
 	float3 color_refraction_bed;
 	float4 color_refraction_blend;
+	//float color_refraction_bed_contribution= 0.0f;
 
 	if (TEST_CATEGORY_OPTION(refraction, none))
 	{
@@ -224,7 +225,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 		float2 texcoord_ss = INTERPOLATORS.position_ss.xy;
 		texcoord_ss = texcoord_ss / 2 + 0.5;
 		texcoord_ss.y = 1 - texcoord_ss.y;
-		texcoord_ss = k_ps_water_player_view_constant.xy + texcoord_ss * k_ps_water_player_view_constant.zw;
+		texcoord_ss = k_water_player_view_constant.xy + texcoord_ss * k_water_player_view_constant.zw;
 	
 		float2 texcoord_refraction;
 		float refraction_depth;
@@ -273,7 +274,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 		texcoord_refraction.y= 1.0 - texcoord_refraction.y;
 		texcoord_refraction= texcoord_refraction*2 - 1.0f;
 		float4 point_refraction= float4(texcoord_refraction, refraction_depth, 1.0f);
-		point_refraction= mul(point_refraction, k_ps_water_view_xform_inverse);
+		point_refraction= mul(point_refraction, k_water_view_xform_inverse);
 		point_refraction.xyz/= point_refraction.w;
 
 		// world space depth
@@ -284,6 +285,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 //		float transparency= compute_fog_transparency(water_murkiness*ripple_slope_length, refraction_depth);		// what does ripple slope length accomplish?  attempt to darken ripple edges?
 		float transparency= compute_fog_transparency_reach(water_murkiness, negative_refraction_depth);
 		transparency *= saturate(refraction_extinct_distance * one_over_camera_distance);							// turns opaque at distance
+		//color_refraction_bed_contribution= transparency;
 		
 		if (k_is_camera_underwater)
 		{
@@ -473,6 +475,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 	//else
 	{		
 		output_color.rgb= lerp(color_refraction, color_reflection,  fresnel);
+		//color_refraction_bed_contribution*= 1.0f - fresnel;
 	
 		// add diffuse
 		output_color.rgb= output_color.rgb + color_diffuse; 
@@ -481,12 +484,14 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 		if ( !TEST_CATEGORY_OPTION(bankalpha, none) )
 		{
 			output_color.rgb= lerp(color_refraction_bed, output_color.rgb, bank_alpha);
+			//color_refraction_bed_contribution= (1.0f-bank_alpha) + color_refraction_bed_contribution*bank_alpha;
 		}
 
 		// apply foam
 		if (!TEST_CATEGORY_OPTION(foam, none))
 		{
 			output_color.rgb= lerp(output_color.rgb, foam_color.rgb, foam_factor);
+			//color_refraction_bed_contribution*= (1.0f - foam_factor);
 		}
 	
 		// apply under water fog
@@ -500,8 +505,10 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 	}
 	
 	// this needs to be figured out
-    //output_color = output_color * INTERPOLATORS.fog_extinction + INTERPOLATORS.fog_inscatter * BLEND_FOG_INSCATTER_SCALE;
-	output_color.rgb *= g_exposure.rrr;
+	//output_color.rgb = output_color.rgb - color_refraction_bed*color_refraction_bed_contribution;
+    //output_color.rgb = output_color.rgb * INTERPOLATORS.fog_extinction + INTERPOLATORS.fog_inscatter * BLEND_FOG_INSCATTER_SCALE * (1.0f - color_refraction_bed_contribution);
+	output_color.rgb = output_color.rgb * g_exposure.rrr;
+	//output_color.rgb = output_color.rgb + color_refraction_bed*color_refraction_bed_contribution;
 		
 	// this may not match reach, but we need to replicate rt write
 	return convert_to_render_target(output_color, true, true, 0.0f);		

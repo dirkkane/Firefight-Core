@@ -61,7 +61,7 @@ CATEGORY_PARAM(category_tinting);
 #ifdef VERTEX_SHADER
 #define IS_FLAT_VERTEX (IS_VERTEX_TYPE(s_flat_world_vertex) || IS_VERTEX_TYPE(s_flat_rigid_vertex) || IS_VERTEX_TYPE(s_flat_skinned_vertex))
 #else
-#define IS_FLAT_VERTEX TEST_CATEGORY_OPTION(bump_mapping, leave)
+#define IS_FLAT_VERTEX (TEST_CATEGORY_OPTION(bump_mapping, leave) && TEST_CATEGORY_OPTION(parallax, off) && TEST_CATEGORY_OPTION(interier, off))
 #endif
 
 #define BLEND_MODE_SELF_ILLUM (TEST_CATEGORY_OPTION(blend_mode, additive) || TEST_CATEGORY_OPTION(blend_mode, add_src_times_srcalpha))
@@ -82,6 +82,7 @@ struct s_decal_interpolators
 	float3 m_binormal	:TEXCOORD3;	
 	float3 m_normal		:TEXCOORD4;
 #endif
+	float3 fragment_to_camera_world: TEXCOORD5;
 };
 
 s_decal_interpolators default_vs( vertex_type IN )
@@ -113,6 +114,7 @@ s_decal_interpolators default_vs( vertex_type IN )
 #if DX_VERSION == 11
 	OUT.m_clip_distance = dot(OUT.m_position, v_clip_plane);
 #endif
+	OUT.fragment_to_camera_world= Camera_Position - IN.position;
 	
 	return OUT;
 }
@@ -129,6 +131,7 @@ s_decal_interpolators default_vs( vertex_type IN )
 #endif
 
 PARAM_SAMPLER_2D(base_map);
+PARAM(float4, base_map_xform);
 PARAM_SAMPLER_2D(alpha_map);
 PARAM_SAMPLER_2D(palette);
 
@@ -172,12 +175,36 @@ PARAM(float, shadow_offset_u);
 PARAM(float, shadow_offset_v);
 PARAM(float, shadow_darkness);
 PARAM(float, shadow_sharpness);
-PARAM(float4, base_map_xform);
 
 PARAM_SAMPLER_2D(change_color_map);
 PARAM(float3, primary_change_color);
 PARAM(float3, secondary_change_color);
 PARAM(float3, tertiary_change_color);
+
+
+PARAM(float, height_scale);
+
+PARAM_SAMPLER_2D(height_map);
+PARAM(float4, height_map_xform);
+
+
+PARAM_SAMPLER_2D(interier);
+PARAM(float4, interier_xform);
+
+PARAM_SAMPLER_2D(wall_map);
+PARAM(float4, wall_map_xform);
+
+PARAM(float, thin_shell_height);
+PARAM(float, mask_threshold);
+PARAM(float, hole_radius);
+PARAM(float, box_size);
+
+PARAM(float, fog_factor);
+PARAM(float3, fog_top_color);
+PARAM(float3, fog_bottom_color);
+
+PARAM(float, sphere_radius);
+PARAM(float, sphere_height);
 	
 float4 get_gradients_pc(in float2 value)
 {
@@ -234,6 +261,20 @@ float4 sample_diffuse(float2 texcoord_tile, float2 texcoord, float palette_v)
 		//return generate_emblem_pixel(texcoord);
         return sample2D(tex0_sampler, texcoord);
 	}
+
+#ifdef category_albedo_option_patchy_emblem
+	IF_CATEGORY_OPTION(albedo, patchy_emblem)
+	{
+		/*
+		float4 emblem=	calc_emblem(texcoord_tile, true);
+		float alpha=	sample2D(alpha_map, transform_texcoord(texcoord_tile, alpha_map_xform)).a;
+		alpha=	saturate(lerp(alpha_min, alpha_max, alpha));
+
+		return float4(emblem.rgb, (1.0f - emblem.a)*alpha);
+		*/
+		return sample2D(tex0_sampler, texcoord);
+	}
+#endif
 
 	IF_CATEGORY_OPTION(albedo, change_color)
 	{
@@ -464,6 +505,64 @@ s_decal_render_pixel_out convert_to_decal_target(float4 color, float3 normal, fl
 	return OUT;
 }
 
+float calc_parallax_off_ps(
+	in float2 texcoord,
+	in float3 view_dir,					// direction towards camera
+	out float2 parallax_texcoord)
+{
+	parallax_texcoord= texcoord;
+	return 0;
+}
+
+float calc_parallax_simple_ps(
+	in float2 texcoord,
+	in float3 view_dir,					// direction towards camera
+	out float2 parallax_texcoord)
+{
+	texcoord= transform_texcoord(texcoord, height_map_xform);
+	float height_in_texture= sample2D(height_map, texcoord).g;
+	float height= ( height_in_texture - 0.5f ) * height_scale;		// ###ctchou $PERF can switch height maps to be signed and get rid of this -0.5 bias
+
+	float2 parallax_offset= view_dir.xy * height / view_dir.z;
+
+	parallax_texcoord= texcoord + parallax_offset;
+
+	parallax_texcoord= (parallax_texcoord - height_map_xform.zw) / height_map_xform.xy;
+	return -length(float3(parallax_offset, height))*sign(height);
+}
+
+float calc_parallax_sphere_ps(
+	in float2 texcoord,
+	in float3 view_dir,					// direction towards camera
+	out float2 parallax_texcoord)
+{
+	float r= sphere_radius*sphere_radius;
+
+	float3 start= float3(texcoord.xy, 0);
+	float3 sphere_center= float3(0.5, 0.5, sphere_height);
+
+	float3 edge_a= sphere_center-start;
+	float a= length(edge_a);
+
+	if (a>sphere_radius)
+	{
+		parallax_texcoord.xy= texcoord;
+		return 0;
+	}
+	else
+	{
+		edge_a= edge_a/a;
+
+		float cosine_r= dot (edge_a, view_dir);
+
+		float x= cosine_r*a-sqrt(-a*a+r+a*a*cosine_r*cosine_r);
+
+		float3 intersected_edge= start+view_dir*x;
+		parallax_texcoord.xy= intersected_edge.xy;
+		return -x;
+	}
+}
+
 #ifndef pc
 // This removes the tangent space interpolators if we're not bump mapping.
 // It gives us 63 ALU threads instead of 48 for the simplest decals.
@@ -474,6 +573,209 @@ s_decal_render_pixel_out convert_to_decal_target(float4 color, float3 normal, fl
 // we want more ALU threads.  Hasn't helped in tests.
 //[reduceTempRegUsage(5)]	
 #endif
+
+#ifdef PIXEL_SHADER
+
+
+void update_interier_layer_simple_ps(float2 texcoord, float2 parallax_texcoord, inout float4 diffuse, inout float3 bump, float3 view_dir, float3x3 tangent_frames)
+{
+	diffuse.a*= 2;
+	float layer= diffuse.a-1;
+
+	if (layer > mask_threshold)
+	{
+		diffuse.rgb= sample2D(interier, transform_texcoord(parallax_texcoord, interier_xform));
+	}
+	return;
+}
+
+void update_interier_layer_floor_ps(float2 texcoord, float2 parallax_texcoord, inout float4 diffuse, inout float3 bump, float3 view_dir, float3x3 tangent_frames)
+{
+	diffuse.a*= 2;
+	float layer= diffuse.a-1;
+	diffuse.a= min(1,diffuse.a);
+
+	if (layer > mask_threshold)
+	{
+		float depth= -thin_shell_height;
+
+		float2 parallax_offset= view_dir.xy * depth / view_dir.z;
+
+		float2 interier_parallax_texcoord= texcoord + parallax_offset;
+
+		diffuse.rgb= sample2D(interier, transform_texcoord(interier_parallax_texcoord, interier_xform));
+
+		bump= tangent_frames[2];
+	}
+	return;
+}
+
+float3 fog_color(float depth)
+{
+	float fog_intensity= exp2(fog_factor*depth);
+	return lerp(fog_bottom_color, fog_top_color, fog_intensity);
+}
+
+void update_interier_layer_hole_ps(float2 texcoord, float2 parallax_texcoord, inout float4 diffuse, inout float3 bump, float3 view_dir, float3x3 tangent_frames)
+{
+	diffuse.a*= 2;
+	float layer= diffuse.a-1;
+	diffuse.a= min(1,diffuse.a);
+
+	if (layer > mask_threshold)
+	{
+		float depth= -thin_shell_height;
+
+		float2 parallax_offset= view_dir.xy * depth / view_dir.z;
+		float2 interier_parallax_texcoord;
+
+		float3 intersected_edge;
+		{
+			float r= hole_radius*hole_radius;
+			float u= texcoord.x-0.5f;
+			float v= texcoord.y-0.5f;
+
+			if (u*u+v*v>r)
+			{
+				return;
+			}
+
+			float s= view_dir.x;
+			float t= view_dir.y;
+
+			float temp_b= - (s*u+t*v);
+			float temp_sqrt= r*s*s+r*t*t-t*t*u*u+2*s*t*u*v-s*s*v*v;
+			float temp_a= s*s+t*t;
+
+			float solution= (temp_b-sqrt(temp_sqrt))/temp_a;
+			float other_solution= (temp_b+sqrt(temp_sqrt))/temp_a;
+
+			intersected_edge= float3(u + s * solution, v + t * solution, view_dir.z * solution);
+		}
+
+		if (intersected_edge.z<0)
+		{
+			if (intersected_edge.z>depth)
+			{
+				float2 texcoord= float2(intersected_edge.z,
+					hole_radius*atan2(intersected_edge.x, intersected_edge.y));
+
+				bump.xy= -intersected_edge.xy;
+				bump.z= 0;
+
+				bump= mul(bump, tangent_frames);
+				bump= normalize(bump);
+
+				interier_parallax_texcoord= texcoord;
+				diffuse.rgb= sample2D(wall_map, transform_texcoord(interier_parallax_texcoord, wall_map_xform));
+				diffuse.rgb= diffuse.rgb * lerp(fog_bottom_color, fog_top_color, exp2(fog_factor*intersected_edge.z));
+			}
+			else
+			{
+				interier_parallax_texcoord= texcoord + parallax_offset;
+
+				bump= tangent_frames[2];
+
+				diffuse.rgb= sample2D(interier, transform_texcoord(interier_parallax_texcoord, interier_xform));
+				diffuse.rgb= diffuse.rgb * lerp(fog_bottom_color, fog_top_color, exp2(fog_factor*depth));
+			}
+		}
+
+	}
+	return;
+}
+
+
+void update_interier_layer_box_ps(float2 texcoord, float2 parallax_texcoord, inout float4 diffuse, inout float3 bump, float3 view_dir, float3x3 tangent_frames)
+{
+	diffuse.a*= 2;
+	float layer= diffuse.a-1;
+	diffuse.a= min(1,diffuse.a);
+
+	if (layer > mask_threshold)
+	{
+		float depth= -thin_shell_height;
+
+		float2 parallax_offset= view_dir.xy * depth / view_dir.z;
+		float2 interier_parallax_texcoord;
+
+		float3 intersected_edge= 0;
+		float3 new_bump= 0;
+		{
+			float r= box_size;
+			float u= texcoord.x-0.5f;
+			float v= texcoord.y-0.5f;
+
+			if (abs(u)>r||abs(v)>r)
+			{
+				return;
+			}
+
+			float s= view_dir.x;
+			float t= view_dir.y;
+
+			float3 candidates[2];
+			int direction[2];
+			{
+				float edge_s= s<0?1:-1;
+				direction[0]= edge_s;
+				float solution= (edge_s*r-u)/s;
+				candidates[0]= float3(u + s * solution, v + t * solution, view_dir.z * solution);
+			}
+
+			{
+				float edge_t= t<0?1:-1;
+				direction[1]= edge_t;
+				float solution= (edge_t*r-v)/t;
+				candidates[1]= float3(u + s * solution, v + t * solution, view_dir.z * solution);
+			}
+
+			if (candidates[1].z>candidates[0].z)
+			{
+				intersected_edge= candidates[1];
+				new_bump= float3(0,-1,0)*direction[1];
+			}
+			else
+			{
+				intersected_edge= candidates[0];
+				new_bump= float3(-1,0,0)*direction[0];
+			}
+		}
+
+		if (intersected_edge.z<0)
+		{
+			if (intersected_edge.z>depth)
+			{
+				float2 texcoord= float2(intersected_edge.z,
+					intersected_edge.x+intersected_edge.y);
+
+				bump= mul(new_bump, tangent_frames);
+				bump= normalize(bump);
+
+				interier_parallax_texcoord= texcoord;
+				diffuse.rgb= sample2D(wall_map, transform_texcoord(interier_parallax_texcoord, wall_map_xform));
+				diffuse.rgb= diffuse.rgb * fog_color(intersected_edge.z);
+			}
+			else
+			{
+				interier_parallax_texcoord= texcoord + parallax_offset;
+
+				bump= tangent_frames[2];
+
+				diffuse.rgb= sample2D(interier, transform_texcoord(interier_parallax_texcoord, interier_xform));
+				diffuse.rgb= diffuse.rgb * fog_color(depth);
+			}
+		}
+	}
+	return;
+}
+
+
+void update_interier_layer_off_ps(float2 texcoord, float2 parallax_texcoord, inout float4 diffuse, inout float3 bump, float3 view_dir, float3x3 tangent_frames)
+{
+	return;
+}
+
 s_decal_render_pixel_out default_ps(s_decal_interpolators IN)
 {
 	if (true /*pixel_kill_enabled*/)	// debug render has a performace impact, so moving this to vertex shader
@@ -483,12 +785,25 @@ s_decal_render_pixel_out default_ps(s_decal_interpolators IN)
 		clip(float4(IN.m_texcoord.xy, 1.0f-IN.m_texcoord.xy));
 	}
 
+	float3x3 tangent_framev = tangent_frame(IN);
+
+	float2 parallax_texcoord;
+	float3 view_dir= IN.fragment_to_camera_world;
+	// convert view direction from world space to tangent space
+	float3 view_dir_in_tangent_space= mul(tangent_frame(IN), view_dir);
+
+	view_dir_in_tangent_space= normalize(view_dir_in_tangent_space);
+
+	float depth_offset= calc_parallax_ps(IN.m_texcoord.zw, view_dir_in_tangent_space, parallax_texcoord);
 	float4 diffuse= sample_diffuse(IN.m_texcoord.xy, IN.m_texcoord.zw, 0.0f);
+	float3 bump= sample_bump(IN.m_texcoord.xy, IN.m_texcoord.zw, tangent_framev);
+
+	update_interier_layer_ps(IN.m_texcoord.zw, parallax_texcoord, diffuse, bump, view_dir_in_tangent_space, tangent_frame(IN));
+
 	tint_and_modulate(diffuse);
 	fade_out(diffuse);
-
-	float3x3 tangent_framev = tangent_frame(IN);
-	float3 bump= sample_bump(IN.m_texcoord.xy, IN.m_texcoord.zw, tangent_framev);
 	
 	return convert_to_decal_target(diffuse, bump, IN.m_pos_w, tangent_framev[2]);
 }
+
+#endif

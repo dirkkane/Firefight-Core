@@ -78,6 +78,8 @@ VERTEX_CONSTANT(bool, v_mesh_squished, b8);
 VERTEX_CONSTANT(float4, v_squish_params, c250);
 #endif
 
+VERTEX_CONSTANT(float4, v_analytical_light_direction, c251);
+VERTEX_CONSTANT(float4, v_analytical_light_intensity, c252);
 
 #ifndef PC_CPU
    PIXEL_CONSTANT(float4, g_exposure, c0 );							// exposure multiplier, HDR target multiplier, HDR alpha multiplier, LDR alpha multiplier		// ###ctchou $REVIEW could move HDR target multiplier to exponent bias and just set HDR alpha multiplier..
@@ -105,6 +107,9 @@ VERTEX_CONSTANT(float4, v_squish_params, c250);
    PIXEL_CONSTANT(float2,  texture_size, c14);							// used for pixel-shader implemented bilinear, and albedo textures
    PIXEL_CONSTANT(float4,  dynamic_environment_blend, c15);
 
+   PIXEL_CONSTANT(float4, p_analytical_gel_xform[3], c69);
+   PIXEL_CONSTANT(float4, antialias_scalars, c72);
+   PIXEL_CONSTANT(float4, object_velocity, c73);
 
    PIXEL_CONSTANT(float4, p_lightmap_compress_constant_0, c210);
    PIXEL_CONSTANT(float4, p_lightmap_compress_constant_1, c211);

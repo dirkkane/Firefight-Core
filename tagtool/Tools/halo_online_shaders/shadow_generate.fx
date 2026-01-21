@@ -6,6 +6,7 @@
 		sampler shadow_depth_map_1;
 #endif
 
+#ifndef NO_SHADOW_GENERATE_PASS
 
 void shadow_generate_vs(
 	in vertex_type vertex,
@@ -78,7 +79,7 @@ void shadow_generate_ps(
 }
 #endif
 
-
+#endif // NO_SHADOW_GENERATE_PASS
 
 #define PCF_WIDTH 4
 #define PCF_HEIGHT 4
@@ -252,10 +253,129 @@ float sample_percentage_closer_PCF_5x5_block_predicated(float3 fragment_shadow_p
 	return color;
 }
 
+float sample_percentage_closer_PCF_9x9_block_predicated(float3 fragment_shadow_position, float depth_bias)
+{
+#if DX_VERSION == 9
+	const float half_texel_offset = 0.5f;
+#elif DX_VERSION == 11
+	const float half_texel_offset = 0.0f;
+#endif
+
+	float2 texel1= fragment_shadow_position.xy;
+
+	float4 blend;
+#ifdef pc
+   float2 frac_pos = fragment_shadow_position.xy / pixel_size + half_texel_offset;
+   blend.xy = frac(frac_pos);
+#else
+#ifndef VERTEX_SHADER
+//	fragment_shadow_position.xy += 0.5f;
+	asm {
+		getWeights2D blend.xy, fragment_shadow_position.xy, shadow_depth_map_1, MagFilter=linear, MinFilter=linear
+	};
+#endif
+#endif
+	blend.zw= 1.0f - blend.xy;
+
+#define offset_0 (-4.0f + half_texel_offset)
+#define offset_1 (-3.0f + half_texel_offset)
+#define offset_2 (-2.0f + half_texel_offset)
+#define offset_3 (-1.0f + half_texel_offset)
+#define offset_4 (-0.0f + half_texel_offset)
+#define offset_5 (-1.0f + half_texel_offset)
+#define offset_6 (+2.0f + half_texel_offset)
+#define offset_7 (+3.0f + half_texel_offset)
+
+	float3 max_depth= depth_bias;							// x= central samples,   y = adjacent sample,   z= diagonal sample
+	max_depth *= float3(-2.0f, -sqrt(5.0f), -4.0f);			// make sure the comparison depth is taken from the very corner of the samples (maximum possible distance from our central point)
+	max_depth += fragment_shadow_position.z;
+
+	// 8x8 point and 7x7 bilinear
+	float color=	blend.z * blend.w * step(max_depth.z, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_0).r) +
+					1.0f    * blend.w * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_0).r) +
+					1.0f    * blend.w * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_0).r) +
+					1.0f    * blend.w * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_0).r) +
+					1.0f    * blend.w * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_0).r) +
+					1.0f    * blend.w * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_0).r) +
+					1.0f    * blend.w * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_0).r) +
+					blend.x * blend.w * step(max_depth.z, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_0).r) +
+
+					blend.z * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_1).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_1).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_1).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_1).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_1).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_1).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_1).r) +
+					blend.x * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_1).r) +
+
+					blend.z * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_2).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_2).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_2).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_2).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_2).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_2).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_2).r) +
+					blend.x * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_2).r) +
+
+					blend.z * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_3).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_3).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_3).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_3).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_3).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_3).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_3).r) +
+					blend.x * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_3).r) +
+
+					blend.z * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_4).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_4).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_4).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_4).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_4).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_4).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_4).r) +
+					blend.x * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_4).r) +
+
+					blend.z * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_5).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_5).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_5).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_5).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_5).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_5).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_5).r) +
+					blend.x * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_5).r) +
+
+					blend.z * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_6).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_6).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_6).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_6).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_6).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_6).r) +
+					1.0f    * 1.0f    * step(max_depth.x, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_6).r) +
+					blend.x * 1.0f    * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_6).r) +
+
+					blend.z * blend.y * step(max_depth.z, tex2D_offset_point(shadow_depth_map_1, texel1, offset_0, offset_7).r) +
+					1.0f    * blend.y * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_1, offset_7).r) +
+					1.0f    * blend.y * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_2, offset_7).r) +
+					1.0f    * blend.y * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_3, offset_7).r) +
+					1.0f    * blend.y * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_4, offset_7).r) +
+					1.0f    * blend.y * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_5, offset_7).r) +
+					1.0f    * blend.y * step(max_depth.y, tex2D_offset_point(shadow_depth_map_1, texel1, offset_6, offset_7).r) +
+					blend.x * blend.y * step(max_depth.z, tex2D_offset_point(shadow_depth_map_1, texel1, offset_7, offset_7).r);
+
+	color /= 49.0f;
+
+	return color;
+}
+
 
 // #define DEBUG_CLIP
 
 void shadow_apply_vs(
+#ifdef FUR_SHADOW_APPLY
+	in vertex_type vertex,
+	out float4 screen_position : SV_Position)
+#else
 	in vertex_type vertex,
 	out float4 screen_position : SV_Position,
 	out float3 world_position : TEXCOORD0,
@@ -265,7 +385,13 @@ void shadow_apply_vs(
 	out float3 fragment_shadow_position : TEXCOORD4,
 	out float3 extinction : COLOR0,
 	out float3 inscatter : COLOR1)
+#endif
 {
+#ifdef FUR_SHADOW_APPLY
+	float4 local_to_world_transform[3];
+	//output to pixel shader
+	always_local_to_view(vertex, local_to_world_transform, screen_position);
+#else
 	float4 local_to_world_transform[3];
 	//output to pixel shader
 	always_local_to_view(vertex, local_to_world_transform, screen_position);
@@ -280,9 +406,13 @@ void shadow_apply_vs(
 	fragment_shadow_position.x= dot(float4(world_position, 1.0), v_lighting_constant_0);
 	fragment_shadow_position.y= dot(float4(world_position, 1.0), v_lighting_constant_1);
 	fragment_shadow_position.z= dot(float4(world_position, 1.0), v_lighting_constant_2);
+#endif
 }
 
 accum_pixel shadow_apply_ps(
+#ifdef FUR_SHADOW_APPLY
+	SCREEN_POSITION_INPUT(screen_position))
+#else
 	SCREEN_POSITION_INPUT(screen_position),
 	in float3 world_position : TEXCOORD0,
 	in float2 texcoord : TEXCOORD1,
@@ -291,7 +421,11 @@ accum_pixel shadow_apply_ps(
 	in float3 fragment_shadow_position : TEXCOORD4,
 	in float3 extinction : COLOR0,
 	in float3 inscatter : COLOR1)
+#endif
 {
+#ifdef FUR_SHADOW_APPLY
+	return convert_to_render_target(float4(0.0f, 0.0f, 0.0f, 1.0f), false, false);
+#else
 	float output_alpha;
 	// do alpha test
 	calc_alpha_test_ps(texcoord, output_alpha);
@@ -343,4 +477,5 @@ accum_pixel shadow_apply_ps(
 		, 0.0f
 #endif
 	);
+#endif
 }

@@ -15,7 +15,7 @@
 LOCAL_SAMPLER_2D(surface_sampler, 0);		
 LOCAL_SAMPLER_2D(dark_surface_sampler, 1);		
 LOCAL_SAMPLER_2D(bloom_sampler, 2);	
-uniform sampler2D unknown3 : register(s3);
+LOCAL_SAMPLER_2D(bling_sampler, 3);
 LOCAL_SAMPLER_3D(color_grading0, 4);
 LOCAL_SAMPLER_3D(color_grading1, 5);
 LOCAL_SAMPLER_2D(depth_sampler, 6);		// depth of field
@@ -27,7 +27,7 @@ LOCAL_SAMPLER_2D(noise_sampler, 9);		// reach noise
 // define default functions, if they haven't been already
 
 #ifndef COMBINE_HDR_LDR
-#define COMBINE_HDR_LDR default_combine_hdr_ldr
+#define COMBINE_HDR_LDR default_combine_optimized
 #endif // !COMBINE_HDR_LDR
 
 #ifndef CALC_BLOOM
@@ -44,16 +44,9 @@ float4 default_combine_hdr_ldr(in float2 texcoord)							// supports multiple so
 {
 #ifdef pc
 	float4 accum=		sample2D(surface_sampler, texcoord);
-	#ifdef APPLY_FIXES
-		accum.rgb = pow(sqrt(accum.rgb), gamma_power);
-	#endif
 	float4 combined= accum;
-	// HO cut this out, but hdr is still rendered.
-#ifdef APPLY_FIXES
 	float4 accum_dark=	sample2D(dark_surface_sampler, texcoord);
-		accum_dark.rgb = pow(sqrt(accum_dark.rgb), gamma_power);
 	combined= max(accum, accum_dark * DARK_COLOR_MULTIPLIER);		// convert_from_render_targets <-- for some reason this isn't optimized very well
-#endif
 #else // XENON
 	
 	float4 accum=		sample2D(surface_sampler, texcoord);
@@ -85,7 +78,6 @@ float4 default_combine_hdr_ldr(in float2 texcoord)							// supports multiple so
 float4 default_combine_optimized(in float2 texcoord)						// final game code: single sample LDR surface, use hardcoded hardware curve
 {
     float4 ldr = sample2D(surface_sampler, texcoord);
-    ldr.rgb = pow(sqrt(ldr.rgb), gamma_power);
     return ldr;
 }
 
@@ -93,18 +85,13 @@ float4 default_combine_optimized(in float2 texcoord)						// final game code: si
 float4 default_calc_bloom(in float2 texcoord)
 {
     float4 bloom_sample = tex2D_offset(bloom_sampler, transform_texcoord(texcoord, bloom_sampler_xform), 0, 0); // $PERF xform in vs
-    //bloom_sample.rgb = pow(sqrt(bloom_sample.rgb), gamma_power);
     return bloom_sample;
 }
 
 
 float3 default_calc_blend(in float2 texcoord, in float4 combined, in float4 bloom)
 {
-#ifdef pc
-	return combined + bloom;
-#else // XENON
-    return combined.rgb * (texcoord.x > 0.5f ? 1.0f : bloom.a) + bloom.rgb;
-#endif // XENON
+    return (combined.rgb * bloom.a + bloom.rgb) + (sample2D(bling_sampler, texcoord).rgb * intensity.z);
 }
 
 float4 apply_noise( in float2 noise_space_texcoord, in float4 input_color )
@@ -187,6 +174,8 @@ float4 default_ps(in s_final_composite_output input) : SV_Target
 	
 #ifdef APPLY_FIXES
 	result= apply_noise(input.xformed_texcoord.zw, result);
+	
+	// TODO: ODST damage overlay
 #endif
 	
 	return result;

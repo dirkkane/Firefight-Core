@@ -44,6 +44,8 @@ Shaders for particle renders, quad manufacture
 #include "function_utilities.fx"
 #include "particle_state.fx"
 #include "atmosphere.fx"
+#else
+#include "bump_mapping_util.fx"
 #endif
 
 #define _dies_at_rest_bit					0 //_particle_dies_at_rest_bit
@@ -89,6 +91,10 @@ extern float4x4 dummy : register(c252);
 PARAM(float, starting_uv_scale);
 PARAM(float, ending_uv_scale);
 PARAM(float4, self_illum_color);
+PARAM(float, bump_contrast);
+PARAM(float, bump_randomness);
+PARAM(float, contrast_scale);
+PARAM(float, contrast_offset);
 
 #include "particle_render_state.fx"
 
@@ -161,7 +167,7 @@ s_particle_interpolators write_particle_interpolators(s_particle_render_vertex V
 	INTERPOLATORS.m_texcoord1= float4(VERTEX.m_frame_blend, VERTEX.m_black_point, VERTEX.m_texcoord_billboard);
 	INTERPOLATORS.m_texcoord2= IS_DISTORTION_PARTICLE
 		? float4(VERTEX.m_binormal, VERTEX.m_palette)
-		: (TEST_CATEGORY_OPTION(lighting, per_pixel_ravi_order_3)
+		: ((TEST_CATEGORY_OPTION(lighting, per_pixel_ravi_order_3) || TEST_CATEGORY_OPTION(lighting, per_pixel_smooth) || TEST_CATEGORY_OPTION(lighting, smoke_lighting))
 			? float4(VERTEX.m_normal, VERTEX.m_palette)
 			: float4(0.0f, 0.0f, 0.0f, VERTEX.m_palette));
 #ifdef PARTICLE_DEBUG_VAR
@@ -192,7 +198,7 @@ s_particle_render_vertex read_particle_interpolators(s_particle_interpolators IN
 	VERTEX.m_binormal= IS_DISTORTION_PARTICLE
 		? INTERPOLATORS.m_texcoord2.xyz
 		: float3(0.0f, 0.0f, 0.0f);
-	VERTEX.m_normal= TEST_CATEGORY_OPTION(lighting, per_pixel_ravi_order_3)
+	VERTEX.m_normal= (TEST_CATEGORY_OPTION(lighting, per_pixel_ravi_order_3) || TEST_CATEGORY_OPTION(lighting, per_pixel_smooth) || TEST_CATEGORY_OPTION(lighting, smoke_lighting))
 		? INTERPOLATORS.m_texcoord2.xyz
 		: float3(0.0f, 0.0f, 0.0f);
 	VERTEX.m_palette= INTERPOLATORS.m_texcoord2.w;
@@ -593,7 +599,7 @@ s_particle_interpolators default_vs(
 		
 		// Transform from sprite plane to world space.
 		float3x3 plane_basis= mul(vertex_orientation, billboard_basis(position, relative_velocity));	// in world space
-		float3x3 vertex_basis= (TEST_CATEGORY_OPTION(lighting,per_pixel_ravi_order_3) || IS_DISTORTION_PARTICLE)
+		float3x3 vertex_basis= (TEST_CATEGORY_OPTION(lighting,per_pixel_ravi_order_3) || TEST_CATEGORY_OPTION(lighting,per_pixel_smooth) || TEST_CATEGORY_OPTION(lighting,smoke_lighting) || IS_DISTORTION_PARTICLE)
 			? surface_basis(plane_basis, planar_pos, g_render_state.m_curvature)
 			: plane_basis;
 		position.xyz += mul(planar_pos, plane_basis) * particle_scale;
@@ -695,6 +701,10 @@ s_particle_interpolators default_vs(
 				v_lighting_constant_9 
 			}; 
 			OUT.m_color.xyz*= ravi_order_0(OUT.m_normal, sh_lighting_coefficients);
+		}
+		IF_CATEGORY_OPTION(lighting, per_vertex_ambient)
+		{
+			OUT.m_color.xyz *= v_lighting_constant_3.rgb;
 		}
 
 		// Compute particle alpha
@@ -820,6 +830,49 @@ PARAM(float, alpha_modulation_factor);
 
 PARAM(float, palette_shift_amount);
 
+PARAM(float, sphere_warp_scale);
+
+float2 calc_warp(float2 texcoord_billboard)
+{
+	IF_CATEGORY_OPTION(warp,	sphere)
+	{
+		// sphere warp sprite, based on billboard
+		float2 delta= texcoord_billboard * 2 - 1;			/// [-1, 1] across sprite
+
+		float delta2=		dot(delta.xy, delta.xy);
+		float delta4=		delta2 * delta2;
+
+//		better approximation, but more expensive:
+//		float delta6=		delta2 * delta2 * delta2;
+//		float delta_offset=		delta2 * 0.05f + delta6 * 0.37f;				// ###ctchou $TODO we could give artists control of this polynomial if they want..  maybe default it to the sphere control, but let them do whatever..
+
+		// we don't need to calculate delta, since it cancels itself out.  save the sqrt, save the world!
+		float delta_offset=		delta4 * sphere_warp_scale;						// decent approximation of a sphere
+
+		float2 offset=			delta.xy * delta_offset;
+
+		return offset;
+	}
+	else
+	{
+		return float2(0.0f, 0.0f);
+	}
+}
+
+float3 calculate_lighting_ps(float3 normal)
+{
+	IF_CATEGORY_OPTION(lighting, per_pixel_smooth)
+	{
+		float cosine=	dot(normal.xyz, p_lighting_constant_0.xyz);
+		float biased=	saturate(cosine * contrast_scale + contrast_offset);
+		float blend=	biased*biased*biased;
+		return lerp(p_lighting_constant_2.rgb, p_lighting_constant_1.rgb, blend);
+	}
+
+	// default unlit
+	return float3(1.0f, 1.0f, 1.0f);
+}
+
 float4 sample_diffuse(float2 texcoord_sprite, float2 texcoord_billboard, float palette_v, float particle_alpha, float depth_alpha)
 {
 // hack for now
@@ -862,10 +915,10 @@ float4 sample_diffuse(float2 texcoord_sprite, float2 texcoord_billboard, float p
 	{
 		float index= sample2D(base_map, transform_texcoord(texcoord_sprite, base_map_xform)).x;
 
-		//IF_CATEGORY_OPTION(depth_fade, palette_shift)
-		//{
-		//	index=	saturate(index + (1-depth_alpha*particle_alpha) * palette_shift_amount);
-		//}
+		IF_CATEGORY_OPTION(depth_fade, palette_shift)
+		{
+			index=	saturate(index + (1-depth_alpha*particle_alpha) * palette_shift_amount);
+		}
 
 		return sample2D(palette, float2(index, palette_v));
 	}
@@ -876,10 +929,10 @@ float4 sample_diffuse(float2 texcoord_sprite, float2 texcoord_billboard, float p
 		float index= sample2D(base_map, transform_texcoord(texcoord_sprite, base_map_xform)).x;
 		float alpha= sample2D(alpha_map, transform_texcoord(texcoord_billboard, alpha_map_xform)).w;
 
-		//IF_CATEGORY_OPTION(depth_fade, palette_shift)
-		//{
-		//	index=	saturate(index + (1-depth_alpha*particle_alpha) * palette_shift_amount);
-		//}
+		IF_CATEGORY_OPTION(depth_fade, palette_shift)
+		{
+			index=	saturate(index + (1-depth_alpha*particle_alpha) * palette_shift_amount);
+		}
 
 		return float4(sample2D(palette, float2(index, palette_v)).xyz, alpha);
 	}
@@ -889,10 +942,10 @@ float4 sample_diffuse(float2 texcoord_sprite, float2 texcoord_billboard, float p
 		float index= sample2D(base_map, transform_texcoord(texcoord_sprite, base_map_xform)).x;
 		float alpha= sample2D(alpha_map, transform_texcoord(texcoord_sprite, alpha_map_xform)).w;
 
-		//IF_CATEGORY_OPTION(depth_fade, palette_shift)
-		//{
-		//	index=	saturate(index + (1-depth_alpha*particle_alpha) * palette_shift_amount);
-		//}
+		IF_CATEGORY_OPTION(depth_fade, palette_shift)
+		{
+			index=	saturate(index + (1-depth_alpha*particle_alpha) * palette_shift_amount);
+		}
 
 		return float4(sample2D(palette, float2(index, palette_v)).xyz, alpha);
 	}
@@ -920,10 +973,10 @@ float4 sample_diffuse(float2 texcoord_sprite, float2 texcoord_billboard, float p
 
 		float alpha=	sample2D(alpha_map, texcoord_billboard).a;
 
-		//IF_CATEGORY_OPTION(depth_fade, palette_shift)
-		//{
-		//	index=	saturate(index + (1-alpha*particle_alpha) * palette_shift_amount);
-		//}
+		IF_CATEGORY_OPTION(depth_fade, palette_shift)
+		{
+			index=	saturate(index + (1-alpha*particle_alpha) * palette_shift_amount);
+		}
 
 		float4 palette_value=	sample2D(palette, float2(index, depth_alpha));
 //		float4 palette_value=	pow(1-abs(index - (1-depth_alpha)), 20);
@@ -934,34 +987,47 @@ float4 sample_diffuse(float2 texcoord_sprite, float2 texcoord_billboard, float p
 
 float compute_depth_fade(float2 screen_coords, float depth, float range)
 {
-#ifdef DISTORTION_MULTISAMPLED
-	if (IS_DISTORTION_PARTICLE)
+#if DX_VERSION == 9
+	if (TEST_CATEGORY_OPTION(depth_fade, low_res))
 	{
-		screen_coords*= 2.0f;
+		float2 screen_texcoord= (screen_coords.xy + float2(0.5f, 0.5f)) / texture_size.xy;
+		float4 scene_depth= sample2D(depth_buffer, screen_texcoord).xyzw;
+		float4 particle_depth= depth;
+		float4 delta_depth= scene_depth - particle_depth;
+		return dot(saturate(delta_depth / range), float4(0.25f, 0.25f, 0.25f, 0.25f));
 	}
+	else
+#endif
+	{
+#ifdef DISTORTION_MULTISAMPLED
+		if (IS_DISTORTION_PARTICLE)
+		{
+			screen_coords*= 2.0f;
+		}
 #endif
 
 #if DX_VERSION == 11
-	float scene_depth = 1.0f - depth_buffer.Load(int3(screen_coords.xy, 0)).x;
-	scene_depth= 1.0f / (depth_constants.x + scene_depth * depth_constants.y);	// convert to real depth
+		float scene_depth = 1.0f - depth_buffer.Load(int3(screen_coords.xy, 0)).x;
+		scene_depth= 1.0f / (depth_constants.x + scene_depth * depth_constants.y);	// convert to real depth
 #elif defined(pc)
-	// TODO solve it!
-//	depth_value = float4(1,2,3,4);
-	float2 screen_texcoord= (screen_coords.xy + float2(0.5f, 0.5f)) / texture_size.xy;
-	float scene_depth= sample2D(depth_buffer, screen_texcoord).x;
+		// TODO solve it!
+	//	depth_value = float4(1,2,3,4);
+		float2 screen_texcoord= (screen_coords.xy + float2(0.5f, 0.5f)) / texture_size.xy;
+		float scene_depth= sample2D(depth_buffer, screen_texcoord).x;
 #else
-	float4 depth_value;
-	asm 
-	{
-		tfetch2D depth_value, screen_coords, depth_buffer, UnnormalizedTextureCoords = true, MagFilter = point, MinFilter = point, MipFilter = point, AnisoFilter = disabled
-	};
-	float scene_depth= 1.0f - depth_value.x;
-	scene_depth= 1.0f / (depth_constants.x + scene_depth * depth_constants.y);	// convert to real depth
+		float4 depth_value;
+		asm 
+		{
+			tfetch2D depth_value, screen_coords, depth_buffer, UnnormalizedTextureCoords = true, MagFilter = point, MinFilter = point, MipFilter = point, AnisoFilter = disabled
+		};
+		float scene_depth= 1.0f - depth_value.x;
+		scene_depth= 1.0f / (depth_constants.x + scene_depth * depth_constants.y);	// convert to real depth
 #endif
 
-	float particle_depth= depth;
-	float delta_depth= scene_depth - particle_depth;
-	return saturate(delta_depth / range);
+		float particle_depth= depth;
+		float delta_depth= scene_depth - particle_depth;
+		return saturate(delta_depth / range);
+	}
 }
 
 float3 compute_normalized_distortion(s_particle_render_vertex IN, float2 screen_coords, float2 blended, float depth_fade)
@@ -1014,21 +1080,24 @@ s_particle_render_pixel_out default_ps(
 	s_particle_render_vertex IN= read_particle_interpolators(INTERPOLATORS);
 
 // this will change compile order, should be after pixel kill
- 	float depth_fade= ((TEST_CATEGORY_OPTION(depth_fade, on)/* || TEST_CATEGORY_OPTION(depth_fade, palette_shift)*/) && !TEST_CATEGORY_OPTION(blend_mode, opaque))
+ 	float depth_fade= ((TEST_CATEGORY_OPTION(depth_fade, on) || TEST_CATEGORY_OPTION(depth_fade, low_res) || TEST_CATEGORY_OPTION(depth_fade, palette_shift)) && !TEST_CATEGORY_OPTION(blend_mode, opaque))
  		? compute_depth_fade(screen_coords, IN.m_depth, depth_fade_range)
  		: 1.0f;
 //	float depth_fade= compute_depth_fade(screen_coords, IN.m_depth, depth_fade_range);
 
+	float2 warp_offset=	calc_warp(IN.m_texcoord_billboard);
+
 	float4 blended= TEST_CATEGORY_OPTION(frame_blend, on)
-		? lerp(sample_diffuse(IN.m_texcoord_sprite0, IN.m_texcoord_billboard, IN.m_palette, IN.m_color.a, depth_fade), 
-				sample_diffuse(IN.m_texcoord_sprite1, IN.m_texcoord_billboard, IN.m_palette, IN.m_color.a, depth_fade), IN.m_frame_blend)
-		: sample_diffuse(IN.m_texcoord_sprite0, IN.m_texcoord_billboard, IN.m_palette, IN.m_color.a, depth_fade);	
+		? lerp(sample_diffuse(IN.m_texcoord_sprite0 + warp_offset, IN.m_texcoord_billboard, IN.m_palette, IN.m_color.a, depth_fade), 
+				sample_diffuse(IN.m_texcoord_sprite1 + warp_offset, IN.m_texcoord_billboard, IN.m_palette, IN.m_color.a, depth_fade), IN.m_frame_blend)
+		: sample_diffuse(IN.m_texcoord_sprite0 + warp_offset, IN.m_texcoord_billboard, IN.m_palette, IN.m_color.a, depth_fade);	
 	
 #ifdef PARTICLE_PIXEL_KILL	// probably not worth it, since you would need all pixels in a vector to die	
 	static float alpha_cutoff= 0.5f/255.0f;
 	clip(IN.m_color.w*blended.w<alpha_cutoff ? -1 : 1);	// early out if sampled alpha is 0, only helps if all ALU threads take it
 #endif
 
+// TODO: options with _diffuse shouldn't be bump converting...
 	if (IS_DISTORTION_PARTICLE)
 	{
 	#if defined(pc) && (DX_VERSION == 9)
@@ -1043,7 +1112,7 @@ s_particle_render_pixel_out default_ps(
 #endif
 )
 		{
-			blended.xy = blended.xy * (255.0f / 127.f) - (128.0f / 127.f);   
+			blended.xy = BUMP_CONVERT(BUMP_GET_CHANNELS(blended));
 		}
 	#endif
 
@@ -1056,7 +1125,9 @@ s_particle_render_pixel_out default_ps(
 
 #ifndef LDR_ONLY
 		distorted_pixel.dark_color= float4(0.0f, 0.0f, 0.0f, 0.0f);
+#ifdef SSR_ENABLE
 		distorted_pixel.ssr_color= float4(0.0f, 0.0f, 0.0f, 0.0f);
+#endif
 #endif
 		return distorted_pixel;
 	}
@@ -1074,7 +1145,13 @@ s_particle_render_pixel_out default_ps(
 			blended.w= remap_alpha(IN.m_black_point, blended.w);
 		}
 
-		blended*= IN.m_color;
+		IF_CATEGORY_OPTION(lighting, smoke_lighting)
+		{
+		}
+		else
+		{
+			blended*= IN.m_color;
+		}
 		
 		IN.m_normal= normalize(IN.m_normal);	// I think cross is fewer instructions, with no interpolator
 		IF_CATEGORY_OPTION(lighting, per_pixel_ravi_order_3)
@@ -1104,6 +1181,40 @@ s_particle_render_pixel_out default_ps(
 #endif
 		}
 
+		blended.xyz *= calculate_lighting_ps(IN.m_normal);
+
+		IF_CATEGORY_OPTION(lighting, smoke_lighting)
+		{
+#if !defined(pc) || (DX_VERSION == 11)
+			float2 texcoord= IN.m_texcoord_billboard.xy;
+
+			// convert uniform warp map into warped sphere normal:
+			blended.xy= blended.xy * 2 - 1;
+			blended.xy= (texcoord.xy * 2 - 1) * bump_contrast + blended.xy * bump_randomness;		// first scale factor affects contrast,  second scale factor affects randomness
+
+			float4 gradients;		// dx/dh,  dx/dv,  dy/dh,  dy/dv
+#ifdef xenon
+			asm {
+				getGradients gradients, texcoord, base_map
+			};
+#elif DX_VERSION == 11
+			gradients= GetGradients(texcoord);
+#endif
+
+			gradients.xy= normalize(gradients.xy);
+			gradients.zw= normalize(gradients.zw);
+
+			blended.xy= gradients.xy * blended.x + gradients.zw * blended.y;
+//			blended.z= sqrt(1.0f - dot(blended.xy, blended.xy));
+
+			blended.xy= blended.xy * 0.5f + 0.5f;
+
+			blended.a *= IN.m_color.a;
+			blended.xyz *= blended.a;
+
+#endif // !pc
+		}
+
 		// Non-linear blend modes don't work under the normal framework...
 		IF_CATEGORY_OPTION(blend_mode, multiply)
 		{
@@ -1119,6 +1230,10 @@ s_particle_render_pixel_out default_ps(
 // 	float4 blended= float4(0.0f, 0.0f, 0.0f, 0.0f);
 // #endif	//#ifndef pc #else
 
-	return CONVERT_TO_RENDER_TARGET_FOR_BLEND(blended, false, false, 0.0f);
+	return CONVERT_TO_RENDER_TARGET_FOR_BLEND(blended, false, false
+#ifdef SSR_ENABLE
+		, 0.0f
+#endif
+	);
 }
 #endif	//#ifdef PIXEL_SHADER

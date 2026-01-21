@@ -725,7 +725,7 @@ accum_pixel water_shading(s_water_interpolators INTERPOLATORS)
 	float2 texcoord_ss0 = INTERPOLATORS.position_ss.xy / INTERPOLATORS.position_ss.w;
 	texcoord_ss0 = texcoord_ss0 / 2 + 0.5;
 	texcoord_ss0.y = 1 - texcoord_ss0.y;
-	texcoord_ss0 = k_ps_water_player_view_constant.xy + texcoord_ss0 * k_ps_water_player_view_constant.zw;
+	texcoord_ss0 = k_water_player_view_constant.xy + texcoord_ss0 * k_water_player_view_constant.zw;
 
 	//	get current pixel depth
 	float depth_width, depth_height;
@@ -746,10 +746,10 @@ accum_pixel water_shading(s_water_interpolators INTERPOLATORS)
 //		float2 texcoord_ss0 = INTERPOLATORS.position_ss.xy / INTERPOLATORS.position_ss.w;
 //		texcoord_ss0 = texcoord_ss0 / 2 + 0.5;
 //		texcoord_ss0.y = 1 - texcoord_ss0.y;
-//		texcoord_ss0 = k_ps_water_player_view_constant.xy + texcoord_ss0 * k_ps_water_player_view_constant.zw;
+//		texcoord_ss0 = k_water_player_view_constant.xy + texcoord_ss0 * k_water_player_view_constant.zw;
 //
 //		//	get current pixel depth
-//		float depth_water0 = 1.0f - (k_ps_water_view_depth_constant.x / sample2D(depth_buffer, texcoord_ss0).r + k_ps_water_view_depth_constant.y);
+//		float depth_water0 = 1.0f - (k_water_view_depth_constant.x / sample2D(depth_buffer, texcoord_ss0).r + k_water_view_depth_constant.y);
 //
 //		if (depth_water0 > (INTERPOLATORS.position_ss.z / INTERPOLATORS.position_ss.w))
 //		{
@@ -900,9 +900,9 @@ accum_pixel water_shading(s_water_interpolators INTERPOLATORS)
 		float2 texcoord_ss = INTERPOLATORS.position_ss.xy;
 		texcoord_ss = texcoord_ss / 2 + 0.5;
 		texcoord_ss.y = 1 - texcoord_ss.y;
-		texcoord_ss = k_ps_water_player_view_constant.xy + texcoord_ss * k_ps_water_player_view_constant.zw;
+		texcoord_ss = k_water_player_view_constant.xy + texcoord_ss * k_water_player_view_constant.zw;
 
-		float depth_water= k_ps_water_view_depth_constant.x / tex2D(depth_buffer, texcoord_ss).r + k_ps_water_view_depth_constant.y; // Zbuf = -FN/(F-N) / z + F/(F-N)
+		float depth_water= k_water_view_depth_constant.x / tex2D(depth_buffer, texcoord_ss).r + k_water_view_depth_constant.y; // Zbuf = -FN/(F-N) / z + F/(F-N)
 		
 		#ifdef APPLY_FIXES
 			depth_water= 1.0f-depth_water;
@@ -910,19 +910,19 @@ accum_pixel water_shading(s_water_interpolators INTERPOLATORS)
 
 		//float4 point_underwater= float4(INTERPOLATORS.position_ss.xy, 1.0f - depth_water, 1.0f);		
 		float4 point_underwater= float4(INTERPOLATORS.position_ss.xy, depth_water, 1.0f);		
-		point_underwater= mul(point_underwater, k_ps_water_view_xform_inverse);
+		point_underwater= mul(point_underwater, k_water_view_xform_inverse);
 		point_underwater.xyz/= point_underwater.w;
 		depth_water= length(point_underwater.xyz - INTERPOLATORS.position_ws.xyz);	
 		
 		float2 bump= slope_refraction.xy * INTERPOLATORS.incident_ws.yx * refraction_texcoord_shift  * saturate(3 * depth_water);
 		bump*= min(max(2 / INTERPOLATORS.incident_ws.w, 0.0f), 1.0f);
-		bump*= k_ps_water_player_view_constant.zw;
+		bump*= k_water_player_view_constant.zw;
 		bump*= ripple_slope_length;
 
 		float2 texcoord_refraction= texcoord_ss + bump;
 
-		float2 delta= 0.001f;	//###xwan avoid fetch back pixel, it could be considered into k_ps_water_player_view_constant
-		texcoord_refraction= clamp(texcoord_refraction, k_ps_water_player_view_constant.xy+delta, k_ps_water_player_view_constant.xy+k_ps_water_player_view_constant.zw-delta);
+		float2 delta= 0.001f;	//###xwan avoid fetch back pixel, it could be considered into k_water_player_view_constant
+		texcoord_refraction= clamp(texcoord_refraction, k_water_player_view_constant.xy+delta, k_water_player_view_constant.xy+k_water_player_view_constant.zw-delta);
 
 #if DX_VERSION == 11
 		depth_refraction = depth_buffer.Load(int3((texcoord_refraction * float2(depth_width, depth_height)), 0)).r;
@@ -930,7 +930,7 @@ accum_pixel water_shading(s_water_interpolators INTERPOLATORS)
 		depth_refraction= sample2D(depth_buffer, texcoord_refraction).r;	
 #endif
 #if (DX_VERSION == 9) && defined(pc)
-		depth_refraction = k_ps_water_view_depth_constant.x / depth_refraction + k_ps_water_view_depth_constant.y; // Zbuf = -FN/(F-N) / z + F/(F-N)
+		depth_refraction = k_water_view_depth_constant.x / depth_refraction + k_water_view_depth_constant.y; // Zbuf = -FN/(F-N) / z + F/(F-N)
 		#ifdef APPLY_FIXES
 			depth_refraction= 1.0f-depth_refraction;
 		#endif
@@ -957,7 +957,7 @@ accum_pixel water_shading(s_water_interpolators INTERPOLATORS)
 		depth_refraction= sample2D(depth_buffer, texcoord_refraction).r;	
 #endif
 #if (DX_VERSION == 9) && defined(pc)
-		depth_refraction = k_ps_water_view_depth_constant.x / depth_refraction + k_ps_water_view_depth_constant.y; // Zbuf = -FN/(F-N) / z + F/(F-N)
+		depth_refraction = k_water_view_depth_constant.x / depth_refraction + k_water_view_depth_constant.y; // Zbuf = -FN/(F-N) / z + F/(F-N)
 		#ifdef APPLY_FIXES
 			depth_refraction= 1.0f-depth_refraction;
 		#endif
@@ -965,7 +965,7 @@ accum_pixel water_shading(s_water_interpolators INTERPOLATORS)
 		texcoord_refraction.y= 1.0 - texcoord_refraction.y;
 		texcoord_refraction= texcoord_refraction*2 - 1.0f;
 		float4 point_refraction= float4(texcoord_refraction, depth_refraction, 1.0f);
-		point_refraction= mul(point_refraction, k_ps_water_view_xform_inverse);
+		point_refraction= mul(point_refraction, k_water_view_xform_inverse);
 		point_refraction.xyz/= point_refraction.w;		
 
 		// hack refraction by depth only, requirement from Justin

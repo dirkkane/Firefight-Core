@@ -48,7 +48,8 @@ float4 albedo_ps(
 	in float3 tangent : TEXCOORD3,
 	in float3 fragment_to_camera_world : TEXCOORD4) : SV_Target0
 {
-	float4 albedo= float4(1.0f, 1.0f, 1.0f, 0.0f);
+	float approximate_specular_type= 0.66f;
+	float4 albedo= float4(1.0f, 1.0f, 1.0f, approximate_specular_type);
 	return albedo;
 }
 

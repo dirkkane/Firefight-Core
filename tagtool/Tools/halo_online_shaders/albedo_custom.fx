@@ -49,3 +49,24 @@ void calc_albedo_waterfall_ps(
 
 //
 
+
+// 
+// MULTIPLY MAP
+// 
+
+void calc_albedo_multiply_map_ps(
+	in float2 texcoord,
+	out float4 albedo,
+	in float3 normal,
+	in float4 misc,
+	in float3 view_dir,
+	in float2 vPos)
+{
+	// Current function is unknown since no implementation for this function exists by default
+	albedo = 0.0f;
+
+	apply_pc_albedo_modifier(albedo, normal);
+}
+
+
+//

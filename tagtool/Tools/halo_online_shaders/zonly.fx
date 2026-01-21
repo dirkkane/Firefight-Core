@@ -38,5 +38,5 @@ albedo_pixel z_only_ps()
 	float3 bump_normal = float3(0, 0, 0);
 	float4 albedo = float4(0, 0, 0, 1);
 	
-	return convert_to_albedo_target(albedo, bump_normal, 0.f, float3(0, 0, 0));
+	return convert_to_albedo_target(albedo, bump_normal, 0.f, float3(0, 0, 0), albedo.w);
 }

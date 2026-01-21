@@ -5,7 +5,11 @@
 #include "hlsl_vertex_types.fx"
 #include "utilities.fx"
 
+#ifdef APPLY_FIXES
+#define DISTORTION_MULTISAMPLED 0
+#else
 #define DISTORTION_MULTISAMPLED 1
+#endif
 #define LDR_ONLY 1
 
 #define LDR_ALPHA_ADJUST g_exposure.w

@@ -80,7 +80,8 @@ float4 default_ps(
 	//return float4(1.0f, 0.0f, 0.0f, 1.0f);
 
  	float4 color= sample2D(source_sampler, texcoord);
-	float color_to_nth = pow(color.g, modulation_factor.y); // gamma-enhanced monochrome channel to generate 'hot' white centers in new flares
+	float4 color_to_nth = pow(color, modulation_factor.y) * color;
+
 	float4 outColor = (color_to_nth * modulation_factor.x) + (color * tint_color); // color tinted external areas for cool exterior
 
  	float brightness = tint_color.a * ILLUM_EXPOSURE * scale.r * modulation_factor.z;

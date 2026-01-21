@@ -65,6 +65,17 @@ void calc_alpha_test_from_albedo_ps(
     output_alpha = 1.0;
 }
 
+void calc_alpha_test_texture_ps(
+	in float2 texcoord,
+	out float output_alpha)
+{
+	float alpha= sample2D(alpha_test_map, transform_texcoord(texcoord, alpha_test_map_xform)).a;
+
+	clip(alpha-0.5f);
+
+	output_alpha = alpha;
+}
+
 // Post albedo
 
 void calc_alpha_test_off_ps(
@@ -72,6 +83,7 @@ void calc_alpha_test_off_ps(
 	inout float output_alpha,
     in float albedo_alpha)
 {
+	output_alpha = 1.0;
 }
 
 void calc_alpha_test_on_ps(
@@ -89,4 +101,12 @@ void calc_alpha_test_from_albedo_ps(
 {
     clip(albedo_alpha - 0.5f);
     output_alpha = albedo_alpha;
+}
+
+void calc_alpha_test_texture_ps(
+	in float2 texcoord,
+	inout float output_alpha,
+    in float albedo_alpha)
+{
+	calc_alpha_test_texture_ps(texcoord, output_alpha);
 }

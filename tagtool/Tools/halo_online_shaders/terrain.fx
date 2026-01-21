@@ -631,7 +631,8 @@ albedo_pixel albedo_ps(
 	apply_pc_albedo_modifier(albedo, bump_normal);
 #endif
 
-	return convert_to_albedo_target(albedo, bump_normal, normal.w, tangent_frame[2]);
+	float approximate_specular_type= 0.667f;
+	return convert_to_albedo_target(albedo, bump_normal, normal.w, tangent_frame[2], approximate_specular_type);
 }
 
 

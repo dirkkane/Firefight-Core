@@ -41,6 +41,9 @@ float edge_tess_level(
 		distance_coefficient= distance_coefficient * distance_coefficient;
 		float angle_to_tess= ANGLE_TO_TESS_LEVEL_RATIO * distance_coefficient;
 
+		if ( !TEST_CATEGORY_OPTION(reach_compatibility, disabled) )
+			angle_to_tess= ANGLE_TO_TESS_LEVEL_RATIO * distance_coefficient * wave_tessellation_level;
+
 		float level= min( sin_theta * angle_to_tess / camera_sin, MAX_TESS_LEVEL);
 		return level;
 	}	

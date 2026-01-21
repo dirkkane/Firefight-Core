@@ -32,28 +32,20 @@ PARAM(float4, wrinkle_weights_b);
 #define SAMPLE_BUMP_TEXTURE sample_bumpmap
 #endif
 
-//#if defined(pc) && (DX_VERSION == 9)
-//#define BUMP_CONVERT(x)  ((x) * (255.0f / 127.f) - (128.0f / 127.f))
-//#else
-//#define BUMP_CONVERT(x)  (x)
-//#endif
-
 float3 sample_bumpmap(in texture_sampler_2d bump_map, in float2 texcoord)
-{
+{	
 #ifdef pc
-	float3 bump= sample2D(bump_map, texcoord).rgb;
-   bump.xy = BUMP_CONVERT(bump.xy);
+   float3 bump= bump_sample_unnormalized(bump_map, texcoord);
 #else					// xenon compressed bump textures don't calculate z automatically
 	float4 bump;
 	asm {
 		tfetch2D bump, texcoord, bump_map, FetchValidOnly= false
 	};
-#endif
-	
 	float2 bump2= bump.xy * bump.xy;
 	bump.z= min(bump2.x + bump2.y, 1.0f);
 	bump.z= sqrt(1 - bump.z);
-
+#endif
+	
 	bump.xyz= normalize(bump.xyz);		// ###ctchou $PERF do we need to normalize?  why?
 	
 	return bump.xyz;

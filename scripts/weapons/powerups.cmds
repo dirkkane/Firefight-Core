@@ -5,42 +5,42 @@ SaveTagChanges
 Exit
 
 edittag objects\characters\masterchief\mp_masterchief\mp_masterchief.biped
-addblockelements RevivingEquipment 3
-setfield RevivingEquipment[0].Instance objects\powerups\health_pack\health_pack_small.equipment
-setfield RevivingEquipment[1].Instance objects\powerups\health_pack\health_pack_medium.equipment
-setfield RevivingEquipment[2].Instance objects\powerups\health_pack\health_pack_large.equipment
+addblockelements HealthPacks 3
+setfield HealthPacks[0].Instance objects\powerups\health_pack\health_pack_small.equipment
+setfield HealthPacks[1].Instance objects\powerups\health_pack\health_pack_medium.equipment
+setfield HealthPacks[2].Instance objects\powerups\health_pack\health_pack_large.equipment
 savetagchanges
 exit
 
 edittag objects\characters\masterchief\masterchief.biped
-addblockelements RevivingEquipment 3
-setfield RevivingEquipment[0].Instance objects\powerups\health_pack\health_pack_small.equipment
-setfield RevivingEquipment[1].Instance objects\powerups\health_pack\health_pack_medium.equipment
-setfield RevivingEquipment[2].Instance objects\powerups\health_pack\health_pack_large.equipment
+addblockelements HealthPacks 3
+setfield HealthPacks[0].Instance objects\powerups\health_pack\health_pack_small.equipment
+setfield HealthPacks[1].Instance objects\powerups\health_pack\health_pack_medium.equipment
+setfield HealthPacks[2].Instance objects\powerups\health_pack\health_pack_large.equipment
 savetagchanges
 exit
 
 edittag objects\powerups\health_pack\health_pack_large.equipment
 setfield PickedUpMessage healthpack_picked_up
 setfield PickupSound sound\game_sfx\ui\pickup_health.sound
-setfield ActivationEffect objects\powerups\health_pack\fx\activate_large.effect
-setfield ActiveEffect null
+setfield ActivateEffect objects\powerups\health_pack\fx\activate_large.effect
+setfield RunningEffect null
 savetagchanges
 exit
 
 edittag objects\powerups\health_pack\health_pack_medium.equipment
 setfield PickedUpMessage healthpack_picked_up
 setfield PickupSound sound\game_sfx\ui\pickup_health.sound
-setfield ActivationEffect objects\powerups\health_pack\fx\activate_large.effect
-setfield ActiveEffect null
+setfield ActivateEffect objects\powerups\health_pack\fx\activate_large.effect
+setfield RunningEffect null
 savetagchanges
 exit
 
 edittag objects\powerups\health_pack\health_pack_small.equipment
 setfield PickedUpMessage healthpack_picked_up
 setfield PickupSound sound\game_sfx\ui\pickup_health.sound
-setfield ActivationEffect objects\powerups\health_pack\fx\activate_large.effect
-setfield ActiveEffect null
+setfield ActivateEffect objects\powerups\health_pack\fx\activate_large.effect
+setfield RunningEffect null
 savetagchanges
 exit
 

@@ -10,7 +10,7 @@
 #define k_vs_water_memexport_addr CONSTANT_NAME(130)
 #define k_vs_water_index_offset CONSTANT_NAME(131)
 
-//#define k_ps_water_view_depth_constant CONSTANT_NAME(217)
+#define k_ps_water_view_depth_constant CONSTANT_NAME(217)
 
 #define k_ps_water_is_lightmap_exist 0
 #define k_ps_water_is_interaction 1
@@ -42,11 +42,11 @@
 #define k_vs_water_ripple_buffer_center CONSTANT_NAME(134)
 #define k_vs_water_hidden_from_compiler CONSTANT_NAME(135)
 
-//#define k_ps_water_view_xform_inverse CONSTANT_NAME(213)
-//#define k_ps_water_player_view_constant CONSTANT_NAME(218)
-//#define k_ps_water_camera_position CONSTANT_NAME(219)
-//#define k_ps_water_underwater_murkiness CONSTANT_NAME(220)
-//#define k_ps_water_underwater_fog_color CONSTANT_NAME(221)
+#define k_ps_water_view_xform_inverse CONSTANT_NAME(213)
+#define k_ps_water_player_view_constant CONSTANT_NAME(218)
+#define k_ps_water_camera_position CONSTANT_NAME(219)
+#define k_ps_water_underwater_murkiness CONSTANT_NAME(220)
+#define k_ps_water_underwater_fog_color CONSTANT_NAME(221)
 
 #elif DX_VERSION == 11
 

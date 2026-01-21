@@ -231,7 +231,8 @@ albedo_pixel albedo_ps(
 	albedo.w= output_alpha;
 #endif
 	
-	return convert_to_albedo_target(albedo, vsout.normal.xyz, vsout.normal.w, vsout.normal.xyz);
+	float approximate_specular_type= 1.0f;
+	return convert_to_albedo_target(albedo, vsout.normal.xyz, vsout.normal.w, vsout.normal.xyz, approximate_specular_type);
 }
 
 PARAM(float, diffuse_coefficient);

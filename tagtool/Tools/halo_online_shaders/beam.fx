@@ -55,6 +55,7 @@ struct s_beam_render_vertex
     float m_palette;	// avoid using interpolator for constant-per-profile value?
     float4 m_color;		// COLOR semantic will not clamp to [0,1].
     float3 m_color_add;		// COLOR semantic will not clamp to [0,1].
+	float m_depth;
 };
 
 struct s_beam_interpolators
@@ -72,7 +73,7 @@ s_beam_interpolators write_beam_interpolators(s_beam_render_vertex VERTEX)
 	INTERPOLATORS.m_position0= VERTEX.m_position;
 	INTERPOLATORS.m_color0= VERTEX.m_color;
 	INTERPOLATORS.m_color1= float4(VERTEX.m_color_add, VERTEX.m_black_point);
-	INTERPOLATORS.m_texcoord0= float4(VERTEX.m_texcoord, VERTEX.m_palette, 0.0f);
+	INTERPOLATORS.m_texcoord0= float4(VERTEX.m_texcoord, VERTEX.m_palette, VERTEX.m_depth);
 
 	return INTERPOLATORS;
 }
@@ -87,6 +88,7 @@ s_beam_render_vertex read_beam_interpolators(s_beam_interpolators INTERPOLATORS)
     VERTEX.m_black_point = INTERPOLATORS.m_color1.w;
     VERTEX.m_texcoord = INTERPOLATORS.m_texcoord0.xy;
     VERTEX.m_palette = INTERPOLATORS.m_texcoord0.z;
+	VERTEX.m_depth=	INTERPOLATORS.m_texcoord0.w;
 
     return VERTEX;
 }
@@ -274,6 +276,9 @@ s_beam_interpolators default_vs(
 	OUT.m_black_point= STATE.m_black_point;
 	OUT.m_palette= STATE.m_palette;
 
+	float depth= dot(-Camera_Forward, Camera_Position-world_pos.xyz);
+	OUT.m_depth= depth;
+
     return write_beam_interpolators(OUT);
 }
 #endif	//#ifdef VERTEX_SHADER
@@ -393,35 +398,34 @@ float4 sample_diffuse(float2 texcoord, float palette_v, float depth_alpha)
 	}
 }
 
-//float compute_depth_fade(float2 screen_coords, float depth, float range)
-//{
-//#if (DX_VERSION == 9)
-//	if ((TEST_CATEGORY_OPTION(depth_fade, on) || TEST_CATEGORY_OPTION(depth_fade, palette_shift)) && !TEST_CATEGORY_OPTION(blend_mode, opaque))
-//	{
-//		float2 screen_texcoord= (screen_coords.xy + float2(0.5f, 0.5f)) / texture_size.xy;
-//		float scene_depth= sample2D(depth_buffer, screen_texcoord).x;
-//		float particle_depth= depth;
-//		float delta_depth= scene_depth - particle_depth;
-//		return saturate(delta_depth / range);
-//	}
-//	else
-//#endif // !pc
-//	{
-//		return 1.0f;
-//	}
-//}
+float compute_depth_fade(float2 screen_coords, float depth, float range)
+{
+#if (DX_VERSION == 9)
+	if ((TEST_CATEGORY_OPTION(depth_fade, on) || TEST_CATEGORY_OPTION(depth_fade, palette_shift)) && !TEST_CATEGORY_OPTION(blend_mode, opaque))
+	{
+		float2 screen_texcoord= (screen_coords.xy + float2(0.5f, 0.5f)) / texture_size.xy;
+		float scene_depth= sample2D(depth_buffer, screen_texcoord).x;
+		float particle_depth= depth;
+		float delta_depth= scene_depth - particle_depth;
+		return saturate(delta_depth / range);
+	}
+	else
+#endif // !pc
+	{
+		return 1.0f;
+	}
+}
 
 typedef accum_pixel s_beam_render_pixel_out;
-s_beam_render_pixel_out default_ps(s_beam_interpolators INTERPOLATORS)
+s_beam_render_pixel_out default_ps(s_beam_interpolators INTERPOLATORS, SCREEN_POSITION_INPUT(screen_coords))
 {
 	s_beam_render_vertex IN= read_beam_interpolators(INTERPOLATORS);
 
-	//float depth_fade=	compute_depth_fade(screen_coords, IN.m_depth, depth_fade_range);
-	float depth_fade = 1.0f;
+	float depth_fade=	compute_depth_fade(screen_coords, IN.m_depth, depth_fade_range);
 
 	float4 blended= sample_diffuse(IN.m_texcoord, IN.m_palette, depth_fade);
 	
-	//blended.w *= depth_fade;
+	blended.w *= depth_fade;
 
 	IF_CATEGORY_OPTION(black_point, on)
 	{

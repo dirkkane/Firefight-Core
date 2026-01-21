@@ -367,7 +367,7 @@ default_ps(
 	//float3 geo_normal = (sample2D(geo_normal_texture, screen_coords).xyz - 0.5f) * 2.0f; // workaround for xenon shadowing parity
 				
 	float3 fake_normal = float3(0,0,1); // up
-	return convert_to_albedo_target(color, fake_normal, position_w, fake_normal);
+	return convert_to_albedo_target(color, fake_normal, position_w, fake_normal, color.w);
 #else   
 	return color;
 #endif // pc

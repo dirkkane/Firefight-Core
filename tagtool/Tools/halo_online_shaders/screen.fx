@@ -16,6 +16,7 @@
 #include "texture_xform.fx"
 #include "hlsl_vertex_types.fx"
 #include "render_target.fx"
+#include "function_utilities.fx"
 #include "blend.fx"
 
 #ifdef VERTEX_SHADER
@@ -29,6 +30,7 @@
 VERTEX_CONSTANT(float4, pixelspace_xform,			c250);
 VERTEX_CONSTANT(float4, screenspace_sampler_xform,	c251);
 PIXEL_CONSTANT(float4,  screenspace_xform,			c200);
+PIXEL_CONSTANT(float4x4, pixel_to_world_relative,   c204);
 
 #undef LDR_gamma2
 #include "hlsl_constant_mapping.fx"
@@ -49,6 +51,14 @@ void default_vs(
 	texcoord.zw= vertex.texcoord; 
 }
 
+void albedo_vs(
+	in vertex_type vertex,
+	out float4 position : SV_Position,
+	out float4 texcoord : TEXCOORD0)
+{
+	default_vs(vertex, position, texcoord);
+}
+
 #define CALC_WARP(type) calc_warp_##type
 
 sampler2D	warp_map;
@@ -62,22 +72,14 @@ float4 calc_warp_none(in float4 original_texcoord)
 
 float4 calc_warp_pixel_space(in float4 original_texcoord)
 {
-	#ifdef APPLY_FIXES
-	float2 warp=	BUMP_CONVERT(tex2D(warp_map,	transform_texcoord(original_texcoord.zw, warp_map_xform)).xy);
-	#else
-	float2 warp=	tex2D(warp_map,	transform_texcoord(original_texcoord.zw, warp_map_xform)).xy;
-	#endif
+	float2 warp=	bump_sample_unnormalized(warp_map,	transform_texcoord(original_texcoord.zw, warp_map_xform)).xy;
 	original_texcoord.zw += warp * warp_amount;
 	return original_texcoord;
 }
 
 float4 calc_warp_screen_space(in float4 original_texcoord)
 {
-	#ifdef APPLY_FIXES
-	float2 warp=	BUMP_CONVERT(tex2D(warp_map,	transform_texcoord(original_texcoord.xy, warp_map_xform)).xy);
-	#else
-	float2 warp=	tex2D(warp_map,	transform_texcoord(original_texcoord.xy, warp_map_xform)).xy;
-	#endif
+	float2 warp=	bump_sample_unnormalized(warp_map,	transform_texcoord(original_texcoord.xy, warp_map_xform)).xy;
 	warp = warp.xy * warp_amount;
 	original_texcoord.xy += warp;
 	
@@ -93,25 +95,93 @@ sampler2D	base_map;
 float4		base_map_xform;
 sampler2D	detail_map;
 float4		detail_map_xform;
+sampler2D   normal_map;
+float4      normal_map_xform;
+sampler2D   stencil_map;
+float4      stencil_map_xform;
+sampler2D   palette;
+float       palette_v;
+float4      camera_forward;
 
-float4 calc_base_single_screen_space(in float4 texcoord)
+float2 inv_transform_texcoord(in float2 texcoord, in float4 xform)
 {
-	float4	base=	tex2D(base_map, transform_texcoord(texcoord.xy, base_map_xform));
+	return (texcoord - xform.zw) / xform.xy;
+}
+
+float4 calc_base_single_screen_space(in float4 texcoord, in bool is_screenshot)
+{
+	float2 uv = transform_texcoord(texcoord.xy, base_map_xform);
+	if (is_screenshot)
+	{
+		uv = inv_transform_texcoord(uv, screenspace_xform);
+	}
+
+	float4	base=	tex2D(base_map, uv);
 	return	base;
 }
 
-float4 calc_base_single_pixel_space(in float4 texcoord)
+float4 calc_base_single_pixel_space(in float4 texcoord, in bool is_screenshot)
 {
 	float4	base=	tex2D(base_map,   transform_texcoord(texcoord.zw, base_map_xform));
 	return	base;
 }
 
+float4 calc_base_single_target_space(in float4 texcoord, in bool is_screenshot)
+{
+	float4	base=	sample2D(base_map,   transform_texcoord(texcoord.xy, base_map_xform));
+	return	base;
+}
 
+float4 calc_base_normal_map_edge_shade(in float4 texcoord, in bool is_screenshot)
+{
+	float4	world_relative=	mul(float4(texcoord.zw, 0.2f, 1.0f), transpose(pixel_to_world_relative));
+	world_relative.xyz=	normalize(world_relative.xyz);
+
+	float3	normal=			sample2D(normal_map,	transform_texcoord(texcoord.xy,	normal_map_xform)).rgb * 2.0 - 1.0;
+	float2	palette_coord=	float2(-dot(normal, world_relative.xyz), palette_v);
+	float4	base=			sample2D(palette, palette_coord);
+
+	return base;
+}
+
+float4 calc_base_normal_map_edge_stencil(in float4 texcoord, in bool is_screenshot)
+{
+	float4	world_relative=	mul(float4(texcoord.zw, 0.2f, 1.0f), transpose(pixel_to_world_relative));
+	world_relative.xyz=	normalize(world_relative.xyz);
+
+	float3	normal=			sample2D(normal_map,	transform_texcoord(texcoord.xy,	normal_map_xform)).rgb * 2.0 - 1.0;
+	float2	palette_coord=	float2(-dot(normal, world_relative.xyz), palette_v);
+	float4	base=			sample2D(palette, palette_coord);
+
+#if DX_VERSION == 9
+	float	stencil=		sample2D(stencil_map,  transform_texcoord(texcoord.xy, stencil_map_xform)).b;
+	base.a *= TEST_BIT(stencil * 255, 6);
+#else
+	float2 uv = transform_texcoord(texcoord.xy, stencil_map_xform);
+
+	uint2 dim;
+	stencil_map.t.GetDimensions(dim.x, dim.y);
+
+	uint2 coord = uint2(uv * dim);
+
+#ifdef durango
+	// G8 SRVs are broken on Durango - components are swapped
+	uint stencil= stencil_map.t.Load(uint3(coord, 0)).r;
+#else
+	uint stencil= stencil_map.t.Load(uint3(coord, 0)).g;
+#endif
+	base.a *= ((stencil >> 6) & 1);
+#endif
+
+	return base;
+}
 
 #define CALC_OVERLAY(type, stage) calc_overlay_##type(color, texcoord, detail_map_##stage, detail_map_##stage##_xform, detail_mask_##stage, detail_mask_##stage##_xform, detail_fade_##stage, detail_multiplier_##stage)
 
 float4		tint_color;
 float4		add_color;
+float4      intensity_color_u;
+float4      intensity_color_v;
 sampler2D	detail_map_a;
 float4		detail_map_a_xform;
 sampler2D	detail_mask_a;
@@ -162,6 +232,17 @@ float4 calc_overlay_detail_masked_screen_space(in float4 color, in float4 texcoo
 
 }
 
+float4 calc_overlay_palette_lookup(in float4 color, in float4 texcoord, sampler2D detail_map, in float4 detail_map_xform, sampler2D detail_mask_map, in float4 detail_mask_map_xform, in float detail_fade, in float detail_multiplier)
+{
+	float3	vec=	color.rgb;
+	float2 palette_coord=	float2(
+								dot(vec.rgb, intensity_color_u.rgb),
+								dot(vec.rgb, intensity_color_v.rgb));
+	float4	detail=			sample2D(detail_map, palette_coord);
+	color=	lerp(color, detail, detail_fade);
+	return color;
+}
+
 
 float fade;
 
@@ -185,17 +266,32 @@ float4 calc_fade_out(in float4 color)
 	return color;
 }
 
-
-accum_pixel default_ps(
-	in float4 original_texcoord : TEXCOORD0)
+accum_pixel pixel_shader(
+	SCREEN_POSITION_INPUT(screen_position),
+	in float4 original_texcoord,
+	in bool is_screenshot)
 {
 	float4 texcoord= CALC_WARP(warp_type)(original_texcoord);
 	
-	float4 color =   CALC_BASE(base_type)(texcoord);
+	float4 color =   CALC_BASE(base_type)(texcoord, is_screenshot);
 	color=			 CALC_OVERLAY(overlay_a_type, a);
 	color=			 CALC_OVERLAY(overlay_b_type, b);
 	
 	color=			 calc_fade_out(color);
 	
 	return CONVERT_TO_RENDER_TARGET_FOR_BLEND(color, false, false);
+}
+
+accum_pixel default_ps(
+	SCREEN_POSITION_INPUT(screen_position),
+	in float4 original_texcoord : TEXCOORD0)
+{
+	return pixel_shader(screen_position, original_texcoord, false);
+}
+
+accum_pixel albedo_ps(
+	SCREEN_POSITION_INPUT(screen_position),
+	in float4 original_texcoord : TEXCOORD0)
+{
+	return pixel_shader(screen_position, original_texcoord, true);
 }

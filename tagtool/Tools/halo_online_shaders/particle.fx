@@ -34,22 +34,23 @@ CATEGORY_PARAM(category_blend_mode);
 #ifndef category_depth_fade
 CATEGORY_PARAM(category_depth_fade);
 #endif
-#ifndef category_lighting
-CATEGORY_PARAM(category_lighting);
-#endif
 #ifndef category_fog
 CATEGORY_PARAM(category_fog);
-#endif
-#ifndef category_specialized_rendering
-CATEGORY_PARAM(category_specialized_rendering);
 #endif
 #ifndef category_frame_blend
 CATEGORY_PARAM(category_frame_blend);
 #endif
+#ifndef category_lighting
+CATEGORY_PARAM(category_lighting);
+#endif
 #ifndef category_self_illumination
 CATEGORY_PARAM(category_self_illumination);
+#endif
+#ifndef category_specialized_rendering
+CATEGORY_PARAM(category_specialized_rendering);
 #endif
 
 PARAM(float, depth_fade_range);
 
 #include "particle_render.hlsl"
+#include "particle_render_fast.fx"

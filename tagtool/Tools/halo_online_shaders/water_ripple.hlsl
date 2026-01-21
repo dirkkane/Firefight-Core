@@ -10,6 +10,7 @@ Copyright (c) Microsoft Corporation, 2005. all rights reserved.
 
 //This comment causes the shader compiler to be invoked for certain vertex types and entry points
 //@generate s_ripple_vertex
+//@generate s_screen_vertex
 //@entry default
 //@entry albedo
 //@entry dynamic_light
@@ -905,7 +906,7 @@ accum_pixel underwater_ps( s_underwater_interpolators INTERPOLATORS )
 	float2 texcoord_ss= INTERPOLATORS.position_ss.xy;
 	texcoord_ss= texcoord_ss / 2 + 0.5;
 	texcoord_ss.y= 1 - texcoord_ss.y;
-	texcoord_ss= k_ps_water_player_view_constant.xy + texcoord_ss*k_ps_water_player_view_constant.zw;
+	texcoord_ss= k_water_player_view_constant.xy + texcoord_ss*k_water_player_view_constant.zw;
 #endif
 
 	// get pixel position in world space
@@ -919,7 +920,7 @@ accum_pixel underwater_ps( s_underwater_interpolators INTERPOLATORS )
 #endif
 	
 	float4 pixel_position= float4(INTERPOLATORS.position_ss.xy, pixel_depth, 1.0f);		
-	pixel_position= mul(pixel_position, k_ps_water_view_xform_inverse);
+	pixel_position= mul(pixel_position, k_water_view_xform_inverse);
 	pixel_position.xyz/= pixel_position.w;
 	distance= length(k_ps_camera_position - pixel_position.xyz);	
 
@@ -945,7 +946,7 @@ accum_pixel underwater_ps( s_underwater_interpolators INTERPOLATORS )
 
 accum_pixel underwater_new_ps( s_underwater_interpolators INTERPOLATORS ) : COLOR
 {
-	float scene_depth = (k_ps_water_view_depth_constant.x / tex2D(tex_depth_buffer, INTERPOLATORS.position_ss.xy).r) + k_ps_water_view_depth_constant.y;
+	float scene_depth = (k_water_view_depth_constant.x / tex2D(tex_depth_buffer, INTERPOLATORS.position_ss.xy).r) + k_water_view_depth_constant.y;
     float3 scene_color = tex2D(tex_ldr_buffer, INTERPOLATORS.position_ss.xy).rgb;
 
 	float4 transform_tex = float4(INTERPOLATORS.position_ss.xy, 1.0f - scene_depth, 1.0f);
@@ -953,7 +954,7 @@ accum_pixel underwater_new_ps( s_underwater_interpolators INTERPOLATORS ) : COLO
     transform_tex.xy -= 0.5f;
     transform_tex.xy /= 0.5f;
     
-    float4 water_view = mul(transform_tex, k_ps_water_view_xform_inverse);
+    float4 water_view = mul(transform_tex, k_water_view_xform_inverse);
     
     water_view.xyz = water_view.xyz / water_view.w - k_ps_camera_position.xyz;
     float view_murkiness = rcp(rsqrt(dot(water_view.xyz, water_view.xyz))) * k_ps_underwater_murkiness;

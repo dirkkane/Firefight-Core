@@ -23,6 +23,7 @@
 #include "albedo.fx"
 #include "parallax.fx"
 #include "bump_mapping.fx"
+#include "extended_bump_mapping.fx"
 #include "self_illumination.fx"
 #include "self_illumination_halogram.fx"
 #include "specular_mask.fx"

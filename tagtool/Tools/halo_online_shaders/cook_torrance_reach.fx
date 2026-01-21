@@ -54,7 +54,7 @@ float fresnel_curve_steepness;
 // marco
 #define SQR(x) ((x)*(x))
 
-#include "vmf_util.fx"
+#include "diffuse_specular.fx"
 
 
 float get_material_cook_torrance_reach_specular_power(float power_or_roughness)

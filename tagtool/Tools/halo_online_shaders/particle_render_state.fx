@@ -65,7 +65,7 @@ struct s_mesh_variant_list
 #endif
 };
 
-#define _max_sprite_frames 15
+#define _max_sprite_frames 63
 
 // These structures are for support of texture animation.  They need to match the declaration of:
 //		c_particle_definition::s_gpu_frame_data

@@ -13,7 +13,7 @@ Copyright (c) Microsoft Corporation, 2007. all rights reserved.
 VERTEX_CONSTANT(float4, k_water_memexport_addr, k_vs_water_memexport_addr)
 VERTEX_CONSTANT(float4, k_water_index_offset, k_vs_water_index_offset)
 
-PIXEL_CONSTANT(float4, k_ps_water_view_depth_constant, CONSTANT_NAME(217))
+PIXEL_CONSTANT(float4, k_water_view_depth_constant, k_ps_water_view_depth_constant)
 
 BOOL_CONSTANT(k_is_lightmap_exist, k_ps_water_is_lightmap_exist) // todo: was 100-103 previously, but there are only 16 of them [25/01/2013 paul.smirnov]
 BOOL_CONSTANT(k_is_water_interaction, k_ps_water_is_interaction)
@@ -53,12 +53,12 @@ VERTEX_CONSTANT(float2, k_ripple_buffer_center, k_vs_water_ripple_buffer_center)
 VERTEX_CONSTANT(float4, hidden_from_compiler, k_vs_water_hidden_from_compiler)
 
 #ifndef PC_CPU
-   PIXEL_CONSTANT(float4x4, k_ps_water_view_xform_inverse, CONSTANT_NAME(213))
+   PIXEL_CONSTANT(float4x4, k_water_view_xform_inverse, k_ps_water_view_xform_inverse)
 #endif
-PIXEL_CONSTANT(float4, k_ps_water_player_view_constant, CONSTANT_NAME(218))
-PIXEL_CONSTANT(float4, k_ps_camera_position, CONSTANT_NAME(219))
-PIXEL_CONSTANT(float, k_ps_underwater_murkiness, CONSTANT_NAME(220))
-PIXEL_CONSTANT(float3, k_ps_underwater_fog_color, CONSTANT_NAME(221))
+PIXEL_CONSTANT(float4, k_water_player_view_constant, k_ps_water_player_view_constant)
+PIXEL_CONSTANT(float4, k_ps_camera_position, k_ps_water_camera_position)
+PIXEL_CONSTANT(float, k_ps_underwater_murkiness, k_ps_water_underwater_murkiness)
+PIXEL_CONSTANT(float3, k_ps_underwater_fog_color, k_ps_water_underwater_fog_color)
 
 #elif DX_VERSION == 11
 

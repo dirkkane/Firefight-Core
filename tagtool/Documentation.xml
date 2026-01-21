@@ -9,11 +9,6 @@
             Bitwise flags for <see cref="T:TagTool.Ai.AiVocalizationResponse"/>.
             </summary>
         </member>
-        <member name="T:TagTool.Ai.CharacterGeneralFlags">
-            <summary>
-            Bitwise flags for <see cref="T:TagTool.Ai.CharacterGeneralProperties"/>.
-            </summary>
-        </member>
         <member name="T:TagTool.Ai.DialogueTypeEnum">
             <summary>
             WARNING: Halo 5 Forge Definitions
@@ -22,11 +17,6 @@
         <member name="T:TagTool.Ai.PatternFlags">
             <summary>
             Bitwise flags for <see cref="T:TagTool.Ai.VocalizationPattern"/>.
-            </summary>
-        </member>
-        <member name="T:TagTool.Ai.VocalizationFlags">
-            <summary>
-            Bitwise flags for <see cref="T:TagTool.Ai.VocalizationDefinition"/>.
             </summary>
         </member>
         <member name="T:TagTool.Analysis.ITagElementGuess">
@@ -119,6 +109,11 @@
             Dispatches each guess in the layout to a visitor object.
             </summary>
             <param name="visitor">The visitor object.</param>
+        </member>
+        <member name="M:TagTool.Animations.AnimationSorter.Sort(TagTool.Tags.Definitions.ModelAnimationGraph)">
+            <summary>
+            Sort the animation blocks for runtime (binary search)
+            </summary>
         </member>
         <member name="T:TagTool.Audio.Compression">
             <summary>
@@ -217,7 +212,7 @@
             Encoded size, to get the real size apply a mask of 0x3FFFFF.
             </summary>
         </member>
-        <member name="F:TagTool.Audio.PitchRange.RuntimePermutationFlags">
+        <member name="F:TagTool.Audio.PitchRange.XsyncFlags">
             <summary>
             keeps track of played permutations
             </summary>
@@ -323,6 +318,21 @@
             sound will play using the current scale modifier multiplied by the values specified above. (0 values are ignored.)
             </summary>
         </member>
+        <member name="M:TagTool.Audio.Utils.SoundExtractorGen2.ExtractSound(TagTool.Cache.GameCacheGen2,TagTool.Tags.Definitions.Gen2.SoundCacheFileGestalt,TagTool.Tags.Definitions.Gen2.Sound,System.Int32,System.Int32)">
+            <summary>
+            Extracts raw sound data for a given permutation
+            </summary>
+        </member>
+        <member name="M:TagTool.Audio.Utils.SoundExtractorGen3.ExtractSound(TagTool.Cache.GameCacheGen3,TagTool.Tags.Definitions.SoundCacheFileGestalt,TagTool.Tags.Definitions.Sound,System.String,System.Int32,System.Int32)">
+            <summary>
+            Extracts raw sound data for a given permutation
+            </summary>
+        </member>
+        <member name="M:TagTool.Audio.Utils.SoundExtractorHO.ExtractSound(TagTool.Cache.GameCacheHaloOnlineBase,TagTool.Tags.Definitions.Sound,System.Int32,System.Int32)">
+            <summary>
+            Extracts raw sound data for a given permutation
+            </summary>
+        </member>
         <member name="F:TagTool.Bitmaps.BitmapCurveMode.ChooseBest">
             <summary>
             Will choose FAST if your bitmap is bright
@@ -371,20 +381,6 @@
         <member name="M:TagTool.Bitmaps.BitmapFormatUtils.GetBlockDimension(TagTool.Bitmaps.BitmapFormat)">
             <summary>
             Get the dimension of a block in block compressed formats.
-            </summary>
-            <param name="format"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TagTool.Bitmaps.BitmapFormatUtils.GetCompressionFactor(TagTool.Bitmaps.BitmapFormat)">
-            <summary>
-            Get the compression factor of a bitmap format.
-            </summary>
-            <param name="format"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TagTool.Bitmaps.BitmapFormatUtils.GetMinimalVirtualSize(TagTool.Bitmaps.BitmapFormat)">
-            <summary>
-            Get the minimal virtual size of an Xbox 360 Bitmap
             </summary>
             <param name="format"></param>
             <returns></returns>
@@ -476,14 +472,6 @@
             <param name="c1"></param>
             <returns></returns>
         </member>
-        <member name="M:TagTool.Bitmaps.BitmapUtils.GetVirtualSize(System.Int32,System.Int32)">
-            <summary>
-            Get the virtual size of an Xbox 360 bitmap.
-            </summary>
-            <param name="size"></param>
-            <param name="minimalSize"></param>
-            <returns></returns>
-        </member>
         <member name="M:TagTool.Bitmaps.BitmapUtils.GetEquivalentBitmapFormat(TagTool.Bitmaps.BitmapFormat)">
             <summary>
             When converting xbox bitmap formats (and other rare formats), get the standard format that it can be converted it without loss
@@ -573,6 +561,16 @@
             Converts a Halo 3 Scenario chunk (levl) to ODST format (HO)
             </summary>
         </member>
+        <member name="P:TagTool.BlamFile.CampaignFileBuilder.CampaignName">
+            <summary>
+            Optional Campaign Display Name
+            </summary>
+        </member>
+        <member name="P:TagTool.BlamFile.CampaignFileBuilder.CampaignDescription">
+            <summary>
+            Optional Campaign Description
+            </summary>
+        </member>
         <member name="P:TagTool.BlamFile.MapFileBuilder.MapName">
             <summary>
             Optional map Display Name (overrides MapInfo)
@@ -592,6 +590,24 @@
             <summary>
             Optional map variant
             </summary>
+        </member>
+        <member name="M:TagTool.BlamFile.MapFileUpdater.UpdateMapFiles(TagTool.Cache.GameCacheHaloOnlineBase,System.String,System.Boolean)">
+            <summary>
+            Creates or updates the map files for each scenario tag in the cache
+            </summary>
+            <param name="cache">Cache</param>
+            <param name="mapInfoDir">Path to the map info directory</param>
+            <param name="forceUpdate">Force recreation of the .map file</param>
+        </member>
+        <member name="M:TagTool.BlamFile.MapFileUpdater.UpdateMapFile(TagTool.Cache.GameCacheHaloOnlineBase,TagTool.Cache.CachedTag,TagTool.Tags.Definitions.Scenario,System.String,System.Boolean)">
+            <summary>
+            Creates or updates the map file for the given scenario
+            </summary>
+            <param name="cache">Cache</param>
+            <param name="scnrTag">Scenario Tag</param>
+            <param name="scnr">Scenario Definition</param>
+            <param name="mapInfoDir">Path to the map info directory</param>
+            <param name="forceUpdate">Force recreation of the .map file</param>
         </member>
         <member name="T:TagTool.BlamFile.MapVariantGenerator">
             <summary>
@@ -653,12 +669,12 @@
             Section table in gen3 cache files.
             </summary>
         </member>
-        <member name="F:TagTool.Cache.CacheFileSectionTable.SectionAddressToOffsets">
+        <member name="F:TagTool.Cache.CacheFileSectionTable.SectionOffsets">
             <summary>
             Add this value to the section virtual address to get the file offset
             </summary>
         </member>
-        <member name="F:TagTool.Cache.CacheFileSectionTable.Sections">
+        <member name="F:TagTool.Cache.CacheFileSectionTable.OriginalSectionBounds">
             <summary>
             Sections in a map file, ordered and offset is determined by the sizes after the map header.
             </summary>
@@ -678,17 +694,17 @@
             <param name="address"></param>
             <returns></returns>
         </member>
-        <member name="T:TagTool.Cache.CacheFileSection">
+        <member name="T:TagTool.Cache.CacheFileSectionFileBounds">
             <summary>
             A virtual section of a cache file.
             </summary>
         </member>
-        <member name="F:TagTool.Cache.CacheFileSection.Offset">
+        <member name="F:TagTool.Cache.CacheFileSectionFileBounds.Offset">
             <summary>
             The virtual address of the cache file interop section.
             </summary>
         </member>
-        <member name="F:TagTool.Cache.CacheFileSection.Size">
+        <member name="F:TagTool.Cache.CacheFileSectionFileBounds.Size">
             <summary>
             The size of the cache file interop section.
             </summary>
@@ -710,20 +726,17 @@
             Serializer is responsible for properly reading/writing to file.
             </summary>
         </member>
-        <member name="M:TagTool.Cache.CacheVersionDetection.DetectFromTimestamp(System.Int64,TagTool.Cache.CacheVersion@)">
+        <member name="M:TagTool.Cache.CacheVersionDetection.DetectFromTimestamp(System.String)">
             <summary>
             Detects the engine that a tags.dat was built for based on its timestamp.
             </summary>
             <param name="timestamp">The timestamp.</param>
-            <param name="closestGuess">On return, the closest guess for the engine's version.</param>
-            <returns>The engine version if the timestamp matched directly, otherwise <see cref="F:TagTool.Cache.CacheVersion.Unknown"/>.</returns>
         </member>
         <member name="M:TagTool.Cache.CacheVersionDetection.GetTimestamp(TagTool.Cache.CacheVersion)">
             <summary>
             Gets the timestamp for a version.
             </summary>
             <param name="version">The version.</param>
-            <returns>The timestamp, or -1 for <see cref="F:TagTool.Cache.CacheVersion.Unknown"/>.</returns>
         </member>
         <member name="M:TagTool.Cache.CacheVersionDetection.GetFromBuildName(System.String,TagTool.Cache.CacheVersion@,TagTool.Cache.CachePlatform@)">
             <summary>
@@ -796,12 +809,6 @@
             Timestamps in here map directly to a <see cref="T:TagTool.Cache.CacheVersion"/> value.
             </summary>
         </member>
-        <member name="F:TagTool.Cache.CacheVersionDetection.VersionTimestamps">
-            <summary>
-            tags.dat timestamps for each game version.
-            Timestamps in here should correspond directly to <see cref="T:TagTool.Cache.CacheVersion"/> enum values (excluding <see cref="F:TagTool.Cache.CacheVersion.Unknown"/>).
-            </summary>
-        </member>
         <member name="F:TagTool.Cache.CachePlatform.All">
             <summary>
             Belongs to both the original version and the MCC version
@@ -817,14 +824,64 @@
             Belongs only to the MCC version
             </summary>
         </member>
-        <member name="F:TagTool.Cache.Gen2.TagCacheGen2.VirtualAddress">
+        <member name="T:TagTool.Cache.Gen2.Resolvers.StringIdResolverHalo2">
+            <summary>
+            StringID resolver for Halo 2.
+            </summary>
+        </member>
+        <member name="F:TagTool.Cache.Gen2.TagCacheGen2.TagsVirtualBase">
             <summary>
             Address in memory (xbox) of the tag data. For Halo 2 Vista, this values turns out to be 0. Every address in the tag data is converted to an offset using this value.
             </summary>
         </member>
-        <member name="T:TagTool.Cache.StringIdResolverHalo2">
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHalo3">
             <summary>
             StringID resolver for Halo 3.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHalo3Alpha">
+            <summary>
+            StringID resolver for Halo 3 Alpha.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHalo3Beta">
+            <summary>
+            StringID resolver for Halo 3 Beta.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHalo3March7Delta">
+            <summary>
+            StringID resolver for Halo 3 March 7 Delta.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHalo3MarchDelta">
+            <summary>
+            StringID resolver for Halo 3 March 8 Delta.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHalo3ODST">
+            <summary>
+            StringID resolver for Halo 3 ODST.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHalo3PreAlpha">
+            <summary>
+            StringID resolver for Halo 3 Alpha.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHaloReach">
+            <summary>
+            StringID resolver for Halo Reach. Halo Reach StringId are 7-8-17 (length-set-index) format instead of (8-8-16)
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHaloReachAlpha">
+            <summary>
+            StringID resolver for Halo Reach Alpha. Halo Reach Alpha StringId are 7-8-17 (length-set-index) format instead of (8-8-16)
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.Gen3.Resolvers.StringIdResolverHaloReachBeta">
+            <summary>
+            StringID resolver for Halo Reach Beta. Halo Reach Beta StringId are 7-8-17 (length-set-index) format instead of (8-8-16)
             </summary>
         </member>
         <member name="F:TagTool.Cache.Gen3.TagCacheGen3.GlobalInstances">
@@ -842,39 +899,16 @@
             Alignment of resource pages in the resource section.
             </summary>
         </member>
-        <member name="T:TagTool.Cache.StringIdResolverHalo3">
+        <member name="T:TagTool.Cache.Gen4.Resolvers.StringIdResolverHalo4">
             <summary>
-            StringID resolver for Halo 3.
+            StringID resolver for Halo 4. 
+            Halo 4 StringId are 5-8-19 (length-set-index) format instead of (8-8-16)
             </summary>
         </member>
-        <member name="T:TagTool.Cache.StringIdResolverHalo3Beta">
+        <member name="T:TagTool.Cache.Gen4.Resolvers.StringIdResolverHalo4E3">
             <summary>
-            StringID resolver for Halo 3 Beta.
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverHalo3MCC">
-            <summary>
-            StringID resolver for Halo 3.
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverHalo3ODST">
-            <summary>
-            StringID resolver for Halo 3 ODST.
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverHalo3ODSTMCC">
-            <summary>
-            StringID resolver for Halo 3 ODST.
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverHaloReach">
-            <summary>
-            StringID resolver for Halo Reach. Halo Reach StringId are 7-8-17 (length-set-index) format instead of (8-8-16)
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverHaloReachMCC">
-            <summary>
-            StringID resolver for Halo Reach. Halo Reach StringId are 7-8-17 (length-set-index) format instead of (8-8-16)
+            StringID resolver for Halo 4 E3. 
+            Halo 4 E3 StringId are 5-8-19 (length-set-index) format instead of (8-8-16)
             </summary>
         </member>
         <member name="F:TagTool.Cache.Gen4.TagCacheGen4.GlobalInstances">
@@ -890,12 +924,6 @@
         <member name="F:TagTool.Cache.GameCacheGen4.PageAlign">
             <summary>
             Alignment of resource pages in the resource section.
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverHalo4">
-            <summary>
-            StringID resolver for Halo 4. 
-            Halo 4 StringId are 5-8-19 (length-set-index) format instead of (8-8-16)
             </summary>
         </member>
         <member name="T:TagTool.Cache.HaloOnline.CachedTagData">
@@ -951,6 +979,11 @@
         <member name="P:TagTool.Cache.HaloOnline.CachedTagData.PointerFixup.TargetOffset">
             <summary>
             The offset (from the start of the tag's data) that the pointer should point to.
+            </summary>
+        </member>
+        <member name="F:TagTool.Cache.HaloOnline.CachedTagHaloOnline.TagCache">
+            <summary>
+            The tag cache this instance belongs to
             </summary>
         </member>
         <member name="P:TagTool.Cache.HaloOnline.CachedTagHaloOnline.HeaderOffset">
@@ -1040,7 +1073,63 @@
             <param name="data">The tag data.</param>
             <param name="dataOffset">The offset of the tag data relative to the tag instance's header.</param>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.Add(System.IO.Stream,System.Byte[],System.UInt32@)">
+        <member name="M:TagTool.Cache.HaloOnline.IMapFileStorage.GetAll">
+            <summary>
+            Retrieves the list of map files.
+            </summary>
+            <returns>An array of <see cref="T:TagTool.BlamFile.MapFile"/></returns>
+        </member>
+        <member name="M:TagTool.Cache.HaloOnline.IMapFileStorage.FindByName(System.String)">
+            <summary>
+            Finds a map file by name.
+            </summary>
+            <param name="name">Name of the map (without the .map extension)</param>
+            <returns>The <see cref="T:TagTool.BlamFile.MapFile"/> or null if not found.</returns>
+        </member>
+        <member name="M:TagTool.Cache.HaloOnline.IMapFileStorage.FindByMapId(System.Int32)">
+            <summary>
+            Finds a map file by map id.
+            </summary>
+            <param name="mapId">The map id of the map</param>
+            <returns>The <see cref="T:TagTool.BlamFile.MapFile"/> or null if not found.</returns>
+        </member>
+        <member name="M:TagTool.Cache.HaloOnline.IMapFileStorage.Add(TagTool.BlamFile.MapFile,System.Int32,System.Boolean)">
+            <summary>
+            Add a map file.
+            </summary>
+            <param name="mapFile">The map file to add</param>
+            <param name="tagCacheIndex">The index of the tag cache to assign - Only applicable to <see cref="T:TagTool.Cache.GameCacheModPackage"/></param>
+            <param name="overwrite">If true overwrites the map file if it already exists</param>
+            <remarks>
+            If a map with the same map id exists and <paramref name="overwrite"/> is true, it'll be overwritten, 
+            otherwise an <see cref="T:System.IO.IOException"/> will be thrown.
+            </remarks>
+        </member>
+        <member name="M:TagTool.Cache.HaloOnline.IMapFileStorage.Delete(System.String)">
+            <summary>
+            Delete a map file.
+            </summary>
+            <param name="name">Name of the map file to delete (without the .map extension)</param>
+            <remarks>
+            If the map file does not exist, no exception will be thrown.
+            </remarks>
+        </member>
+        <member name="T:TagTool.Cache.HaloOnline.Resolvers.StringIdResolverMS23">
+            <summary>
+            StringID resolver for 1.106708.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.HaloOnline.Resolvers.StringIdResolverMS28">
+            <summary>
+            StringID resolver for 11.1.498295.
+            </summary>
+        </member>
+        <member name="T:TagTool.Cache.HaloOnline.Resolvers.StringIdResolverMS30">
+            <summary>
+            StringID resolver for 12.1.700123.
+            </summary>
+        </member>
+        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.Add(System.IO.Stream,System.ReadOnlySpan{System.Byte},System.UInt32@)">
             <summary>
             Adds a resource to the cache.
             </summary>
@@ -1049,7 +1138,7 @@
             <param name="compressedSize">On return, the size of the compressed data.</param>
             <returns>The index of the resource that was added.</returns>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.AddRaw(System.IO.Stream,System.Byte[])">
+        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.AddRaw(System.IO.Stream,System.ReadOnlySpan{System.Byte})">
             <summary>
             Adds a raw, pre-compressed resource to the cache.
             </summary>
@@ -1066,7 +1155,7 @@
             <param name="compressedSize">Total size of the compressed data, including chunk headers.</param>
             <returns>The raw, compressed resource data.</returns>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.ImportRaw(System.IO.Stream,System.Int32,System.Byte[])">
+        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.ImportRaw(System.IO.Stream,System.Int32,System.ReadOnlySpan{System.Byte})">
             <summary>
             Overwrites a resource with raw, pre-compressed data.
             </summary>
@@ -1083,7 +1172,7 @@
             <param name="compressedSize">Total size of the compressed data, including chunk headers.</param>
             <param name="outStream">The stream to write the decompressed resource data to.</param>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.Compress(System.IO.Stream,System.Int32,System.Byte[])">
+        <member name="M:TagTool.Cache.HaloOnline.ResourceCacheHaloOnline.Compress(System.IO.Stream,System.Int32,System.ReadOnlySpan{System.Byte})">
             <summary>
             Compresses and saves data for a resource.
             </summary>
@@ -1092,16 +1181,16 @@
             <param name="data">The data to compress.</param>
             <returns>The total size of the compressed resource in bytes.</returns>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.AddResource(TagTool.Common.PageableResource,System.IO.Stream)">
+        <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.AddResource(TagTool.Common.PageableResource,System.ReadOnlySpan{System.Byte})">
             <summary>
             Adds a new pageable_resource to the current cache.
             </summary>
             <param name="resource">The pageable_resource to add.</param>
-            <param name="dataStream">The stream to read the resource data from.</param>
+            <param name="data">Resource data</param>
             <exception cref="T:System.ArgumentNullException">resource</exception>
             <exception cref="T:System.ArgumentException">The input stream is not open for reading;dataStream</exception>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.AddRawResource(TagTool.Common.PageableResource,System.Byte[])">
+        <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.AddRawResource(TagTool.Common.PageableResource,System.ReadOnlySpan{System.Byte})">
             <summary>
             Adds raw, pre-compressed resource data to a cache.
             </summary>
@@ -1117,16 +1206,6 @@
             <exception cref="T:System.ArgumentException">Thrown if the output stream is not open for writing.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown if the file containing the resource has not been loaded.</exception>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.ExtractResource(System.IO.Stream,TagTool.Common.PageableResource,System.IO.Stream)">
-            <summary>
-            Extracts and decompresses the data for a resource from the current cache.
-            </summary>
-            <param name="inStream"></param>
-            <param name="pageable">The resource.</param>
-            <param name="outStream">The stream to write the extracted data to.</param>
-            <exception cref="T:System.ArgumentException">Thrown if the output stream is not open for writing.</exception>
-            <exception cref="T:System.InvalidOperationException">Thrown if the file containing the resource has not been loaded.</exception>
-        </member>
         <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.ExtractRawResource(TagTool.Common.PageableResource)">
             <summary>
             Extracts raw, compressed resource data.
@@ -1134,12 +1213,12 @@
             <param name="resource">The resource.</param>
             <returns>The raw, compressed resource data.</returns>
         </member>
-        <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.ReplaceResource(TagTool.Common.PageableResource,System.IO.Stream)">
+        <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.ReplaceResource(TagTool.Common.PageableResource,System.ReadOnlySpan{System.Byte})">
             <summary>
             Compresses and replaces the data for a resource.
             </summary>
             <param name="resource">The resource whose data should be replaced. On success, the reference will be adjusted to account for the new data.</param>
-            <param name="dataStream">The stream to read the new data from.</param>
+            <param name="data">The new resource data</param>
             <exception cref="T:System.ArgumentException">Thrown if the input stream is not open for reading.</exception>
         </member>
         <member name="M:TagTool.Cache.HaloOnline.ResourceCachesHaloOnlineBase.ReplaceRawResource(TagTool.Common.PageableResource,System.Byte[])">
@@ -1272,21 +1351,6 @@
             </summary>
             <param name="path">The path to the tag_list.csv file.</param>
         </member>
-        <member name="T:TagTool.Cache.StringIdResolverMS23">
-            <summary>
-            StringID resolver for 1.106708.
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverMS28">
-            <summary>
-            StringID resolver for 11.1.498295.
-            </summary>
-        </member>
-        <member name="T:TagTool.Cache.StringIdResolverMS30">
-            <summary>
-            StringID resolver for 12.1.700123.
-            </summary>
-        </member>
         <member name="F:TagTool.Cache.ModPackageSectionTable.Count">
             <summary>
             Number of sections in the table
@@ -1331,6 +1395,11 @@
             <summary>
             Flags related to the location and storage of the resource data.
             Only for 1.106708.
+            </summary>
+        </member>
+        <member name="F:TagTool.Cache.Resources.OldRawPageFlags.None">
+            <summary>
+            Indicates that there is no cached resource.
             </summary>
         </member>
         <member name="F:TagTool.Cache.Resources.OldRawPageFlags.UseChecksum">
@@ -1383,6 +1452,11 @@
             <summary>
             Flags related to the location and storage of the resource data.
             Only for versions 1.235640 and newer.
+            </summary>
+        </member>
+        <member name="F:TagTool.Cache.Resources.NewRawPageFlags.None">
+            <summary>
+            Indicates that there is no cached resource.
             </summary>
         </member>
         <member name="F:TagTool.Cache.Resources.NewRawPageFlags.UseChecksum">
@@ -1457,12 +1531,11 @@
             <param name="stringId">The stringID.</param>
             <returns>The string list index, or -1 if none.</returns>
         </member>
-        <member name="M:TagTool.Cache.StringIdResolver.IndexToStringID(System.Int32,TagTool.Cache.CacheVersion)">
+        <member name="M:TagTool.Cache.StringIdResolver.IndexToStringID(System.Int32)">
             <summary>
             Converts a string list index to a stringID value.
             </summary>
             <param name="index">The index.</param>
-            <param name="version">The version of the stringID. Halo 3 By default.</param>
             <returns>The stringID value, or <see cref="F:TagTool.Common.StringId.Invalid"/> if none.</returns>
         </member>
         <member name="M:TagTool.Cache.TagCache.TryParseGroupTag(System.String,TagTool.Common.Tag@)">
@@ -1493,6 +1566,11 @@
             </summary>
             <param name="path">Tag path including long or short tag group name.</param>
             <returns>True if valid and available else false</returns>
+        </member>
+        <member name="M:TagTool.Cache.Utils.TagReplacer.ReplaceTag(TagTool.Cache.GameCacheHaloOnlineBase,System.IO.Stream,TagTool.Cache.CachedTag,TagTool.Cache.CachedTag)">
+            <summary>
+            Replaces all references to <paramref name="tag"/> with <paramref name="replacementTag"/>
+            </summary>
         </member>
         <member name="T:TagTool.Commands.Tags.TagDependencyCommand">
             <summary>
@@ -1629,6 +1707,11 @@
             Gets the currently-active context, or <c>null</c> if there is none.
             </summary>
         </member>
+        <member name="F:TagTool.Commands.CommandContextStack.ScriptEvaluator">
+            <summary>
+            CSharp Script Evaluator
+            </summary>
+        </member>
         <member name="M:TagTool.Commands.CommandContextStack.GetPath">
             <summary>
             Gets the current path.
@@ -1735,6 +1818,11 @@
             </summary>
             <param name="question">Question to ask</param>
             <param name="indent">The amount of spaces to indent output text by</param>
+        </member>
+        <member name="T:TagTool.Commands.Common.TagToolError">
+            <remarks>
+            Prefer using <see cref="M:TagTool.Common.Logging.Log.Error(System.String)"/> directly when outside of commands
+            </remarks>
         </member>
         <member name="T:TagTool.Commands.Files.GenerateAssemblyPluginsCommand.AssemblyPluginField">
             <summary>
@@ -2079,7 +2167,12 @@
             <br>If parsing fails, or required arguments cannot be resolved, IsValid will be false.</br>
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:TagTool.Commands.ParseResult.Parameters" -->
+        <member name="P:TagTool.Commands.ParseResult.Parameters">
+            <summary>
+            Contains any arguments that were identified within the command string. If none are found, the list will be empty (not null).
+            <br>Sometimes a command has no parameters. Sometimes no valid Parameters can be determined.</br>
+            </summary>
+        </member>
         <member name="P:TagTool.Commands.ParseResult.Response">
             <summary>
             Response strings that will be sent to the appropriate party (usually the player that issued a command).
@@ -2091,168 +2184,7 @@
             </summary> 
             <param name="arguments">The args being parsed.</param>
         </member>
-        <member name="T:TagTool.Commands.Porting.Gen2.PortTagGen2Command.PortingFlags">
-            <summary>
-            Flags which can be used to affect the behavior of <see cref="T:TagTool.Commands.Porting.PortTagCommand"/>.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.Gen2.PortTagGen2Command.PortingFlags.Replace">
-            <summary>
-            Replace tags of the same name when porting.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.Gen2.PortTagGen2Command.PortingFlags.Recursive">
-            <summary>
-            Recursively port all tag references available.
-            </summary>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.GetEquivalentFlags``2(``0,``1)">
-            <summary>
-            Adds shared values from flags2 to flags1.
-            </summary>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.GetEquivalentValue``2(``0,``1)">
-            <summary>
-            If the value of enum1 has a value with the same name as the value of enum2, return it.
-            </summary>
-        </member>
-        <member name="P:TagTool.Commands.Porting.PortTagCommand.Flags">
-            <summary>
-            Current set of <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> which will affect the behavior of <see cref="T:TagTool.Commands.Porting.PortTagCommand"/>.
-            </summary>
-        </member>
-        <member name="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags">
-            <summary>
-            Flags which can be used to affect the behavior of <see cref="T:TagTool.Commands.Porting.PortTagCommand"/>.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Replace">
-            <summary>
-            Replace tags of the same name when porting.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Recursive">
-            <summary>
-            Recursively port all tag references available.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.New">
-            <summary>
-            Create a new tag after the last index.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.UseNull">
-            <summary>
-            Port a tag using nulled tag indices where available.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Audio">
-            <summary>
-            Include Sound 'snd!' tags.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Elites">
-            <summary>
-            Include elite <see cref="T:TagTool.Tags.Definitions.Biped"/> tags.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.ForgePalette">
-            <summary>
-            Include <see cref="T:TagTool.Tags.Definitions.Scenario.SandboxObject"/> tag-blocks.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Squads">
-            <summary>
-            Include <see cref="T:TagTool.Tags.Definitions.Scenario.Squad"/> tag-blocks.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Scripts">
-            <summary>
-            Include <see cref="T:TagTool.Scripting.HsScript"/> tag-blocks.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Dialogue">
-            <summary>
-            Include udlg tags and their referenced audio.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.MatchShaders">
-            <summary>
-            Attempt to match shaders to existing tags.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.PefectShaderMatchOnly">
-            <summary>
-            Only use templates that have the exact same render method options
-            </summary>
-        </member>
-        <!-- Badly formed XML comment ignored for member "F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Ms30" -->
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Print">
-            <summary>
-            Allow writing output to the console.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Merge">
-            <summary>
-            Merges new data if tags exist.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.Regex">
-            <summary>
-            Use a regular expression to determine target tags.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.GenerateShaders">
-            <summary>
-            Attempt to generate shaders.
-            </summary>
-        </member>
-        <member name="F:TagTool.Commands.Porting.PortTagCommand.PortingFlags.MPobject">
-            <summary>
-            Add a multiplayerobject block for spawnable tag types.
-            </summary>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.FlagsAllSet(TagTool.Commands.Porting.PortTagCommand.PortingFlags)">
-            <summary>
-            True if ALL of the supplied <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> are set, false if any aren't:
-            (<see cref="P:TagTool.Commands.Porting.PortTagCommand.Flags"/> &amp; flags) == flags
-            </summary>
-            <param name="flags">The <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> to check.</param>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.FlagIsSet(TagTool.Commands.Porting.PortTagCommand.PortingFlags)">
-            <summary>
-            True if the flag is set (this is 100% the same as <see cref="M:TagTool.Commands.Porting.PortTagCommand.FlagsAnySet(TagTool.Commands.Porting.PortTagCommand.PortingFlags)"/>,
-            other than the name.
-            </summary>
-            <param name="flag"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.FlagsAnySet(TagTool.Commands.Porting.PortTagCommand.PortingFlags)">
-            <summary>
-            True if ANY of the supplied <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> are set, false if none are:
-            (<see cref="P:TagTool.Commands.Porting.PortTagCommand.Flags"/> &amp; flags) != 0
-            </summary>
-            <param name="flags">The <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> to check.</param>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.SetFlags(TagTool.Commands.Porting.PortTagCommand.PortingFlags)">
-            <summary>
-            Sets flags explicitly (<see cref="P:TagTool.Commands.Porting.PortTagCommand.Flags"/> |= <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/>).
-            </summary>
-            <param name="flags">The <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> to set.</param>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.RemoveFlags(TagTool.Commands.Porting.PortTagCommand.PortingFlags)">
-            <summary>
-            Removes flags explicitly (<see cref="P:TagTool.Commands.Porting.PortTagCommand.Flags"/> &amp;= ~<see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/>).
-            </summary>
-            <param name="flags">The <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> to remove.</param>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.ToggleFlags(TagTool.Commands.Porting.PortTagCommand.PortingFlags)">
-            <summary>
-            Toggles flags on or off (<see cref="P:TagTool.Commands.Porting.PortTagCommand.Flags"/> ^= <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/>).
-            </summary>
-            <param name="flags">The <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> to toggle.</param>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.ParsePortingOptions(System.Collections.Generic.List{System.String})">
+        <member name="M:TagTool.Commands.Porting.PortTagCommand.ParseFlags(System.Collections.Generic.List{System.String})">
             <summary>
             Parses porting flag options from a <see cref="T:System.Collections.Generic.List`1"/> of <see cref="T:System.String"/>.
             </summary>
@@ -2260,24 +2192,9 @@
         </member>
         <member name="M:TagTool.Commands.Porting.PortTagCommand.GetPortingFlagsDescription">
             <summary>
-            Generates a <see cref="P:TagTool.Commands.Command.Description"/> based on the <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/> <see cref="T:System.Enum"/>.
+            Generates a <see cref="P:TagTool.Commands.Command.Description"/> based on the <see cref="T:TagTool.Porting.PortingFlags"/> <see cref="T:System.Enum"/>.
             </summary>
-            <returns>A <see cref="P:TagTool.Commands.Command.Description"/> based on <see cref="T:TagTool.Commands.Porting.PortTagCommand.PortingFlags"/>.</returns>
-        </member>
-        <member name="T:TagTool.Commands.Porting.PortTagCommand.PortingFlagDescriptionAttribute">
-            <summary>
-            Generic description attribute
-            </summary>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.MultiplayerPrematchCamera(TagTool.Common.RealPoint3d,TagTool.Common.RealEulerAngles3d)">
-            <summary>
-            Given the position and the yaw/pitch given by the camera coordinates, create a CutsceneCameraPoint block. Note that roll is always 0 in the coordinates.
-            </summary>
-        </member>
-        <member name="M:TagTool.Commands.Porting.PortTagCommand.ConvertXYZtoZYX(TagTool.Common.RealEulerAngles3d)">
-            <summary>
-            Convert from the Tait-Bryan XYZ to ZYX coordinate, assuming input Z = 0.
-            </summary>
+            <returns>A <see cref="P:TagTool.Commands.Command.Description"/> based on <see cref="T:TagTool.Porting.PortingFlags"/>.</returns>
         </member>
         <member name="M:TagTool.Commands.ScenarioStructureBSPs.ImportGeometryWithPathfindingCommand.TryGetTag``1(System.String,``0@)">
             <summary>
@@ -2302,12 +2219,12 @@
             &lt;scenarioPath&gt; -- Path to the scenario file to edit.
             </remarks>
         </member>
-        <member name="M:TagTool.Commands.Shaders.GenerateShaderCommand.GetDependantsAsync(TagTool.Cache.GameCache,System.IO.Stream,System.String,System.Byte[])">
+        <member name="M:TagTool.Commands.Shaders.GenerateShaderCommand.GetDependantsAsync(TagTool.Cache.GameCache,System.IO.Stream,System.String)">
             <summary>
             For async recompile
             </summary>
         </member>
-        <member name="M:TagTool.Commands.Shaders.GenerateShaderCommand.ReserializeDependantsAsync(TagTool.Cache.GameCache,System.IO.Stream,TagTool.Tags.Definitions.RenderMethodTemplate,System.Collections.Generic.List{TagTool.Commands.Shaders.GenerateShaderCommand.SDependentRenderMethodData})">
+        <member name="M:TagTool.Commands.Shaders.GenerateShaderCommand.ReserializeDependantsAsync(TagTool.Cache.GameCache,System.IO.Stream,TagTool.Tags.Definitions.RenderMethodTemplate,System.Collections.Generic.List{TagTool.Commands.Shaders.GenerateShaderCommand.SDependentRenderMethodData},System.Collections.Generic.List{TagTool.Tags.Definitions.RenderMethodOption.ParameterBlock},System.Byte[])">
             <summary>
             For async recompile
             </summary>
@@ -2358,6 +2275,11 @@
             <param name="degrees">The degrees of the angle.</param>
             <returns>The angle that was created.</returns>
         </member>
+        <member name="T:TagTool.Common.AnsiWriter">
+            <summary>
+            A Textwriter implementation that automatically appends the ansi reset sequence
+            </summary>
+        </member>
         <member name="M:TagTool.Common.ArrayUtil.Replace(System.Byte[],System.Int32,System.Int32,System.Byte[])">
             <summary>
             Reallocates an array, replacing a block of data in it.
@@ -2390,6 +2312,16 @@
             <param name="destinationIndex">The offset in the destination array</param>
             <param name="length">The number of elements to copy</param>
         </member>
+        <member name="M:TagTool.Common.BitwiseExtensions.Bits(System.UInt32,System.Int32,System.Int32)">
+            <summary>
+            Extracts <paramref name="count"/> bits from a 32-bit unsigned integer starting at <paramref name="offset"/>
+            </summary>
+        </member>
+        <member name="M:TagTool.Common.BitwiseExtensions.Bits(System.UInt64,System.Int32,System.Int32)">
+            <summary>
+            Extracts <paramref name="count"/> bits from a 64-bit unsigned integer starting at <paramref name="offset"/>
+            </summary>
+        </member>
         <member name="P:TagTool.Common.Bounds`1.Lower">
             <summary>
             Gets the lowerimum value within the range.
@@ -2418,6 +2350,16 @@
             </summary>
             <param name="value">The value to check.</param>
             <returns><c>true</c> if the value is inside the range.</returns>
+        </member>
+        <member name="P:TagTool.Common.IBounds.Lower">
+            <summary>
+            Gets the lowerimum value within the range. (Boxed)
+            </summary>
+        </member>
+        <member name="P:TagTool.Common.IBounds.Upper">
+            <summary>
+            Gets the upperimum value within the range. (Boxed)
+            </summary>
         </member>
         <member name="T:TagTool.Common.Crc32">
             <summary>
@@ -2950,7 +2892,12 @@
         </member>
         <member name="F:TagTool.Common.StringId.Invalid">
             <summary>
-            A null stringID.
+            An invalid StringID
+            </summary>
+        </member>
+        <member name="F:TagTool.Common.StringId.Empty">
+            <summary>
+            An empty string
             </summary>
         </member>
         <member name="P:TagTool.Common.StringId.Value">
@@ -4461,6 +4408,23 @@
             At runtime this is a pointer
             </summary>
         </member>
+        <member name="M:TagTool.IO.ConsoleHistory.AnsiRegex">
+            <remarks>
+            Pattern:<br/>
+            <code>\\x1B(?:[@-Z\\\\-_]|\\[[0-?]*[ -/]*[@-~])</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ Match '\u001b'.<br/>
+            ○ Match with 2 alternative expressions, atomically.<br/>
+                ○ Match a character in the set [@-Z\\-_].<br/>
+                ○ Match a sequence of expressions.<br/>
+                    ○ Match '['.<br/>
+                    ○ Match a character in the set [0-?] atomically any number of times.<br/>
+                    ○ Match a character in the set [ -/] atomically any number of times.<br/>
+                    ○ Match a character in the set [@-~].<br/>
+            </code>
+            </remarks>
+        </member>
         <member name="M:TagTool.IO.EndianReader.#ctor(System.IO.Stream,TagTool.IO.EndianFormat)">
             <summary>
             Creates a new instance of the EndianReader class.
@@ -4621,7 +4585,7 @@
             </summary>
             <param name="length">The number of bytes to decrypt.</param>
             <param name="key">The decryption key as a string.</param>
-            <returns>A new <see cref="T:System.IO.MemoryStream"/> containing the decrypted segment.</returns>
+            <returns>A new byte array containing the decrypted segment.</returns>
         </member>
         <member name="T:TagTool.IO.ExtantStream">
             <summary>
@@ -5008,21 +4972,414 @@
             <param name="tagPathfinding"></param>
             <returns></returns>
         </member>
-        <member name="T:TagTool.Properties.Resources">
+        <member name="M:TagTool.Porting.Gen3.PortingContextGen3.PreConvertDefinition(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,System.Object)">
             <summary>
-              A strongly-typed resource class, for looking up localized strings, etc.
+            Perform pre-conversion fixups to Blam data
             </summary>
         </member>
-        <member name="P:TagTool.Properties.Resources.ResourceManager">
+        <member name="M:TagTool.Porting.Gen3.PortingContextGen3.PostConvertDefinition(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,TagTool.Cache.CachedTag,System.Object)">
             <summary>
-              Returns the cached ResourceManager instance used by this class.
+            Perform post-conversion fixups to Blam data
             </summary>
         </member>
-        <member name="P:TagTool.Properties.Resources.Culture">
+        <member name="M:TagTool.Porting.Gen3.PortingContextGen3.GetEquivalentFlags``2(``0,``1)">
             <summary>
-              Overrides the current thread's CurrentUICulture property for all
-              resource lookups using this strongly typed resource class.
+            Adds shared values from flags2 to flags1.
             </summary>
+        </member>
+        <member name="M:TagTool.Porting.Gen3.PortingContextGen3.GetEquivalentValue``2(``0,``1)">
+            <summary>
+            If the value of enum1 has a value with the same name as the value of enum2, return it.
+            </summary>
+        </member>
+        <member name="M:TagTool.Porting.Gen3.PortingContextGen3.MultiplayerPrematchCamera(TagTool.Common.RealPoint3d,TagTool.Common.RealEulerAngles3d)">
+            <summary>
+            Given the position and the yaw/pitch given by the camera coordinates, create a CutsceneCameraPoint block. Note that roll is always 0 in the coordinates.
+            </summary>
+        </member>
+        <member name="M:TagTool.Porting.Gen3.PortingContextGen3.BumpMapParameterRegex">
+            <remarks>
+            Pattern:<br/>
+            <code>^(bump_map|bump_detail_map|bump_detail_masked_map|distort_map|wrinkle_normal|detail_bump)</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ Match if at the beginning of the string.<br/>
+            ○ 1st capture group.<br/>
+                ○ Match with 3 alternative expressions, atomically.<br/>
+                    ○ Match a sequence of expressions.<br/>
+                        ○ Match the string "bump_".<br/>
+                        ○ Match with 2 alternative expressions, atomically.<br/>
+                            ○ Match the string "map".<br/>
+                            ○ Match a sequence of expressions.<br/>
+                                ○ Match the string "detail_ma".<br/>
+                                ○ Match with 2 alternative expressions, atomically.<br/>
+                                    ○ Match 'p'.<br/>
+                                    ○ Match the string "sked_map".<br/>
+                    ○ Match a sequence of expressions.<br/>
+                        ○ Match 'd'.<br/>
+                        ○ Match with 2 alternative expressions, atomically.<br/>
+                            ○ Match the string "istort_map".<br/>
+                            ○ Match the string "etail_bump".<br/>
+                    ○ Match the string "wrinkle_normal".<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="M:TagTool.Porting.Gen3.PortingContextGen3.BumpFileNameSuffixRegex">
+            <remarks>
+            Pattern:<br/>
+            <code>(_bump|_zbump|_detailbump|_normal)$</code><br/>
+            Explanation:<br/>
+            <code>
+            ○ 1st capture group.<br/>
+                ○ Match '_'.<br/>
+                ○ Match with 4 alternative expressions.<br/>
+                    ○ Match the string "bump".<br/>
+                    ○ Match the string "zbump".<br/>
+                    ○ Match the string "detailbump".<br/>
+                    ○ Match the string "normal".<br/>
+            ○ Match if at the end of the string or if before an ending newline.<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:TagTool.Porting.Gen3.RenderMethodMerger">
+            <summary>
+            A class to fix issues when porting the same shader from different maps
+            </summary>
+            <remarks>
+            Shaders can reference bitmaps with no resource. If TagTool encounters such a bitmap during porting, a null reference will be left in its place.
+            If the same shader is then ported from a different map, it'll also use that shader, and that can cause rendering artifacts.
+            The goal of this class is to detect those null references, and try to replace them with the correct bitmaps.
+            </remarks>
+        </member>
+        <member name="P:TagTool.Porting.PortingContext.MainThreadScheduler">
+            <summary>
+            Used to schedule tasks to execute on the main thread
+            </summary>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.RunOnThreadPool``1(System.Func{``0})">
+            <summary>
+            Executes a function on the thread pool with limited concurrency.
+            </summary>
+            <remarks>
+            This should be preferred over using Task.Run
+            </remarks>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.RunOnThreadPool(System.Action)">
+            <summary>
+            Executes an action on the thread pool with limited concurrency.
+            </summary>
+            <remarks>
+            This should be preferred over Task.Run
+            </remarks>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.WaitForTag(TagTool.Cache.CachedTag)">
+            <summary>
+            Waits for the tag to be serialized.
+            </summary>
+            <remarks>
+            Only use this as a last resort. Instead use <see cref="M:TagTool.Porting.PortingContext.WaitForTagAsync(TagTool.Cache.CachedTag)"/> with a continuation to avoid porting pipeline stalls.
+            </remarks>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.WaitForTagAsync(TagTool.Cache.CachedTag)">
+            <summary>
+            Returns a task that completes when the <paramref name="tag"/> has been serialized.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingContext.IgnoreBlamTags">
+            <summary>
+            Set of blam tag indices to ignore when porting
+            </summary>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.Create(TagTool.Cache.GameCacheHaloOnlineBase,TagTool.Cache.GameCache)">
+            <summary>
+            Create context for porting from sourceCache to destCache
+            </summary>
+            <param name="destCache">Destination cache</param>
+            <param name="sourceCache">Source cache</param>
+            <returns>PortingContext</returns>
+            <exception cref="T:System.NotSupportedException">Thrown if the cache is not supported</exception>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.TagIsValid(TagTool.Cache.CachedTag,System.IO.Stream,System.IO.Stream,System.Object,TagTool.Cache.CachedTag@)">
+            <summary>
+            Checks whether a tag can be ported and optionally returns an alternative tag
+            </summary>
+            <param name="blamTag">Tag to be ported</param>
+            <param name="cacheStream">Destination cache stream</param>
+            <param name="blamCacheStream">Source cache stream</param>
+            <param name="blamDefinition">Source definition</param>
+            <param name="resultTag">Alternative tag to use</param>
+            <returns>True if the tag can be ported, otherwise alternativeTag will be used</returns>
+        </member>
+        <member name="F:TagTool.Porting.PortingContext.ConvertTagOptions.TargetTagName">
+            <summary>
+            If non null, overrides the ported tag name.
+            </summary>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.ConvertTag(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,System.String,System.Object,TagTool.Porting.PortingContext.ConvertTagOptions@)">
+            <summary>
+            Ports a tag from the source cache to the destination cache
+            </summary>
+            <param name="cacheStream">Destination cache stream</param>
+            <param name="blamCacheStream">Source cache stream</param>
+            <param name="blamTag">Tag to be converted</param>
+            <param name="blamParentTagName">Parent tag name. Currently used to alter the template for particular render methods.</param>
+            <param name="blamDefinition">Optional pre-deserialized tag definition. Useful for making changes to a tag prior to porting</param>
+            <param name="options">Extra options</param>
+            <returns>The resulting the tag from the destination cache</returns>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.GetTargetTagNameAndGroup(TagTool.Cache.CachedTag,System.Object)">
+            <summary>
+            Allows subclasses to override the name and group of the ported tag
+            </summary>
+            <param name="blamTag">Source tag instance</param>
+            <param name="blamDefinition">Source tag definition</param>
+            <returns>A tuple containing the name and group of the ported tag</returns>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.MergeTags(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,TagTool.Cache.CachedTag,System.Object)">
+            <summary>
+            Merges blamTag into edTag
+            </summary>
+            <param name="cacheStream">Destination cache stream</param>
+            <param name="blamCacheStream">Source cache stream</param>
+            <param name="blamTag">Tag to be merged</param>
+            <param name="edTag">Tag to merge into</param>
+            <param name="blamDefinition">Source definition</param>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.ConvertDefinition(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,TagTool.Cache.CachedTag,System.Object)">
+            <summary>
+            Converts a tag definition
+            </summary>
+            <param name="cacheStream">Destination cache stream</param>
+            <param name="blamCacheStream">Source cache stream</param>
+            <param name="blamTag">Tag to be ported</param>
+            <param name="edTag">Tag that is being ported to</param>
+            <param name="blamDefinition">Deserialized definition data</param>
+            <returns></returns>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.ConvertStructure``1(System.IO.Stream,System.IO.Stream,``0,System.Object,System.String)">
+            <summary>
+            Converts a <see cref="T:TagTool.Tags.TagStructure"/> from the source cache to the destination cache
+            </summary>
+            <remarks>
+            This should only be used if all you want to do is convert the fields and nothing else. Consider using <see cref="M:TagTool.Porting.PortingContext.ConvertData(System.IO.Stream,System.IO.Stream,System.Object,System.Object,System.String)"/> or <see cref="M:TagTool.Porting.PortingContext.ConvertDefinition(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,TagTool.Cache.CachedTag,System.Object)"/> If it'a tag definition
+            </remarks>
+            <typeparam name="T"></typeparam>
+            <param name="cacheStream"></param>
+            <param name="blamCacheStream"></param>
+            <param name="data"></param>
+            <param name="definition"></param>
+            <param name="blamTagName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.ConvertData(System.IO.Stream,System.IO.Stream,System.Object,System.Object,System.String)">
+            <summary>
+            Converts arbitrary data
+            </summary>
+            <remarks>
+            Avoid using this on tag definitions, use <see cref="M:TagTool.Porting.PortingContext.ConvertDefinition(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,TagTool.Cache.CachedTag,System.Object)"/> instead.
+            </remarks>
+            <param name="cacheStream">Destination cache stream</param>
+            <param name="blamCacheStream">Ssource cache stream</param>
+            <param name="data">Data to be converted</param>
+            <param name="definition">Current tag definition</param>
+            <param name="blamTagName">Current tag name</param>
+            <returns></returns>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.ConvertFieldvalue(System.IO.Stream,System.IO.Stream,TagTool.Tags.TagFieldInfo,System.Object,System.Object,System.String)">
+            <summary>
+            Converts a field portedTag
+            </summary>
+            <param name="cacheStream">Destination cache stream</param>
+            <param name="blamCacheStream">Source cache stream</param>
+            <param name="tagFieldInfo">TagFieldInfo of the field to be converted</param>
+            <param name="value">Value of the field to be converted</param>
+            <param name="definition">Current tag definition</param>
+            <param name="blamTagName">Current tag name</param>
+            <returns></returns>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.ConvertStringId(TagTool.Common.StringId)">
+            <summary>
+            Converts a StringId from the source cache to destination cache
+            </summary>
+            <remarks>
+            If the StringId exists in the destination cache exists then it is returned, otherwise one will be allocated
+            </remarks>
+            <param name="stringId">String id to convert</param>
+            <returns>The existing or newly allocated string id in the destination cache</returns>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.Finish(System.Boolean)">
+            <summary>
+            Should be called when finished with the <see cref="T:TagTool.Porting.PortingContext"/> to finalize any pending tasks and cleanup
+            </summary>
+            <remarks>
+            Consider using <see cref="M:TagTool.Porting.PortingContext.Dispose"/> or <seealso cref="M:TagTool.Porting.PortingContext.CreateScope(TagTool.Porting.PortingFlags,System.Boolean)"/>
+            </remarks>
+            <param name="saveStrings">Save the string id cache</param>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.FinishInternal">
+            <summary>
+            To be implemented by derived classes
+            </summary>
+            <remarks>
+            Implementators should avoid throwing exceptions
+            </remarks>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.CreateScope(TagTool.Porting.PortingFlags,System.Boolean)">
+            <summary>
+            Creates a scope that automatically calls <see cref="M:TagTool.Porting.PortingContext.Finish(System.Boolean)"/> when disposed
+            </summary>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.FlagsAllSet(TagTool.Porting.PortingFlags)">
+            <summary>
+            True if ALL of the supplied <see cref="T:TagTool.Porting.PortingFlags"/> are set, false if any aren't:
+            (<see cref="F:TagTool.Porting.PortingContext.Flags"/> &amp; flags) == flags
+            </summary>
+            <param name="flags">The <see cref="T:TagTool.Porting.PortingFlags"/> to check.</param>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.FlagIsSet(TagTool.Porting.PortingFlags)">
+            <summary>
+            True if the flag is set (this is 100% the same as <see cref="M:TagTool.Porting.PortingContext.FlagsAnySet(TagTool.Porting.PortingFlags)"/>,
+            other than the name.
+            </summary>
+            <param name="flag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.FlagsAnySet(TagTool.Porting.PortingFlags)">
+            <summary>
+            True if ANY of the supplied <see cref="T:TagTool.Porting.PortingFlags"/> are set, false if none are:
+            (<see cref="F:TagTool.Porting.PortingContext.Flags"/> &amp; flags) != 0
+            </summary>
+            <param name="flags">The <see cref="T:TagTool.Porting.PortingFlags"/> to check.</param>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.SetFlags(TagTool.Porting.PortingFlags)">
+            <summary>
+            Sets flags explicitly (<see cref="F:TagTool.Porting.PortingContext.Flags"/> |= <see cref="T:TagTool.Porting.PortingFlags"/>).
+            </summary>
+            <param name="flags">The <see cref="T:TagTool.Porting.PortingFlags"/> to set.</param>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.RemoveFlags(TagTool.Porting.PortingFlags)">
+            <summary>
+            Removes flags explicitly (<see cref="F:TagTool.Porting.PortingContext.Flags"/> &amp;= ~<see cref="T:TagTool.Porting.PortingFlags"/>).
+            </summary>
+            <param name="flags">The <see cref="T:TagTool.Porting.PortingFlags"/> to remove.</param>
+        </member>
+        <member name="M:TagTool.Porting.PortingContext.ToggleFlags(TagTool.Porting.PortingFlags)">
+            <summary>
+            Toggles flags on or off (<see cref="F:TagTool.Porting.PortingContext.Flags"/> ^= <see cref="T:TagTool.Porting.PortingFlags"/>).
+            </summary>
+            <param name="flags">The <see cref="T:TagTool.Porting.PortingFlags"/> to toggle.</param>
+        </member>
+        <member name="T:TagTool.Porting.PortingFlags">
+            <summary>
+            Flags which can be used to affect the behavior of <see cref="T:TagTool.Porting.PortingContext"/>.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Replace">
+            <summary>
+            Replace tags of the same name when porting.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Recursive">
+            <summary>
+            Recursively port all tag references available.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.New">
+            <summary>
+            Create a new tag after the last index.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.UseNull">
+            <summary>
+            Port a tag using nulled tag indices where available.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Audio">
+            <summary>
+            Include Sound 'snd!' tags.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Elites">
+            <summary>
+            Include elite <see cref="T:TagTool.Tags.Definitions.Biped"/> tags.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.ForgePalette">
+            <summary>
+            Include <see cref="T:TagTool.Tags.Definitions.Scenario.SandboxObject"/> tag-blocks.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Squads">
+            <summary>
+            Include <see cref="T:TagTool.Tags.Definitions.Scenario.Squad"/> tag-blocks.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Scripts">
+            <summary>
+            Include <see cref="T:TagTool.Scripting.HsScript"/> tag-blocks.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Dialogue">
+            <summary>
+            Include udlg tags and their referenced audio.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.MatchShaders">
+            <summary>
+            Attempt to match shaders to existing tags.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.PefectShaderMatchOnly">
+            <summary>
+            Only use templates that have the exact same render method options
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Ms30">
+            <summary>
+            Allow using existing tags from Ms30.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Print">
+            <summary>
+            Allow writing output to the console.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Merge">
+            <summary>
+            Merges new data if tags exist.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.Regex">
+            <summary>
+            Use a regular expression to determine target tags.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.GenerateShaders">
+            <summary>
+            Attempt to generate shaders.
+            </summary>
+        </member>
+        <member name="F:TagTool.Porting.PortingFlags.MPobject">
+            <summary>
+            Add a multiplayerobject block for spawnable tag types.
+            </summary>
+        </member>
+        <member name="M:TagTool.Porting.PortingContextExtensions.PortTag(TagTool.Porting.PortingContext,System.String,TagTool.Porting.PortingFlags)">
+            <summary>
+            Ports a tag from source cache to the destination cache
+            </summary>
+            <remarks>
+            NOTE: For bulk conversion consider using <see cref="M:TagTool.Porting.PortingContext.ConvertTag(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,System.String,System.Object,TagTool.Porting.PortingContext.ConvertTagOptions@)"/>
+            </remarks>
+        </member>
+        <member name="M:TagTool.Porting.PortingContextExtensions.PortTag(TagTool.Porting.PortingContext,TagTool.Cache.CachedTag,TagTool.Porting.PortingFlags)">
+            <summary>
+            Ports a tag from source cache to the destination cache
+            </summary>
+            <remarks>
+            NOTE: For bulk conversion consider using <see cref="M:TagTool.Porting.PortingContext.ConvertTag(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,System.String,System.Object,TagTool.Porting.PortingContext.ConvertTagOptions@)"/>
+            </remarks>
         </member>
         <member name="P:TagTool.Scripting.Compiler.ScriptSyntaxReader.Reader">
             <summary>
@@ -5447,7 +5804,7 @@
             <param name="valueInfo">Information about the value. Can be <c>null</c>.</param>
             <param name="valueType">The type of the value.</param>
         </member>
-        <member name="M:TagTool.Serialization.TagSerializer.SerializeTagBlock(TagTool.Serialization.ISerializationContext,System.IO.MemoryStream,TagTool.Serialization.IDataBlock,System.Object,System.Type,TagTool.Tags.TagFieldAttribute)">
+        <member name="M:TagTool.Serialization.TagSerializer.SerializeTagBlock(TagTool.Serialization.ISerializationContext,System.IO.MemoryStream,TagTool.Serialization.IDataBlock,TagTool.Tags.ITagBlock,System.Type,TagTool.Tags.TagFieldAttribute)">
             <summary>
             Serializes a tag block.
             </summary>
@@ -5458,7 +5815,7 @@
             <param name="listType">Type of the list.</param>
             <param name="valueInfo">Information about the value. Can be <c>null</c>.</param>
         </member>
-        <member name="M:TagTool.Serialization.TagSerializer.SerializeTagBlockAsList(TagTool.Serialization.ISerializationContext,System.IO.MemoryStream,TagTool.Serialization.IDataBlock,System.Object,System.Type,TagTool.Tags.TagFieldAttribute)">
+        <member name="M:TagTool.Serialization.TagSerializer.SerializeTagBlockAsList(TagTool.Serialization.ISerializationContext,System.IO.MemoryStream,TagTool.Serialization.IDataBlock,System.Collections.IList,System.Type,TagTool.Tags.TagFieldAttribute)">
             <summary>
             Serializes a tag block.
             </summary>
@@ -5479,11 +5836,6 @@
             Builds a list of animated parameters into a RenderMethod.
             </summary>
         </member>
-        <member name="M:TagTool.Shaders.ShaderGenerator.RenderMethodDefinitionGenerator.FixupMethodOptionName(System.String)">
-            <summary>
-            Contains hardcoded fixups for shader method or option names
-            </summary>
-        </member>
         <member name="M:TagTool.Shaders.ShaderGenerator.ShaderGeneratorNew.GenerateTemplateSafe(TagTool.Cache.GameCache,System.IO.Stream,TagTool.Tags.Definitions.RenderMethodDefinition,System.String,TagTool.Tags.Definitions.PixelShader@,TagTool.Tags.Definitions.VertexShader@)">
             <summary>
             Non async
@@ -5494,17 +5846,12 @@
             Async compatible -- WARNING: no serialization is to occur within the scope of this function. pixl and vtsh must be serialized after this function.
             </summary>
         </member>
-        <member name="M:TagTool.Shaders.ShaderMatching.ShaderMatcherNew.FindClosestTemplate(TagTool.Cache.CachedTag,TagTool.Tags.Definitions.RenderMethodTemplate,System.Boolean)">
+        <member name="M:TagTool.Shaders.ShaderMatching.ShaderMatcher.FindClosestTemplate(System.String,System.String,System.String@,System.Boolean@)">
             <summary>
             Find the closest template in the base cache to the input template.
             </summary>
         </member>
-        <member name="M:TagTool.Shaders.ShaderMatching.ShaderMatcherNew.GetBestTag(TagTool.Shaders.ShaderMatching.SortingInterface,System.Collections.Generic.Dictionary{TagTool.Cache.CachedTag,System.Int64},System.String,System.String)">
-            <summary>
-            Returns the best render_method_template tag match using the given dictionary and source rmt2
-            </summary>
-        </member>
-        <member name="M:TagTool.Shaders.ShaderMatching.ShaderMatcherNew.RebuildRmt2Options(TagTool.Shaders.ShaderMatching.ShaderMatcherNew.Rmt2Descriptor)">
+        <member name="M:TagTool.Shaders.ShaderMatching.ShaderMatcher.RebuildRmt2Options(TagTool.Shaders.Rmt2Descriptor,System.String)">
             <summary>
             Rebuilds an rmt2's options in memory so indices match up with the base cache
             </summary>
@@ -18927,6 +19274,140 @@
             blends colors through more hues (goes the long way around the color wheel)
             </summary>
         </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.AccelerationScale">
+            <summary>
+            marine 1.0, grunt 1.4, elite 0.9, hunter 0.5, etc.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.DynamicLightSphereRadius">
+            <summary>
+            sphere to use for dynamic lights and shadows. only used if not 0
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.DynamicLightSphereOffset">
+            <summary>
+            only used if radius not 0
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.ApplyCollisionDamageScale">
+            <summary>
+            for things that want to cause more or less collision damage
+            </summary>
+            <summary>
+            0 means 1.  1 is standard scale.  Some things may want to apply more damage
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MinGameAccDefault">
+            <summary>
+            0 - means take default value from globals.globals
+            </summary>
+            <summary>
+            0-oo
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MaxGameAccDefault">
+            <summary>
+            0-oo
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MinGameScaleDefault">
+            <summary>
+            0-1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MaxGameScaleDefault">
+            <summary>
+            0-1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MinAbsAccDefault">
+            <summary>
+            0 - means take default value from globals.globals
+            </summary>
+            <summary>
+            0-oo
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MaxAbsAccDefault">
+            <summary>
+            0-oo
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MinAbsScaleDefault">
+            <summary>
+            0-1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.GameObject.MaxAbsScaleDefault">
+            <summary>
+            0-1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.FlagsValue.ExtensionOfParent">
+            <summary>
+            object passes all function values to parent and uses parent's markers
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.FlagsValue.UseStaticMassiveLightmapSample">
+            <summary>
+            cast a ton of rays once and store the results for lighting
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.FlagsValue.AttachToClustersByDynamicSphere">
+            <summary>
+            use this for the mac gun on spacestation
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectAiPropertiesBlock.AiTypeName">
+            <summary>
+            used for combat dialogue, etc.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectFunctionBlock.TurnOffWith">
+            <summary>
+            if the specified function is off, so is this function
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectFunctionBlock.MinValue">
+            <summary>
+            function must exceed this value (after mapping) to be active 0. means do nothing
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectFunctionBlock.FlagsValue.Invert">
+            <summary>
+            result of function is one minus actual result
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectFunctionBlock.FlagsValue.MappingDoesNotControlsActive">
+            <summary>
+            the curve mapping can make the function active/inactive
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectFunctionBlock.FlagsValue.AlwaysActive">
+            <summary>
+            function does not deactivate when at or below lower bound
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectFunctionBlock.FlagsValue.RandomTimeOffset">
+            <summary>
+            function offsets periodic function input by random value between 0 and 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectChangeColors.ObjectChangeColorInitialPermutation.VariantName">
+            <summary>
+            if empty, may be used by any model variant
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectChangeColors.ObjectChangeColorFunction.ScaleFlagsValue.BlendInHsv">
+            <summary>
+            blends colors in hsv rather than rgb space
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ObjectChangeColors.ObjectChangeColorFunction.ScaleFlagsValue.MoreColors">
+            <summary>
+            blends colors through more hues (goes the long way around the color wheel)
+            </summary>
+        </member>
         <member name="F:TagTool.Tags.Definitions.Gen2.Garbage.AccelerationScale">
             <summary>
             marine 1.0, grunt 1.4, elite 0.9, hunter 0.5, etc.
@@ -20118,6 +20599,11 @@
             how long the event can be triggered before it's displayed
             </summary>
         </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Item.PickupMessage">
+            <summary>
+            everything you need to display stuff
+            </summary>
+        </member>
         <member name="F:TagTool.Tags.Definitions.Gen2.ItemCollection.ItemPermutation.Weight">
             <summary>
             relatively how likely this item will be chosen
@@ -21173,6 +21659,238 @@
         <member name="F:TagTool.Tags.Definitions.Gen2.ParticleModel.ParticleSystemDefinitionBlockNew.ParticleSystemEmitterDefinitionBlock.RelativeDirection">
             <summary>
             particle initial velocity direction relative to the location's forward
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.MinimumSize">
+            <summary>
+            in the distance, don't get any smaller than this size on the screen
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.RadiusAnimation">
+            <summary>
+            when created, the radius is multiplied by the first number. at the end of the lifetime, the radius is multiplied by the
+            second number.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.AnimationRate">
+            <summary>
+            rate at which the particle animates
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.ContactDeterioration">
+            <summary>
+            the decrease in the frame rate caused by a collision
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.FadeStartSize">
+            <summary>
+            begin fading the particle out when it's smaller than this size on the screen
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.FadeEndSize">
+            <summary>
+            kill the particle when it's smaller than this size on the screen
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.FirstSequenceIndex">
+            <summary>
+            the index of the first sequence in the bitmap group used by this particle
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.Bitmap1">
+            <summary>
+            Optional multitextured second map
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.UAnimationPeriod">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.UAnimationScale">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.VAnimationPeriod">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.VAnimationScale">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.RotationAnimationPeriod">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.RotationAnimationScale">
+            <summary>
+            0 defaults to 360
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleOld.FlagsValue.SelfIlluminated">
+            <summary>
+            don't cast world-lights onto this particle
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.PointPhysics">
+            <summary>
+            These settings affect the behavior of the system's origin.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemPhysicsConstantsBlock.K">
+            <summary>
+            The meaning of this constant depends on the selected physics creation/update function.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleCreationPhysics">
+            <summary>
+            This controls the initial placement of particles.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.FlagsValue.RotationalSpritesAnimateSideways">
+            <summary>
+            if the complex sprite mode is rotational and this flag is set, the sideways sequence is contains an
+            animation rather than a set of permutations.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemPhysicsConstantsBlock.K">
+            <summary>
+            The meaning of this constant depends on the selected physics creation/update function.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.DurationBounds">
+            <summary>
+            Time in this state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.TransitionTimeBounds">
+            <summary>
+            Time spent in transition to next state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.ScaleMultiplier">
+            <summary>
+            This value will be multiplied into the scale computed by the particles' state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.AnimationRateMultiplier">
+            <summary>
+            This value will be multiplied into the animation rate computed by the particles' state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.RotationRateMultiplier">
+            <summary>
+            This value will be multiplied into the rotation rate computed by the particles' state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.ColorMultiplier">
+            <summary>
+            This value will be multiplied into the color computed by the particles' state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.RadiusMultiplier">
+            <summary>
+            This value will be multiplied into the radius computed by the type.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.ParticleCreationPhysics">
+            <summary>
+            This controls the placement of particles created during this state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.ParticleUpdatePhysics">
+            <summary>
+            This controls the motion of particles during this state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeStatesBlock.ParticleSystemPhysicsConstantsBlock.K">
+            <summary>
+            The meaning of this constant depends on the selected physics creation/update function.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.DurationBounds">
+            <summary>
+            Time in this state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.TransitionTimeBounds">
+            <summary>
+            Time spent in transition to next state.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.Scale">
+            <summary>
+            Apparent size of the particles.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.AnimationRate">
+            <summary>
+            Rate of sprite animation.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.RotationRate">
+            <summary>
+            Rate of texture rotation.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.Color1">
+            <summary>
+            Particle will have a random color in the range determined by these two colors.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.Color2">
+            <summary>
+            Particle will have a random color in the range determined by these two colors.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.RadiusMultiplier">
+            <summary>
+            This value will be multiplied into the radius computed by the type.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.Bitmap">
+            <summary>
+            Optional multitextured second map
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.UAnimationPeriod">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.UAnimationScale">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.VAnimationPeriod">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.VAnimationScale">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.RotationAnimationPeriod">
+            <summary>
+            0 defaults to 1
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.RotationAnimationScale">
+            <summary>
+            0 defaults to 360
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.ParticleSystem.ParticleSystemTypesBlock.ParticleSystemTypeParticleStatesBlock.ParticleSystemPhysicsConstantsBlock.K">
+            <summary>
+            The meaning of this constant depends on the selected physics creation/update function.
             </summary>
         </member>
         <member name="F:TagTool.Tags.Definitions.Gen2.PatchyFog.Flags">
@@ -23282,6 +24000,102 @@
         <member name="F:TagTool.Tags.Definitions.Gen2.Style.StyleControl">
             <summary>
             Check the appropriate box to turn on/off the given behavior
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.DistanceOfEvadeAnim">
+            <summary>
+            this must be set to tell the AI how far it should expect our evade animation to move us
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.DistanceOfDiveAnim">
+            <summary>
+            this must be set to tell the AI how far it should expect our dive animation to move us
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.StunnedMovementThreshold">
+            <summary>
+            if we take this much damage in a short space of time we will play our 'stunned movement' animations
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.SpawnedTurretCharacter">
+            <summary>
+            automatically created character when this unit is driven
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.SpawnedActorCount">
+            <summary>
+            number of actors which we spawn
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.SpawnedVelocity">
+            <summary>
+            velocity at which we throw spawned actors
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.RightHandNode">
+            <summary>
+            where the primary weapon is attached
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.LeftHandNode">
+            <summary>
+            where the seconday weapon is attached (for dual-pistol modes)
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitAdditionalNodeNamesStructBlock.PreferredGunNode">
+            <summary>
+            if found, use this gun marker
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.DialogueVariantBlock.VariantNumber">
+            <summary>
+            variant number to use this dialogue with (must match the suffix in the permutations on the unit's model)
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitSeatBlock.PingScale">
+            <summary>
+            nathan is too lazy to make pings for each seat.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitSeatBlock.TurnoverTime">
+            <summary>
+            how much time it takes to evict a rider from a flipped vehicle
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitSeatBlock.ListenerInterpolationFactor">
+            <summary>
+            how far to interpolate listener position from camera to occupant's head
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitSeatBlock.YawRateBounds">
+            <summary>
+            when the unit velocity is 0, the yaw/pitch rates are the left values
+            at [max speed reference], the yaw/pitch rates are
+            the right values.
+            the max speed reference is what the code uses to generate a clamped speed from 0..1
+            the exponent
+            controls how midrange speeds are interpreted.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitSeatBlock.EntryRadius">
+            <summary>
+            note: the entry radius shouldn't exceed 3 world units, 
+            as that is as far as the player will search for a vehicle
+            to
+            enter.
+            </summary>
+            <summary>
+            how close to the entry marker a unit must be
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitSeatBlock.EntryMarkerConeAngle">
+            <summary>
+            angle from marker forward the unit must be
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.Definitions.Gen2.Unit.UnitSeatBlock.EntryMarkerFacingAngle">
+            <summary>
+            angle from unit facing the marker must be
             </summary>
         </member>
         <member name="F:TagTool.Tags.Definitions.Gen2.UnitHudInterface.FlashDelay">
@@ -25820,12 +26634,22 @@
             <param name="platform"></param>
             <returns></returns>
         </member>
+        <member name="M:TagTool.Tags.Definitions.SoundCacheFileGestalt.GetPermutationCount(TagTool.Audio.PitchRange,TagTool.Cache.CachePlatform)">
+            <summary>
+            Get the number of permutation in the pitch range block.
+            </summary>
+        </member>
         <member name="M:TagTool.Tags.Definitions.SoundCacheFileGestalt.GetPermutation(System.Int32)">
             <summary>
             Get permutation block.
             </summary>
             <param name="permutationIndex"></param>
             <returns></returns>
+        </member>
+        <member name="M:TagTool.Tags.Definitions.SoundCacheFileGestalt.GetPermutation(TagTool.Audio.PitchRange,System.Int32,TagTool.Cache.CachePlatform)">
+            <summary>
+            Get permutation block.
+            </summary>
         </member>
         <member name="M:TagTool.Tags.Definitions.SoundCacheFileGestalt.GetPermutationSamples(System.Int32)">
             <summary>
@@ -25834,13 +26658,10 @@
             <param name="permutationIndex"></param>
             <returns></returns>
         </member>
-        <member name="M:TagTool.Tags.Definitions.SoundCacheFileGestalt.GetSamplesPerPitchRange(System.Int32,TagTool.Cache.CachePlatform)">
+        <member name="M:TagTool.Tags.Definitions.SoundCacheFileGestalt.GetSamplesPerPitchRange(TagTool.Audio.PitchRange,TagTool.Cache.CachePlatform)">
             <summary>
             Get the total number of audio samples in a pitch range block.
             </summary>
-            <param name="pitchRangeIndex"></param>
-            <param name="platform"></param>
-            <returns></returns>
         </member>
         <member name="M:TagTool.Tags.Definitions.SoundCacheFileGestalt.GetPermutationOrder(System.Int32,TagTool.Cache.CachePlatform)">
             <summary>
@@ -26030,6 +26851,11 @@
             The index buffer definitions for the model data.
             </summary>
         </member>
+        <member name="P:TagTool.Tags.TagEnumMemberAttribute.Flags">
+            <summary>
+            The flags of the field.
+            </summary>
+        </member>
         <member name="P:TagTool.Tags.TagEnumMemberAttribute.MinVersion">
             <summary>
             The minimum cache version the tag field is present in.
@@ -26053,6 +26879,11 @@
         <member name="P:TagTool.Tags.TagEnumMemberAttribute.Platform">
             <summary>
             The platforms that the tag field are available on.
+            </summary>
+        </member>
+        <member name="F:TagTool.Tags.TagEnumMemberFlags.Constant">
+            <summary>
+            Used for values that are contrary to the natural order. e.g -1, 0xBABA
             </summary>
         </member>
         <member name="T:TagTool.Tags.TagFieldAttribute">
@@ -26297,6 +27128,11 @@
             <param name="cachePlatform"></param>
             <returns></returns>
         </member>
+        <member name="M:TagTool.Tags.TagFieldInfo.FieldInCacheVersion(TagTool.Tags.TagFieldInfo,TagTool.Cache.CacheVersion,TagTool.Cache.CachePlatform)">
+            <summary>
+            Check whether a field is in the given cache version and platform
+            </summary>
+        </member>
         <member name="F:TagTool.Tags.TagFile.Version">
             <summary>
             The version of the tag definition in the tag file.
@@ -26446,12 +27282,6 @@
             Utility class for analyzing a tag structure type's inheritance hierarchy.
             </summary>
         </member>
-        <member name="M:TagTool.Tags.TagStructureInfo.#ctor(System.Type)">
-            <summary>
-            Constructs a <see cref="T:TagTool.Tags.TagStructureInfo"/> object which contains info about a tag structure type.
-            </summary>
-            <param name="structureType">The tag structure type to analyze.</param>
-        </member>
         <member name="M:TagTool.Tags.TagStructureInfo.#ctor(System.Type,TagTool.Cache.CacheVersion,TagTool.Cache.CachePlatform)">
             <summary>
             Constructs a <see cref="T:TagTool.Tags.TagStructureInfo"/> object which contains info about a tag structure type.
@@ -26548,6 +27378,111 @@
             </summary>
             <param name="str">The string to convert.</param>
             <returns>The string converted to pascal case.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.AnsiRegex_0">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the AnsiRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.AnsiRegex_0.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.AnsiRegex_0.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.AnsiRegex_0.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.AnsiRegex_0.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.AnsiRegex_0.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.AnsiRegex_0.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.AnsiRegex_0.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.AnsiRegex_0.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the BumpMapParameterRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpMapParameterRegex_1.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2">
+            <summary>Custom <see cref="T:System.Text.RegularExpressions.Regex"/>-derived type for the BumpFileNameSuffixRegex method.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.Instance">
+            <summary>Cached, thread-safe singleton instance.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.#ctor">
+            <summary>Initializes the instance.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.RunnerFactory">
+            <summary>Provides a factory for creating <see cref="T:System.Text.RegularExpressions.RegexRunner"/> instances to be used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.RunnerFactory.CreateInstance">
+            <summary>Creates an instance of a <see cref="T:System.Text.RegularExpressions.RegexRunner"/> used by methods on <see cref="T:System.Text.RegularExpressions.Regex"/>.</summary>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.RunnerFactory.Runner">
+            <summary>Provides the runner that contains the custom logic implementing the specified regular expression.</summary>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.RunnerFactory.Runner.Scan(System.ReadOnlySpan{System.Char})">
+            <summary>Scan the <paramref name="inputSpan"/> starting from base.runtextstart for the next match.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.RunnerFactory.Runner.TryFindNextPossibleStartingPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Search <paramref name="inputSpan"/> starting from base.runtextpos for the next location a match could possibly start.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if a possible match was found; false if no more matches are possible.</returns>
+        </member>
+        <member name="M:System.Text.RegularExpressions.Generated.BumpFileNameSuffixRegex_2.RunnerFactory.Runner.TryMatchAtCurrentPosition(System.ReadOnlySpan{System.Char})">
+            <summary>Determine whether <paramref name="inputSpan"/> at base.runtextpos is a match for the regular expression.</summary>
+            <param name="inputSpan">The text being scanned by the regular expression.</param>
+            <returns>true if the regular expression matches at the current position; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Text.RegularExpressions.Generated.Utilities">
+            <summary>Helper methods used by generated <see cref="T:System.Text.RegularExpressions.Regex"/>-derived implementations.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout">
+            <summary>Default timeout value set in <see cref="T:System.AppContext"/>, or <see cref="F:System.Text.RegularExpressions.Regex.InfiniteMatchTimeout"/> if none was set.</summary>
+        </member>
+        <member name="F:System.Text.RegularExpressions.Generated.Utilities.s_hasTimeout">
+            <summary>Whether <see cref="F:System.Text.RegularExpressions.Generated.Utilities.s_defaultTimeout"/> is non-infinite.</summary>
         </member>
     </members>
 </doc>

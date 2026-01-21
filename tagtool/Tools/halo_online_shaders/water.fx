@@ -146,6 +146,8 @@ PARAM(float, choppiness_backward);
 PARAM(float, choppiness_side);
 PARAM(float, wave_visual_damping_distance);
 
+PARAM(float, wave_tessellation_level);
+
 PARAM(float, detail_slope_scale_x);
 PARAM(float, detail_slope_scale_y);
 PARAM(float, detail_slope_scale_z);
@@ -178,12 +180,13 @@ PARAM(float, globalshape_infuence_depth);
 // additions from reach
 PARAM(float4, global_shape_texture_xform);
 PARAM(float4, watercolor_texture_xform);
-float slope_scaler;
-float normal_variation_tweak;
-float fresnel_dark_spot;
-float foam_coefficient;
-float foam_cut;
-samplerCUBE dynamic_environment_map_0;
+PARAM(float, slope_scaler);
+PARAM(float, normal_variation_tweak);
+PARAM(float, fresnel_dark_spot);
+PARAM(float, foam_coefficient);
+PARAM(float, foam_cut);
+PARAM(float, foam_start_side);
+PARAM_SAMPLER_CUBE(dynamic_environment_map_0);
 
 //	ignore the vertex_type, input vertex type defined locally
 struct s_vertex_type_water_tessellation
@@ -283,8 +286,8 @@ struct s_underwater_vertex_input
 };
 
 /* implementation */
-#include "water_tessellation.fx"
 #include "water_shading.fx"
+#include "water_tessellation.fx"
 
 //#endif //pc
 

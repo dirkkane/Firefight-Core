@@ -22,6 +22,10 @@
 #define MATERIAL_TYPE_custom_specular 14
 #define MATERIAL_TYPE_cook_torrance_reach 15
 #define MATERIAL_TYPE_two_lobe_phong_reach 16
+#define MATERIAL_TYPE_pbr 17
+#define MATERIAL_TYPE_pbr_spec_gloss 18
+#define MATERIAL_TYPE_phong_h2 19
+#define MATERIAL_TYPE_umamusume 20
 
 
 // all material models must define these 4 functions
@@ -235,5 +239,37 @@ PARAM(bool, no_dynamic_lights);
 //*****************************************************************************
 #if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_custom_specular
 #include "custom_specular.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+//*****************************************************************************
+// two lobe phong model with specular tint colors got from special texture
+//*****************************************************************************
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_pbr
+#include "pbr.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+//*****************************************************************************
+// two lobe phong model with specular tint colors got from special texture
+//*****************************************************************************
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_pbr_spec_gloss
+#include "pbr_spec_gloss.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+//*****************************************************************************
+// totally not just single lobe phong plus some halo 2 code
+//*****************************************************************************
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_phong_h2
+#include "phong_h2.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+//*****************************************************************************
+// two lobe phong model with specular tint colors got from special texture
+//*****************************************************************************
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_umamusume
+#include "umamusume.fx"
 #define NO_ALPHA_TO_COVERAGE
 #endif

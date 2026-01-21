@@ -23,7 +23,7 @@ float3 d3dSRGBGamma(float3 Clinear)
 
 #endif
 
-albedo_pixel convert_to_albedo_target(in float4 albedo, in float3 normal, in float pos_w, in float3 geo_normal)
+albedo_pixel convert_to_albedo_target(in float4 albedo, in float3 normal, in float pos_w, in float3 geo_normal, in float normal_alpha_spec_type)
 {
 	albedo_pixel result;
 #if defined(pc) && (DX_VERSION == 9)
@@ -33,7 +33,7 @@ albedo_pixel convert_to_albedo_target(in float4 albedo, in float3 normal, in flo
 	result.albedo_specmask= albedo;
 #endif
 	result.normal.xyz= normal * 0.5f + 0.5f;		// bias and offset to all positive
-	result.normal.w= albedo.w;
+	result.normal.w= normal_alpha_spec_type;        // normally we just use the albedo.w
 
 #if defined(pc) && (DX_VERSION == 9)
 	result.pos_w = pos_w;

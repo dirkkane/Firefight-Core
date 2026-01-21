@@ -10,6 +10,11 @@ typedef sampler3D texture_sampler_3d;
 typedef samplerCUBE texture_sampler_cube;
 typedef sampler2D texture_sampler_2d_array;
 
+float4 sample1D(in texture_sampler_2d s, in float u)
+{
+	return tex2D(s, float2(u, 0));
+}
+
 float4 sample2D(in texture_sampler_2d s, in float2 uv)
 {
 	return tex2D(s, uv);

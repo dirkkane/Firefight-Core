@@ -2,9 +2,8 @@
 #define _TWO_LOBE_PHONG_FX_
 
 #include "shared_specular_reach.fx"
-#include "vmf_util.fx"
-//#include "templated\materials\diffuse_specular.fx"
-//#include "templated\materials\phong_specular.fx"
+#include "diffuse_specular.fx"
+#include "phong_specular.fx"
 
 
 /*
@@ -58,13 +57,6 @@ float3 get_analytical_specular_multiplier_two_lobe_phong_reach_ps(float specular
 float3 get_diffuse_multiplier_two_lobe_phong_reach_ps()
 {
 	return diffuse_coefficient;
-}
-
-float analytical_Phong_specular(in float3 L, in float3 R, float fPower)
-{
-    float fRDotL = saturate(dot(R, L));
-
-    return pow(saturate(fRDotL), fPower) * (1 + fPower);
 }
 
 float4 calc_material_analytic_specular_two_lobe_phong_ps(

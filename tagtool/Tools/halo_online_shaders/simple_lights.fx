@@ -13,6 +13,8 @@
 #define SIMPLE_LIGHT_COUNT simple_light_count
 #endif // !SIMPLE_LIGHT_DATA
 
+#define PI 3.14159265358979323846264338327950
+
 void calculate_simple_light(
 		uniform int light_index,
 		in float3 fragment_position_world,
@@ -195,6 +197,235 @@ void calc_simple_lights_analytical_reach(
 #endif // pc
 	}
 	specularly_reflected_light *= (1+specular_power);
+}
+
+void calc_simple_lights_ggx(
+		in float3 fragment_position_world,
+		in float3 surface_normal,
+		in float3 view_reflect_dir_world,							// view direction = fragment to camera,   reflected around fragment normal
+        in float3 view_dir,
+        in float3 f0,
+		in float3 f1,
+		in float fresnel_power,
+		in float a,
+        in float metallic,
+        in float3 albedo,
+		out float3 diffusely_reflected_light,						// diffusely reflected light (not including diffuse surface color)
+		out float3 specularly_reflected_light)
+{
+	diffusely_reflected_light= float3(0.0f, 0.0f, 0.0f);
+	specularly_reflected_light= float3(0.0f, 0.0f, 0.0f);
+
+#ifndef pc
+	[loop]
+#endif
+	for (int light_index= 0; light_index < SIMPLE_LIGHT_COUNT; light_index++)
+	{
+		// Compute distance squared to light, to see if we can skip this light.
+		// Note: This is also computed in calculate_simple_light below, but the shader
+		// compiler will remove the second computation and share the results of this
+		// computation.
+		float3 fragment_to_light_test= LIGHT_POSITION - fragment_position_world;				// vector from fragment to light
+		float  light_dist2_test= dot(fragment_to_light_test, fragment_to_light_test);				// distance to the light, squared
+		if( light_dist2_test >= LIGHT_BOUNDING_RADIUS )
+		{
+			// debug: use a strong green tint to highlight area outside of the light's radius
+			//diffusely_reflected_light += float3( 0, 1, 0 );
+			//specularly_reflected_light += float3( 0, 1, 0 );
+			continue;
+		}
+
+		float3 fragment_to_light;
+		float3 light_radiance;
+		calculate_simple_light(
+			light_index, fragment_position_world, light_radiance, fragment_to_light);
+
+        float3 H    = normalize(fragment_to_light + view_dir);
+        float NdotL = clamp(dot(surface_normal, fragment_to_light), 0.0001, 1);
+        float NdotV = clamp(abs(dot(surface_normal, view_dir)), 0.0001, 1.0);
+        float LdotH = clamp(dot(fragment_to_light, H), 0.0001, 1.0);
+		float VdotH = clamp(dot(view_dir, H), 0.0001, 1.0);
+		float VdotL = dot(view_dir, fragment_to_light);
+        float NdotH = clamp(dot(surface_normal, H), 0.0001, 1.0);
+        float a2_sqrd   = pow(a, 4);
+    	float min_dot = min(NdotL, NdotV);
+		float3 fresnel = f0 + (f1 - f0) * pow(1.0 - VdotH, fresnel_power);
+		
+        //Fresnel
+        //Self explanitory.
+
+        //Normal Distribution Function
+        float NDFdenom = max((NdotH * a2_sqrd - NdotH) * NdotH + 1.0, 0.0001);
+        float NDF = a2_sqrd / (PI * NDFdenom * NDFdenom);
+
+        //Geometry
+        float L = 2.0 * NdotL / (NdotL + sqrt(a2_sqrd + (1.0 - a2_sqrd) * (NdotL * NdotL)));
+        float V = 2.0 * NdotV / (NdotV + sqrt(a2_sqrd + (1.0 - a2_sqrd) * (NdotV * NdotV)));
+        float G = L * V;
+
+        //Final GGX
+        float3 numerator    = NDF * 
+                              G * 
+                        	  fresnel;
+        float3 denominator  = max(4.0 * NdotV * NdotL, 0.0001);
+        specularly_reflected_light += (numerator / denominator) * light_radiance * NdotL;//Light radiance was light irradiance, so keep an eye on that if there's issues.
+
+		//specularly_reflected_light = 0.00001f;
+
+        //Oren-Nayar
+		//wfloat3 fresnel = 0.04 + (1 - 0.04) * pow(1.0 - HoV, 5.0);
+		/*
+		The github this function is pulled from (https://github.com/glslify/glsl-diffuse-oren-nayar) states that values for the float below above 0.96
+		will not be energy conserving. This is because the output of this function is intended to be multiplied by albedo afterwards for the final diffuse.
+
+		I may need to use this for more than just diffuse, so this will be left as 1.0 and we can multiply the function's output by the albedo map and
+		then (1 - Fresnel) to maintain energy conservation.
+		*/
+
+		float albedo_standin = 0.96;
+
+		float s = VdotL - NdotL * NdotV;
+		float t = lerp(1.0, max(NdotL, NdotV), step(0.0, s));
+
+		float sigma2 = (1 / sqrt(2)) * atan(a * a);
+		float A = 1.0 + sigma2 * (albedo_standin / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
+		float B = 0.45 * sigma2 / (sigma2 + 0.09);
+
+
+		float3 ONdif = (albedo_standin * max(0.0, NdotL) * saturate(A + B * s / t) * light_radiance / PI);
+
+		
+		//Halo 3 diffuse
+		//float cosine_lobe= dot(surface_normal, fragment_to_light);//Unclamped NdotL
+		//diffusely_reflected_light  += light_radiance * max(0.05f, cosine_lobe);
+		
+		//Oren-Nayar diffuse
+		diffusely_reflected_light	+= ONdif * (1 - metallic);
+	}
+}
+
+void calc_simple_lights_uma(
+		in float3 fragment_position_world,
+		in float3 surface_normal,
+		in float3 view_reflect_dir_world,							// view direction = fragment to camera,   reflected around fragment normal
+        in float3 view_dir,
+		in float  spec_mask,
+        in float3 albedo,
+		out float3 diffusely_reflected_light,						// diffusely reflected light (not including diffuse surface color)
+		out float3 specularly_reflected_light)
+{
+	
+
+	diffusely_reflected_light= float3(0.0f, 0.0f, 0.0f);
+	specularly_reflected_light= float3(0.0f, 0.0f, 0.0f);
+
+#ifndef pc
+	[loop]
+#endif
+	for (int light_index= 0; light_index < SIMPLE_LIGHT_COUNT; light_index++)
+	{
+		// Compute distance squared to light, to see if we can skip this light.
+		// Note: This is also computed in calculate_simple_light below, but the shader
+		// compiler will remove the second computation and share the results of this
+		// computation.
+		float3 fragment_to_light_test= LIGHT_POSITION - fragment_position_world;				// vector from fragment to light
+		float  light_dist2_test= dot(fragment_to_light_test, fragment_to_light_test);				// distance to the light, squared
+		if( light_dist2_test >= LIGHT_BOUNDING_RADIUS )
+		{
+			// debug: use a strong green tint to highlight area outside of the light's radius
+			//diffusely_reflected_light += float3( 0, 1, 0 );
+			//specularly_reflected_light += float3( 0, 1, 0 );
+			continue;
+		}
+
+		float3 fragment_to_light;
+		float3 light_radiance;
+		calculate_simple_light(
+			light_index, fragment_position_world, light_radiance, fragment_to_light);
+
+        float NdotL = smoothstep(0.0, 0.03f, dot(surface_normal, fragment_to_light));
+		float NdotV = dot(surface_normal, view_dir);
+
+		specularly_reflected_light += saturate(spec_mask * 50 * (NdotV - 0.6)) * (albedo / PI) * NdotL * light_radiance;
+		
+		diffusely_reflected_light	+= NdotL * light_radiance * (albedo / PI);
+	}
+}
+
+void calc_simple_lights_spec_gloss(
+		in float3 fragment_position_world,
+		in float3 surface_normal,
+		in float3 view_reflect_dir_world,							// view direction = fragment to camera,   reflected around fragment normal
+        in float3 view_dir,
+        in float3 f0,
+		in float3 f1,
+		in float fresnel_power,
+		in float a,
+        in float3 albedo,
+		out float3 diffusely_reflected_light,						// diffusely reflected light (not including diffuse surface color)
+		out float3 specularly_reflected_light)
+{
+	diffusely_reflected_light= float3(0.0f, 0.0f, 0.0f);
+	specularly_reflected_light= float3(0.0f, 0.0f, 0.0f);
+
+#ifndef pc
+	[loop]
+#endif
+	for (int light_index= 0; light_index < SIMPLE_LIGHT_COUNT; light_index++)
+	{
+		// Compute distance squared to light, to see if we can skip this light.
+		// Note: This is also computed in calculate_simple_light below, but the shader
+		// compiler will remove the second computation and share the results of this
+		// computation.
+		float3 fragment_to_light_test= LIGHT_POSITION - fragment_position_world;				// vector from fragment to light
+		float  light_dist2_test= dot(fragment_to_light_test, fragment_to_light_test);				// distance to the light, squared
+		if( light_dist2_test >= LIGHT_BOUNDING_RADIUS )
+		{
+			// debug: use a strong green tint to highlight area outside of the light's radius
+			//diffusely_reflected_light += float3( 0, 1, 0 );
+			//specularly_reflected_light += float3( 0, 1, 0 );
+			continue;
+		}
+
+		float3 fragment_to_light;
+		float3 light_radiance;
+		calculate_simple_light(
+			light_index, fragment_position_world, light_radiance, fragment_to_light);
+
+        float3 H    = normalize(fragment_to_light + view_dir);
+        float NdotL = clamp(dot(surface_normal, fragment_to_light), 0.0001, 1);
+        float NdotV = clamp(abs(dot(surface_normal, view_dir)), 0.0001, 1.0);
+        float LdotH = clamp(dot(fragment_to_light, H), 0.0001, 1.0);
+		float VdotH = clamp(dot(view_dir, H), 0.0001, 1.0);
+		float VdotL = dot(view_dir, fragment_to_light);
+        float NdotH = clamp(dot(surface_normal, H), 0.0001, 1.0);
+        float a2_sqrd   = pow(a, 4);
+    	float min_dot = min(NdotL, NdotV);
+		float3 fresnel = f0 + (f1 - f0) * pow(1.0 - VdotH, fresnel_power);
+		
+        //Fresnel
+        //Self explanitory.
+
+        //Normal Distribution Function
+        float NDFdenom = max((NdotH * a2_sqrd - NdotH) * NdotH + 1.0, 0.0001);
+        float NDF = a2_sqrd / (PI * NDFdenom * NDFdenom);
+
+        //Geometry
+        float L = 2.0 * NdotL / (NdotL + sqrt(a2_sqrd + (1.0 - a2_sqrd) * (NdotL * NdotL)));
+        float V = 2.0 * NdotV / (NdotV + sqrt(a2_sqrd + (1.0 - a2_sqrd) * (NdotV * NdotV)));
+        float G = L * V;
+
+        //Final GGX
+        float3 numerator    = NDF * 
+                              G * 
+                        	  fresnel;
+        float3 denominator  = max(4.0 * NdotV * NdotL, 0.0001);
+        specularly_reflected_light += (numerator / denominator) * light_radiance * NdotL;//Light radiance was light irradiance, so keep an eye on that if there's issues.
+		
+		//Halo 3 diffuse
+		float cosine_lobe= dot(surface_normal, fragment_to_light);//Unclamped NdotL
+		diffusely_reflected_light += light_radiance * max(0.0001f, cosine_lobe);
+	}
 }
 
 #else

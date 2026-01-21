@@ -74,18 +74,18 @@ void misc_attr_animation(in vertex_type vertex, out float4 misc)
 {
 	decompress_deform(vertex);
 	[branch]
-	switch (misc_attr_animation_option)
+	if (misc_attr_animation_option == 2)
 	{
-		case 2:
-			calc_misc_scrolling_projected_vs(vertex, misc);
-			break;
-		case 1:
-			calc_misc_scrolling_cube_vs(vertex, misc);
-			break;
-		default:
-			misc = float4(0, 0, 0, 0);
-			break;
-	};
+		calc_misc_scrolling_projected_vs(vertex, misc);
+	}
+	else if (misc_attr_animation_option == 1)
+	{
+		calc_misc_scrolling_cube_vs(vertex, misc);
+	}
+	else 
+	{
+		misc = float4(0, 0, 0, 0);
+	}
 }
 
 #endif

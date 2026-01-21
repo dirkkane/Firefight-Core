@@ -19,13 +19,14 @@ float4 simple_DOF_filter(float2 vTexCoord, texture_sampler_2d original_sampler, 
 	float fTapBlur = min(max(abs(-FOCUS_DISTANCE + -fCenterDepth)-FOCUS_HALF_WIDTH, 0.0f)*APERTURE, MAX_BLUR_BLEND);
 
 	// blend high and low res based on blur amount
-	float4 vOutColor= lerp(vTapHigh, vTapLow, fTapBlur * fTapBlur);							// blurry samples use blurry buffer,  sharp samples use sharp buffer
+    float blend_factor= 1.0f; // TODO: bias towards high res if DOF blur is low
+	float4 vOutColor= lerp(vTapHigh, vTapLow, (fTapBlur * fTapBlur) * blend_factor);	// blurry samples use blurry buffer,  sharp samples use sharp buffer
         
     if (original_gamma2)
     {
-#ifdef APPLY_FIXES
-        vOutColor.rgb = pow(sqrt(vOutColor.rgb), gamma_power);
-#endif
+//#ifdef APPLY_FIXES
+//        vOutColor.rgb = pow(sqrt(vOutColor.rgb), gamma_power);
+//#endif
     }
     
     return vOutColor; 
