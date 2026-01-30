@@ -39,6 +39,25 @@ Done
 exitmodpackage
 
 deletemodfiles
+
+MapFile Remove 270735729
+MapFile Remove 7050
+MapFile Remove 720
+MapFile Remove 520
+MapFile Remove 580
+MapFile Remove 500
+MapFile Remove 5436
+MapFile Remove 8187
+MapFile Remove 10001
+MapFile Remove 10002
+MapFile Remove 10004
+MapFile Remove 32572
+MapFile Remove 32272
+MapFile Remove 32271
+MapFile Remove 32270
+MapFile Remove 0
+MapFile Remove 64617
+
 importfonts firefightfolder\fonts\font_package.bin
 
 savemodpackage firefightfolder\paks\crates.pak
