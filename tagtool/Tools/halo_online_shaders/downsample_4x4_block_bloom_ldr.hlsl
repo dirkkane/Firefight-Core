@@ -28,27 +28,15 @@ float4 default_ps(screen_output IN, SCREEN_POSITION_INPUT(screen_pos)) : SV_Targ
 	float3 color= 0.0f;
 #endif
 
-	//float4 sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, -1, -1);
-	//	color += sample.rgb;
-	//sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, +1, -1);
-	//	color += sample.rgb;
-	//sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, -1, +1);
-	//	color += sample.rgb;
-	//sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, +1, +1);
-	//	color += sample.rgb;
-	//color= color / 4.0f;
-
-// Switched to ODST version of this shader:
-	// this is a 6x6 gaussian filter (slightly better than 4x4 box filter)
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, -2, -2);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, +0, -2);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, +2, -2);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, -2, +0);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, +0, +0);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, +2, +0);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, -2, +2);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, +0, +2);
-	color += (0.33f * 0.33f) * sample2D_offset_texel_size(source_sampler, IN.texcoord, +2, +2);
+	float4 sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, -1, -1);
+		color += sample.rgb;
+	sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, +1, -1);
+		color += sample.rgb;
+	sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, -1, +1);
+		color += sample.rgb;
+	sample= sample2D_offset_texel_size(source_sampler, IN.texcoord, +1, +1);
+		color += sample.rgb;
+	color= color / 4.0f;
 
 	// calculate 'intensity'		(max or dot product?)
 	float intensity= dot(color.rgb, intensity_vector.rgb);					// max(max(color.r, color.g), color.b);

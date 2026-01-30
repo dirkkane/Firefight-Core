@@ -138,6 +138,16 @@ void calc_material_analytic_specular_umamusume_ps(
         material_parameters= saturate(sample2D(material_texture, transform_texcoord(texcoord, material_texture_xform)));
 		float4 shaded_texture = sample2D(uma_shaded_map, transform_texcoord(texcoord, material_texture_xform));
 		float4 base_texture = sample2D(uma_base_map, transform_texcoord(texcoord, material_texture_xform));
+		// apply change_color_map to base_texture (same UV transform)
+		{
+			float4 change_mask = sample2D(change_color_map, transform_texcoord(texcoord, change_color_map_xform));
+			float3 change_multiplier =
+				lerp(float3(1,1,1), primary_change_color, change_mask.r) *
+				lerp(float3(1,1,1), secondary_change_color, change_mask.g) *
+				lerp(float3(1,1,1), tertiary_change_color, change_mask.b) *
+				lerp(float3(1,1,1), quaternary_change_color, change_mask.a);
+			shaded_texture.rgb *= change_multiplier;
+		}
 		material_parameters.w = base_texture.g;
 		float shadowLerp = saturate(1 + ((base_texture.r * 2 * halfLambert - 0.2) * 100));
 		float3 shadedDiff = lerp(shaded_texture.rgb, diffuse_albedo_color, shadowLerp) * light_irradiance;
@@ -154,6 +164,16 @@ void calc_material_analytic_specular_umamusume_ps(
         material_parameters= saturate(sample2D(material_texture, transform_texcoord(texcoord, material_texture_xform)));
 		float4 shaded_texture = sample2D(uma_shaded_map, transform_texcoord(texcoord, material_texture_xform));
 		float4 base_texture = sample2D(uma_base_map, transform_texcoord(texcoord, material_texture_xform));
+		// apply change_color_map to base_texture (same UV transform)
+		{
+			float4 change_mask = sample2D(change_color_map, transform_texcoord(texcoord, change_color_map_xform));
+			float3 change_multiplier =
+				lerp(float3(1,1,1), primary_change_color, change_mask.r) *
+				lerp(float3(1,1,1), secondary_change_color, change_mask.g) *
+				lerp(float3(1,1,1), tertiary_change_color, change_mask.b) *
+				lerp(float3(1,1,1), quaternary_change_color, change_mask.a);
+			shaded_texture.rgb *= change_multiplier;
+		}
 		material_parameters.w = 0;
 		float3 shadedDiff = lerp(shaded_texture.rgb, diffuse_albedo_color, base_texture.r) * light_irradiance;
 		float rimLerp = (1 - saturate(facing * 8)) * material_parameters.b;
@@ -170,6 +190,16 @@ void calc_material_analytic_specular_umamusume_ps(
 		float2 altUv = float2(texcoord.x, texcoord.y * 2);
 		float4 shaded_texture = sample2D(uma_shaded_map, transform_texcoord(altUv, material_texture_xform));
 		float4 base_texture = sample2D(uma_base_map, transform_texcoord(altUv, material_texture_xform));
+		// apply change_color_map to base_texture (use same altUv transform)
+		{
+			float4 change_mask = sample2D(change_color_map, transform_texcoord(altUv, change_color_map_xform));
+			float3 change_multiplier =
+				lerp(float3(1,1,1), primary_change_color, change_mask.r) *
+				lerp(float3(1,1,1), secondary_change_color, change_mask.g) *
+				lerp(float3(1,1,1), tertiary_change_color, change_mask.b) *
+				lerp(float3(1,1,1), quaternary_change_color, change_mask.a);
+			shaded_texture.rgb *= change_multiplier;
+		}
 		
 		float hl00 = shaded_texture.r * (eye_highlight_0 >= shaded_texture.r);
         float hl01 = base_texture.r * (eye_highlight_1 >= base_texture.r);
@@ -182,6 +212,16 @@ void calc_material_analytic_specular_umamusume_ps(
         material_parameters= saturate(sample2D(material_texture, transform_texcoord(texcoord, material_texture_xform)));
 		float4 shaded_texture = sample2D(uma_shaded_map, transform_texcoord(texcoord, material_texture_xform));
 		float4 base_texture = sample2D(uma_base_map, transform_texcoord(texcoord, material_texture_xform));
+		// apply change_color_map to base_texture (same UV transform)
+		{
+			float4 change_mask = sample2D(change_color_map, transform_texcoord(texcoord, change_color_map_xform));
+			float3 change_multiplier =
+				lerp(float3(1,1,1), primary_change_color, change_mask.r) *
+				lerp(float3(1,1,1), secondary_change_color, change_mask.g) *
+				lerp(float3(1,1,1), tertiary_change_color, change_mask.b) *
+				lerp(float3(1,1,1), quaternary_change_color, change_mask.a);
+			shaded_texture.rgb *= change_multiplier;
+		}
 		material_parameters.w = base_texture.g;
 		float shadowLerp = saturate(1 + ((base_texture.r * 2 * halfLambert - 0.2) * 100));
 		float3 shadedDiff = lerp(shaded_texture.rgb, diffuse_albedo_color, shadowLerp) * light_irradiance;

@@ -18,7 +18,7 @@ float4 default_ps(screen_output IN) : SV_Target
 #else
 	float3 color= 0.0f;
 #endif
-/*
+
 	float4 sample= tex2D_offset(dark_source_sampler, IN.texcoord, -1, -1);
 	color += sample.rgb * sample.rgb;
 	sample= tex2D_offset(dark_source_sampler, IN.texcoord, +1, -1);
@@ -37,43 +37,6 @@ float4 default_ps(screen_output IN) : SV_Target
 	
 	// calculate bloom color
 	float3 bloom_color= color * (bloom_intensity / intensity);
-*/
-	
-	// Switched to the ODST version of this shader
     
-    float4 sample;
-    float sample_intensity, sample_curved;
-    float intensity = 0;
-	
-    sample = tex2D_offset(dark_source_sampler, IN.texcoord, -1, -1);
-    sample.rgb *= sample.rgb * DARK_COLOR_MULTIPLIER;
-    sample_intensity = dot(sample.rgb, intensity_vector.rgb);
-    intensity += sample_intensity * 0.25f;
-    sample_curved = max(sample_intensity * scale.y, sample_intensity - scale.x); // ###ctchou $PERF could compute both parameters with a single mad followed by max
-    color += sample.rgb * sample_curved / sample_intensity;
-
-    sample = tex2D_offset(dark_source_sampler, IN.texcoord, +1, -1);
-    sample.rgb *= sample.rgb * DARK_COLOR_MULTIPLIER;
-    sample_intensity = dot(sample.rgb, intensity_vector.rgb);
-    intensity += sample_intensity * 0.25f;
-    sample_curved = max(sample_intensity * scale.y, sample_intensity - scale.x); // ###ctchou $PERF could compute both parameters with a single mad followed by max
-    color += sample.rgb * sample_curved / sample_intensity;
-
-    sample = tex2D_offset(dark_source_sampler, IN.texcoord, -1, +1);
-    sample.rgb *= sample.rgb * DARK_COLOR_MULTIPLIER;
-    sample_intensity = dot(sample.rgb, intensity_vector.rgb);
-    intensity += sample_intensity * 0.25f;
-    sample_curved = max(sample_intensity * scale.y, sample_intensity - scale.x); // ###ctchou $PERF could compute both parameters with a single mad followed by max
-    color += sample.rgb * sample_curved / sample_intensity;
-
-    sample = tex2D_offset(dark_source_sampler, IN.texcoord, +1, +1);
-    sample.rgb *= sample.rgb * DARK_COLOR_MULTIPLIER;
-    sample_intensity = dot(sample.rgb, intensity_vector.rgb);
-    intensity += sample_intensity * 0.25f;
-    sample_curved = max(sample_intensity * scale.y, sample_intensity - scale.x); // ###ctchou $PERF could compute both parameters with a single mad followed by max
-    color += sample.rgb * sample_curved / sample_intensity;
-
-    color = color / 4.0f;
-    float3 bloom_color = color;
 	return float4(bloom_color.rgb, intensity);
 }
