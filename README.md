@@ -4,6 +4,8 @@ A firefight mod for ElDewrito 0.7. This is intended to be used as the basis for 
 
 If you're going to use my mod as a basis for yours, please make both of our lives easier and add your changes to the scripts in this repo and build it that way. Don't take the finished compiled pak and add stuff on top of it, it's just going to create issues and cause you to lose your progress at some point.
 
+This mod utilizes [MtnDewIt's TagTool fork](https://github.com/MtnDewIt/TagTool-NET-Test) as it includes many more features and fixes than the main repo. It's recommended to only use the build bundled with firefight because sometimes new versions can break things. Every "Updated TagTool" commit has the short commit hash for which build is currently in use.
+
 # How To Build
 ## Variables
 Change the following lines at the beginning of `build.cmds` and `buildMaps.cmds`:
