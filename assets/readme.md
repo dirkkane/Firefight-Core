@@ -16,6 +16,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 - NoShotz
 
 ### v2.8 Changelog
+- Black Eye skull description now says "shields" instead of "stamina"
 - Removed Herobrine
 
 ### v2.7 Changelog
