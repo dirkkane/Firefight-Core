@@ -7,18 +7,18 @@ If you're going to use my mod as a basis for yours, please make both of our live
 This mod utilizes [MtnDewIt's TagTool fork](https://github.com/MtnDewIt/TagTool-NET-Test) as it includes many more features and fixes than the main repo. It's recommended to only use the build bundled with firefight because sometimes new versions can break things. Every "Updated TagTool" commit has the short commit hash for which build is currently in use.
 
 # How To Build
-## Variables
-Change the following lines at the beginning of `build.cmds` and `buildMaps.cmds`:
+Change `.env.example` to `.env` and set the variables as follows:
 
+| Variable           | Description                                |
+|--------------------|--------------------------------------------|
+| `basecache`        | Path to your ElDewrito maps directory      |
+| `workingdir`       | Path to the repository directory           |
+
+Example of a correct `.env` file:
 ```
-basecache
-
-setvariable firefightfolder path
+SET basecache="E:\Games\Eldewrito\0.7\game\ElDewrito\maps\tags.dat"
+SET workingdir="I:\Development\eldewrito_modding\Firefight-Core"
 ```
-
-Replace `basecache` with the full path to your clean ElDewrito 0.7 map files <br> (ex. `C:\Users\User\Games\ElDewrito\maps\tags.dat`).
-
-Then replace the word `path` next to `firefightfolder` with the full path to the folder where you saved this repository.
 
 ## Source Files
 This mod works by porting content from Xbox 360 versions of Halo 3 and Halo 3: ODST as well as the MCC PC version of Halo 3: ODST. Place the files listed below into the respective subfolders as shown.

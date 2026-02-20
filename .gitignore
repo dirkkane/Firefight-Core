@@ -1,3 +1,4 @@
+.env
 *.map
 *.pak
 !/paks/h2amp_beam_rifle.pak

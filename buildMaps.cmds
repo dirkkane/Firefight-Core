@@ -1,9 +1,3 @@
-basecache
-
-setvariable firefightfolder path
-
-useshadercache firefightfolder\caches\shadercache
-
 createmodpackage 1 large
 Firefight Maps
 Maps component of Firefight Core. Meant for pak building only.
