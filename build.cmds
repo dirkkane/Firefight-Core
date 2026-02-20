@@ -127,5 +127,8 @@ UpdateMapFiles firefightfolder\mapinfo
 echo ==Add assets...==
 addmodfiles firefightfolder\assets
 
+echo ==Saving Mod Package...==
 savemodpackage
+
+echo ===DONE!===
 DumpLog firefight_build.log
