@@ -26,6 +26,7 @@ Do not use cosmetic mods when playing with others, differences in game data caus
 - Added readme for in-game mod info
 - Added H2A Beam Rifle
 - Added HD textures for the Automag and Silenced SMG
+- Added Gauss Hog to Lost Platoon
 - Fixed campaign player rep not picking up health packs
 - Fixed Flood fronds shader (Thanks mtn)
 - Fixed skull icons clipping off screen when in third person
