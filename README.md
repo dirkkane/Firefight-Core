@@ -56,11 +56,6 @@ campaign.map
 shared.map
 ```
 
-`source_maps\fmod`:
-```
-paste the FMOD sounds from Halo 3 ODST MCC into this folder.
-```
-
 ## Building
 Once you have completed the above steps run `buildMaps.bat`, this will create a mod package in the `paks` folder that contains most of the ported data from Halo 3: ODST to save time on future builds. When that finishes run `build.bat` to create the actual firefight mod, the complete mod package will be saved to the mods folder in your ElDewrito installation.
 > [!TIP]
