@@ -2,11 +2,12 @@ using (var stream = Cache.OpenCacheReadWrite())
 {
     foreach (var tag in Cache.TagCache.FindAllInGroup<TagTool.Tags.Definitions.Scenario>())
     {
-        var scnr = Cache.Deserialize<TagTool.Tags.Definitions.Scenario>(stream, tag);
+        var scenario = Cache.Deserialize<TagTool.Tags.Definitions.Scenario>(stream, tag);
         if (tag.Name.StartsWith("levels\\atlas"))
         {
-            
             Console.WriteLine("\nModifying Squads: " + tag);
+
+            // Initialize all needed indexes as -1 (invalid index, game assumes null if assigned)
             short elite = -1;
             short elite_major = -1;
             short elite_specops = -1;
@@ -26,38 +27,93 @@ using (var stream = Cache.OpenCacheReadWrite())
             short carbine = -1;
             short brute_shot = -1;
             short energy_sword = -1;
-            foreach (var character in scnr.CharacterPalette)
+
+            // Get indexes for all required character tags in the current scenario
+            foreach (var character in scenario.CharacterPalette)
             {
-                if (character.Instance != null)
+                switch (character.Instance?.Name)
                 {
-                    if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite")) elite = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_major")) elite_major = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops")) elite_specops = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_specops_commander")) elite_specops_commander = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\elite\\ai\\elite_gold_boss")) elite_gold_boss = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute")) brute = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain") && brute_captain == -1) brute_captain = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_ultra")) brute_captain_ultra = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_captain_major")) brute_captain_major = (short)scnr.CharacterPalette.IndexOf(character);
-                    else if (character.Instance.Name.Equals("objects\\characters\\brute\\ai\\brute_stalker")) brute_stalker = (short)scnr.CharacterPalette.IndexOf(character);
+                    case "objects\\characters\\elite\\ai\\elite":
+                        elite = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\elite\\ai\\elite_major":
+                        elite_major = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\elite\\ai\\elite_specops":
+                        elite_specops = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\elite\\ai\\elite_specops_commander":
+                        elite_specops_commander = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\elite\\ai\\elite_gold_boss":
+                        elite_gold_boss = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\brute\\ai\\brute":
+                        brute = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\brute\\ai\\brute_captain":
+                        if (brute_captain == -1) // Only assign variable to the found index if it hasn't already been assigned. Protects against duplicate palette entries i'm assuming, don't remember which maps have this problem.
+                        {
+                            brute_captain = (short)scenario.CharacterPalette.IndexOf(character);
+                        }
+                        break;
+                    case "objects\\characters\\brute\\ai\\brute_captain_ultra":
+                        brute_captain_ultra = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\brute\\ai\\brute_captain_major":
+                        brute_captain_major = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case "objects\\characters\\brute\\ai\\brute_stalker":
+                        brute_stalker = (short)scenario.CharacterPalette.IndexOf(character);
+                        break;
+                    case null:
+                        break;
+                    default:
+                        break;
                 }
             }
-            foreach (var weapon in scnr.WeaponPalette)
+
+            // Get indexes for all required weapon tags in the current scenario
+            foreach (var weapon in scenario.WeaponPalette)
             {
-                if (weapon.Object != null)
+                switch (weapon.Object?.Name)
                 {
-                    if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\plasma_rifle\\plasma_rifle")) plasma_rifle = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\plasma_rifle_red\\plasma_rifle_red")) plasma_rifle_red = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\plasma_rifle\\plasma_rifle_power")) plasma_rifle_gold = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\spike_rifle\\spike_rifle")) spiker = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\excavator\\excavator")) mauler = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\pistol\\needler\\needler")) needler = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\rifle\\covenant_carbine\\covenant_carbine")) carbine = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\support_low\\brute_shot\\brute_shot")) brute_shot = (short)scnr.WeaponPalette.IndexOf(weapon);
-                    else if (weapon.Object.Name.Equals("objects\\weapons\\melee\\energy_blade\\energy_blade")) energy_sword = (short)scnr.WeaponPalette.IndexOf(weapon);
+                     case "objects\\weapons\\rifle\\plasma_rifle\\plasma_rifle":
+                         plasma_rifle = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\rifle\\plasma_rifle_red\\plasma_rifle_red":
+                         plasma_rifle_red = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\rifle\\plasma_rifle\\plasma_rifle_power":
+                         plasma_rifle_gold = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\rifle\\spike_rifle\\spike_rifle":
+                         spiker = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\pistol\\excavator\\excavator":
+                         mauler = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\pistol\\needler\\needler":
+                         needler = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\rifle\\covenant_carbine\\covenant_carbine":
+                         carbine = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\support_low\\brute_shot\\brute_shot":
+                         brute_shot = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case "objects\\weapons\\melee\\energy_blade\\energy_blade":
+                         energy_sword = (short)scenario.WeaponPalette.IndexOf(weapon);
+                         break;
+                     case null:
+                         break;
+                     default:
+                         break;
                 }
-            }
-            foreach (var squad in scnr.Squads)
+            } 
+
+            // Replace palette indexes referenced by squads with the desired new weapon / character
+            foreach (var squad in scenario.Squads)
             {
                 foreach (var designerfireteam in squad.DesignerFireteams)
                 {
@@ -110,11 +166,12 @@ using (var stream = Cache.OpenCacheReadWrite())
                     //else if (fireteamname.StartsWith("1_hammer"))
                     //{
                     //    designerfireteam.characterblock = new List<TagRef
-                    
+
                 }
             }
             
-            Console.WriteLine("\nCHARACTER PALETTE INDEXES: \n");
+            // Print found indexes for reference by modder
+            Console.WriteLine("\nCHARACTER PALETTE INDEXES:");
             Console.WriteLine("Elite: " + elite);
             Console.WriteLine("Elite Major: " + elite_major);
             Console.WriteLine("Elite SpecOps: " + elite_specops);
@@ -125,7 +182,7 @@ using (var stream = Cache.OpenCacheReadWrite())
             Console.WriteLine("Brute Captain Ultra: " + brute_captain_ultra);
             Console.WriteLine("Brute Stalker: " + brute_stalker);
 
-            Console.WriteLine("\nWEAPON PALETTE INDEXES: \n");
+            Console.WriteLine("\nWEAPON PALETTE INDEXES:");
             Console.WriteLine("Plasma Rifle: " + plasma_rifle);
             Console.WriteLine("Plasma Rifle Red: " + plasma_rifle_red);
             Console.WriteLine("Plasma Rifle PWR: " + plasma_rifle_gold);
@@ -136,6 +193,6 @@ using (var stream = Cache.OpenCacheReadWrite())
             Console.WriteLine("Carbine: " + carbine);
             Console.WriteLine("Energy Sword: " + energy_sword);
         }
-        Cache.Serialize(stream, tag, scnr);
+        Cache.Serialize(stream, tag, scenario);
     }
 }
