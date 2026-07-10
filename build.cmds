@@ -127,4 +127,4 @@ echo ==Saving Mod Package...==
 savemodpackage
 
 echo ===DONE!===
-DumpLog firefight_build.log
+DumpLog

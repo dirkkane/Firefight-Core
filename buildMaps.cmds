@@ -185,4 +185,5 @@ porttag !updatemapfiles *.scnr
 Exit
 
 savemodpackage firefightfolder\paks\maps.pak
-Exitmodpackage
+
+DumpLog
