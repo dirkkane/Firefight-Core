@@ -5,7 +5,7 @@ for /f "delims=" %%i in (%configFile%) do (
     call %%i
 )
 
-cd tagtool
+pushd tagtool
 
 (
 	echo setvariable firefightfolder %workingdir%
@@ -13,4 +13,5 @@ cd tagtool
 
 ) |tagtool.exe %basecache%
 
+popd
 pause
