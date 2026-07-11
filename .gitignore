@@ -6,3 +6,6 @@
 !/paks/crates.pak
 /tagtool/logs
 /source_maps/fmod
+caches/shadercache/string_ids.dat
+caches/shadercache/tag_list.csv
+caches/shadercache/tags.dat
