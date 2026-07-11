@@ -11,6 +11,8 @@
 #include "shadow_geometry_registers.fx"
 
 //@generate tiny_position_only
+//@generate flat_rigid
+//@generate flat_world
 
 #define LDR_ALPHA_ADJUST g_exposure.w
 #define HDR_ALPHA_ADJUST g_exposure.b

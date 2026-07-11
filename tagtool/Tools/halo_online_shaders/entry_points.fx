@@ -252,7 +252,11 @@ float4 calc_output_color_with_explicit_light_quadratic(
 	float4 envmap_specular_reflectance_and_roughness;
 	float3 envmap_area_specular_only;
 	float4 specular_radiance;
+	#ifdef _DISABLE_DIFFUSE_IN_ENTRY_POINTS
+	float3 diffuse_radiance= 0;
+	#else
 	float3 diffuse_radiance= ravi_order_3(bump_normal, sh_lighting_coefficients);
+	#endif
 	
 	//float4 lightint_coefficients[4]= {sh_lighting_coefficients[0], sh_lighting_coefficients[1], sh_lighting_coefficients[2], sh_lighting_coefficients[3]};
 	
@@ -281,7 +285,11 @@ float4 calc_output_color_with_explicit_light_quadratic(
 		
 	//compute environment map
 	envmap_area_specular_only= max(envmap_area_specular_only, 0.001f);
-	float3 envmap_radiance= CALC_ENVMAP(envmap_type)(view_dir, bump_normal, view_reflect_dir, envmap_specular_reflectance_and_roughness, envmap_area_specular_only, ssr_color);
+	float3 envmap_radiance= CALC_ENVMAP(envmap_type)(view_dir, bump_normal, view_reflect_dir, envmap_specular_reflectance_and_roughness, envmap_area_specular_only, 
+#ifdef _PASS_EXTRA_PARAMETERS
+	misc,
+#endif
+	ssr_color);
 
 	//compute self illumination	
 	float3 self_illum_radiance= calc_self_illumination_ps(texcoord, albedo.xyz, view_dir_in_tangent_space, fragment_position, fragment_to_camera_world, view_dot_normal) * ILLUM_SCALE;
@@ -305,12 +313,20 @@ float4 calc_output_color_with_explicit_light_quadratic(
 	out_color.xyz= out_color.xyz * BLEND_MULTIPLICATIVE;
 	out_color.w= ALPHA_CHANNEL_OUTPUT;
 #elif defined(BLEND_FRESNEL)
-	out_color.xyz= (diffuse_radiance * albedo.xyz * albedo.w + self_illum_radiance + envmap_radiance + specular_radiance);
+	out_color.xyz= (diffuse_radiance
+					#ifndef _DISABLE_DIFFUSE_IN_ENTRY_POINTS
+					* albedo.xyz 
+					#endif
+					* albedo.w + self_illum_radiance + envmap_radiance + specular_radiance);
 	APPLY_OVERLAYS(out_color.xyz, texcoord, view_dot_normal)
 	out_color.xyz= (out_color.xyz * extinction + inscatter * BLEND_FOG_INSCATTER_SCALE) * g_exposure.rrr;
 	out_color.w= saturate(specular_radiance.w + albedo.w);
 #else
-	out_color.xyz= (diffuse_radiance * albedo.xyz + specular_radiance.rgb + self_illum_radiance + envmap_radiance);
+	out_color.xyz= (diffuse_radiance
+					#ifndef _DISABLE_DIFFUSE_IN_ENTRY_POINTS
+					* albedo.xyz 
+					#endif
+					+ specular_radiance + self_illum_radiance + envmap_radiance);
 	APPLY_OVERLAYS(out_color.xyz, texcoord, view_dot_normal)
 	out_color.xyz= (out_color.xyz * extinction + inscatter * BLEND_FOG_INSCATTER_SCALE) * g_exposure.rrr;
 	out_color.w= ALPHA_CHANNEL_OUTPUT;
@@ -403,7 +419,11 @@ float4 calc_output_color_with_explicit_light_linear_with_dominant_light(
 	float4 envmap_specular_reflectance_and_roughness;
 	float3 envmap_area_specular_only;
 	float4 specular_radiance;
+#ifdef _DISABLE_DIFFUSE_IN_ENTRY_POINTS
+	float3 diffuse_radiance= 0;
+#else
 	float3 diffuse_radiance= ravi_order_2_with_dominant_light(bump_normal, sh_lighting_coefficients, light_direction, light_intensity);
+#endif
 	
 	float4 zero_vec= 0.0f;
 	float4 lightint_coefficients[10]= {
@@ -442,7 +462,11 @@ float4 calc_output_color_with_explicit_light_linear_with_dominant_light(
 			
 	//compute environment map
 	envmap_area_specular_only= max(envmap_area_specular_only, 0.001f);
-	float3 envmap_radiance= CALC_ENVMAP(envmap_type)(view_dir, bump_normal, view_reflect_dir, envmap_specular_reflectance_and_roughness, envmap_area_specular_only, ssr_color);
+	float3 envmap_radiance= CALC_ENVMAP(envmap_type)(view_dir, bump_normal, view_reflect_dir, envmap_specular_reflectance_and_roughness, envmap_area_specular_only, 
+#ifdef _PASS_EXTRA_PARAMETERS
+	misc,
+#endif
+	ssr_color);
 
 	//compute self illumination	
 	float3 self_illum_radiance= calc_self_illumination_ps(texcoord, albedo.xyz, view_dir_in_tangent_space, fragment_position, fragment_to_camera_world, view_dot_normal) * ILLUM_SCALE;
@@ -466,12 +490,20 @@ float4 calc_output_color_with_explicit_light_linear_with_dominant_light(
 	out_color.xyz= out_color.xyz * BLEND_MULTIPLICATIVE;
 	out_color.w= ALPHA_CHANNEL_OUTPUT;
 #elif defined(BLEND_FRESNEL)
-	out_color.xyz= (diffuse_radiance * albedo.xyz * albedo.w + self_illum_radiance + envmap_radiance + specular_radiance);
+	out_color.xyz= (diffuse_radiance 
+					#ifndef _DISABLE_DIFFUSE_IN_ENTRY_POINTS
+					* albedo.xyz
+					#endif
+					* albedo.w + self_illum_radiance + envmap_radiance + specular_radiance);
 	APPLY_OVERLAYS(out_color.xyz, texcoord, view_dot_normal)
 	out_color.xyz= (out_color.xyz * extinction + inscatter * BLEND_FOG_INSCATTER_SCALE) * g_exposure.rrr;
 	out_color.w= saturate(specular_radiance.w + albedo.w);
 #else
-	out_color.xyz= (diffuse_radiance * albedo.xyz + specular_radiance.rgb + self_illum_radiance + envmap_radiance);
+	out_color.xyz= (diffuse_radiance 
+					#ifndef _DISABLE_DIFFUSE_IN_ENTRY_POINTS
+					* albedo.xyz 
+					#endif
+					+ specular_radiance + self_illum_radiance + envmap_radiance);
 	APPLY_OVERLAYS(out_color.xyz, texcoord, view_dot_normal)
 	out_color.xyz= (out_color.xyz * extinction + inscatter * BLEND_FOG_INSCATTER_SCALE) * g_exposure.rrr;
 	out_color.w= ALPHA_CHANNEL_OUTPUT;
@@ -1537,7 +1569,10 @@ accum_pixel default_dynamic_light_ps(
 	///    and hlsl reflect can do that directly
 	///float3 view_reflect_dir= normalize( (dot(view_dir, bump_normal) * bump_normal - view_dir) * 2 + view_dir );
 	float3 view_reflect_dir= -normalize(reflect(view_dir, bump_normal));
-
+	
+	// calculate specular lobe
+	float3 specular_mask;
+	calc_specular_mask_ps(texcoord, albedo.w, specular_mask);
 
 //PBR SHADER MOD: 	The #ifdef is here to make dynamic lights use the PBR material model without the "unproven 'performance' hack" that'd replace it all with
 //					just the vanilla diffuse lobe in certain cases, but without removing it for the sake of keeping vanilla logic intact for default shaders.			
@@ -1548,44 +1583,126 @@ accum_pixel default_dynamic_light_ps(
 	float3 analytic_specular_radiance;
 	
 	float4 spatially_varying_material_parameters;
-
+	float4 guh = float4(specular_mask,0);
 	CALC_MATERIAL_ANALYTIC_SPECULAR(material_type)(
 		view_dir,
 		bump_normal,
 		view_reflect_dir,
 		fragment_to_light,
 		light_radiance,
-		albedo,									// diffuse reflectance (ignored for cook-torrance)
+		albedo.xyz,									// diffuse reflectance (ignored for cook-torrance)
 		texcoord,
 		1.0f,
-		tangent_frame,
-		misc,
+		vsout.normal,
+		guh,
 		spatially_varying_material_parameters,			// only when use_material_texture is defined
 		specular_fresnel_color,							// fresnel(specular_albedo_color)
 		specular_albedo_color,							// specular reflectance at normal incidence
 		analytic_specular_radiance);
 
-	float3 radiance = oren_nayar(
-								view_dir,
-								bump_normal,
-								fragment_to_light,
-								light_radiance,
-								specular_fresnel_color,
-								texcoord,
-								albedo
-								) * albedo * (1 - spatially_varying_material_parameters.z);
+		float3 radiance = oren_nayar(
+									view_dir,
+									bump_normal,
+									fragment_to_light,
+									light_radiance,
+									specular_fresnel_color,
+									spatially_varying_material_parameters.y,
+									albedo
+									) * (1 - spatially_varying_material_parameters.z);
+	radiance += analytic_specular_radiance;
+#elif defined(_PBR_SSS_FX_)
+	float3 specular_fresnel_color;
+	float3 specular_albedo_color;
+	float power_or_roughness;
+	float3 analytic_specular_radiance;
+	
+	float4 material_parameters;
+	float4 guh = float4(specular_mask,0);
+	CALC_MATERIAL_ANALYTIC_SPECULAR(material_type)(
+		view_dir,
+		bump_normal,
+		view_reflect_dir,
+		fragment_to_light,
+		light_radiance,
+		albedo.xyz,									// diffuse reflectance (ignored for cook-torrance)
+		texcoord,
+		1.0f,
+		vsout.normal,
+		guh,
+		material_parameters,			// only when use_material_texture is defined
+		specular_fresnel_color,							// fresnel(specular_albedo_color)
+		specular_albedo_color,							// specular reflectance at normal incidence
+		analytic_specular_radiance);
+
+	float3 blurred_normal = sample2Dlod(bump_map, transform_texcoord(texcoord, bump_map_xform), normal_blur_mip).xyz;
+	blurred_normal.xy += sample2Dlod(bump_detail_map, transform_texcoord(texcoord, bump_detail_map_xform), normal_blur_mip).xy * bump_detail_coefficient;
+	blurred_normal.z = sqrt(saturate(1.0f + dot(blurred_normal.xy, -blurred_normal.xy)));
+	blurred_normal = mul(blurred_normal, tangent_frame);
+	
+	float3 radiance = sss(
+		texcoord,
+		view_dir,
+		bump_normal,
+		blurred_normal,
+		fragment_to_light,
+		light_radiance,
+		material_parameters.w,
+		material_parameters.z,
+		albedo.xyz,
+		specular_fresnel_color);
+	
 	radiance += analytic_specular_radiance;
 
-#else
-#ifdef _PBR_SPEC_GLOSS_FX_
+
+#elif defined(_PBR_SPEC_GLOSS_FX_)
 	float3 specular_fresnel_color;
 	float3 specular_albedo_color;
 	float power_or_roughness;
 	float3 analytic_specular_radiance;
 	
 	float4 spatially_varying_material_parameters;
-
+	float4 guh = float4(0,specular_mask);
 	CALC_MATERIAL_ANALYTIC_SPECULAR(material_type)(
+		view_dir,
+		bump_normal,
+		view_reflect_dir,
+		fragment_to_light,
+		light_radiance,
+		albedo.xyz,									// diffuse reflectance (ignored for cook-torrance)
+		texcoord,
+		1.0f,
+		vsout.normal,
+		guh,
+		spatially_varying_material_parameters,			// only when use_material_texture is defined
+		specular_fresnel_color,							// fresnel(specular_albedo_color)
+		specular_albedo_color,							// specular reflectance at normal incidence
+		analytic_specular_radiance);
+
+		//float metallic = max(max(spatially_varying_material_parameters.x, spatially_varying_material_parameters.y), spatially_varying_material_parameters.z);
+
+		//metallic = metallic + (max(1 - spatially_varying_material_parameters.w, metallic) - metallic) * pow(saturate(dot(bump_normal, view_dir)), 5);
+		//float3 radiance = albedo.rgb * (1 / PI) * specular_fresnel_color * saturate(dot(fragment_to_light, bump_normal)) * light_radiance;
+		float3 radiance = oren_nayar(
+							view_dir,
+							bump_normal,
+							fragment_to_light,
+							light_radiance,
+							specular_fresnel_color,
+							spatially_varying_material_parameters.y,
+							albedo.xyz
+							);
+
+		radiance += analytic_specular_radiance;
+		//radiance *= material_parameters.z;
+#elif defined(_TOON_FX_)
+		float3 specular_fresnel_color;
+		float3 specular_albedo_color;
+		float power_or_roughness;
+		float3 analytic_specular_radiance;
+
+		float4 spatially_varying_material_parameters;
+
+		CALC_MATERIAL_ANALYTIC_SPECULAR(material_type)(
 		view_dir,
 		bump_normal,
 		view_reflect_dir,
@@ -1601,15 +1718,14 @@ accum_pixel default_dynamic_light_ps(
 		specular_albedo_color,							// specular reflectance at normal incidence
 		analytic_specular_radiance);
 
-		float metallic = max(max(spatially_varying_material_parameters.x, spatially_varying_material_parameters.y), spatially_varying_material_parameters.z);
-
-		metallic = metallic + (max(1 - spatially_varying_material_parameters.w, metallic) - metallic) * pow(saturate(dot(bump_normal, view_dir)), 5);
-
-		float3 analytic_diffuse_radiance= light_radiance * dot(fragment_to_light, bump_normal) * (1 - metallic) * albedo.rgb;
-		float3 radiance= analytic_diffuse_radiance * GET_MATERIAL_DIFFUSE_MULTIPLIER(material_type)();
+		float NdotL_stepped = saturate(dot(bump_normal, fragment_to_light));
+		NdotL_stepped = smoothstep(0, 0.04f, NdotL_stepped);
+		float3 analytic_diffuse_radiance= albedo.rgb * (1 / PI) * (1 - specular_fresnel_color) * NdotL_stepped * light_radiance;
+		float3 radiance= analytic_diffuse_radiance;
 
 		radiance += analytic_specular_radiance;
 #else
+
 		// calculate diffuse lobe
 		float3 analytic_diffuse_radiance= light_radiance * dot(fragment_to_light, bump_normal) * albedo.rgb;
 		float3 radiance= analytic_diffuse_radiance * GET_MATERIAL_DIFFUSE_MULTIPLIER(material_type)();
@@ -1620,10 +1736,6 @@ accum_pixel default_dynamic_light_ps(
 	#ifndef pc	
 		float blended_normal_attenuate= pow(normal_lengthsq, 8);
 	#endif	
-
-		// calculate specular lobe
-		float3 specular_mask;
-		calc_specular_mask_ps(texcoord, albedo.w, specular_mask);
 
 		float3 specular_multiplier= GET_MATERIAL_ANALYTICAL_SPECULAR_MULTIPLIER(material_type)(specular_mask);
 		
@@ -1655,8 +1767,6 @@ accum_pixel default_dynamic_light_ps(
 			radiance += analytic_specular_radiance * specular_multiplier;
 		}
 #endif
-#endif
-
 
 #ifndef pc	
 	radiance*= blended_normal_attenuate;
@@ -1676,6 +1786,9 @@ accum_pixel default_dynamic_light_ps(
 			{
 				unshadowed_percentage = sample_percentage_closer_PCF_3x3_block(vsout.fragment_position_shadow, /*unused*/0.0f);
 			}
+			#ifdef _TOON_FX_
+				unshadowed_percentage *= specular_mask * (1 - specular_shadowing_amount);
+			#endif
 		}
 	}
 

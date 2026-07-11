@@ -23,9 +23,14 @@
 #define MATERIAL_TYPE_cook_torrance_reach 15
 #define MATERIAL_TYPE_two_lobe_phong_reach 16
 #define MATERIAL_TYPE_pbr 17
-#define MATERIAL_TYPE_pbr_spec_gloss 18
-#define MATERIAL_TYPE_phong_h2 19
-#define MATERIAL_TYPE_umamusume 20
+#define MATERIAL_TYPE_pbr_advanced 18
+#define MATERIAL_TYPE_pbr_sss 19
+#define MATERIAL_TYPE_h2a 20
+#define MATERIAL_TYPE_h2a_advanced 21
+#define MATERIAL_TYPE_h2a_advanced_mask 22
+#define MATERIAL_TYPE_phong_h2 23
+#define MATERIAL_TYPE_umamusume 24
+#define MATERIAL_TYPE_toon 25
 
 
 // all material models must define these 4 functions
@@ -243,7 +248,7 @@ PARAM(bool, no_dynamic_lights);
 #endif
 
 //*****************************************************************************
-// two lobe phong model with specular tint colors got from special texture
+// GGX specular and Hammon diffuse
 //*****************************************************************************
 #if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_pbr
 #include "pbr.fx"
@@ -251,9 +256,40 @@ PARAM(bool, no_dynamic_lights);
 #endif
 
 //*****************************************************************************
-// two lobe phong model with specular tint colors got from special texture
+// GGX specular and Hammon diffuse with more features
 //*****************************************************************************
-#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_pbr_spec_gloss
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_pbr_advanced
+#define PBR_ADVANCED
+#include "pbr.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+//*****************************************************************************
+// Pre-Integrated Skin BRDF with GGX specular, for skin rendering
+//*****************************************************************************
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_pbr_sss
+#define _SSS_
+#include "pbr_sss.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+//*****************************************************************************
+// GGX-based PBR shader mimmicking the workflow of H2A's spec-gloss shaders
+//*****************************************************************************
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_h2a
+#include "pbr_spec_gloss.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_h2a_advanced
+#define H2A_ADVANCED
+#include "pbr_spec_gloss.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_h2a_advanced_mask
+#define H2A_ADVANCED
+#define H2A_ADVANCED_MASKED
 #include "pbr_spec_gloss.fx"
 #define NO_ALPHA_TO_COVERAGE
 #endif
@@ -267,9 +303,17 @@ PARAM(bool, no_dynamic_lights);
 #endif
 
 //*****************************************************************************
-// two lobe phong model with specular tint colors got from special texture
+// basically just the shader converted directly from umamusume
 //*****************************************************************************
 #if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_umamusume
 #include "umamusume.fx"
+#define NO_ALPHA_TO_COVERAGE
+#endif
+
+//*****************************************************************************
+// Toon
+//*****************************************************************************
+#if MATERIAL_TYPE(material_type) == MATERIAL_TYPE_toon
+#include "toon.fx"
 #define NO_ALPHA_TO_COVERAGE
 #endif

@@ -93,14 +93,14 @@ s_decal_interpolators default_vs( vertex_type IN )
 	always_local_to_view(IN, local_to_world_transform, OUT.m_position);
 
 	// Record both the normalized and sprite texcoord, for use in pixel kill and tfetch
-	if (pixel_kill_enabled)
+	//if (pixel_kill_enabled)
 	{
 		OUT.m_texcoord= float4(IN.texcoord, IN.texcoord * sprite.zw + sprite.xy);
 	}
-	else
-	{
-		OUT.m_texcoord= float4(0.5f, 0.5f, IN.texcoord * sprite.zw + sprite.xy);
-	}
+	//else
+	//{
+	//	OUT.m_texcoord= float4(0.5f, 0.5f, IN.texcoord * sprite.zw + sprite.xy);
+	//}
 	
 	OUT.m_texcoord.zw*= float2(u_tiles, v_tiles);
 	OUT.m_pos_w = OUT.m_position.w;
@@ -117,6 +117,11 @@ s_decal_interpolators default_vs( vertex_type IN )
 	OUT.fragment_to_camera_world= Camera_Position - IN.position;
 	
 	return OUT;
+}
+
+s_decal_interpolators albedo_vs( vertex_type IN )
+{
+	return default_vs(IN);
 }
 
 // define before render_target.fx
@@ -481,8 +486,8 @@ void fade_out(inout float4 color)
 
 #if (RENDER_TARGET_TYPE== RENDER_TARGET_LIGHTING)
 typedef accum_pixel s_decal_render_pixel_out;
-#elif (RENDER_TARGET_TYPE== RENDER_TARGET_ALBEDO_AND_NORMAL)
-typedef albedo_pixel s_decal_render_pixel_out;
+//#elif (RENDER_TARGET_TYPE== RENDER_TARGET_ALBEDO_AND_NORMAL)
+//typedef albedo_pixel s_decal_render_pixel_out;
 #else	//if (RENDER_TARGET_TYPE RENDER_TARGET_ALBEDO_ONLY)
 struct s_decal_render_pixel_out
 {
@@ -495,9 +500,13 @@ s_decal_render_pixel_out convert_to_decal_target(float4 color, float3 normal, fl
 	s_decal_render_pixel_out OUT;
 	
 #if (RENDER_TARGET_TYPE== RENDER_TARGET_LIGHTING)
-	OUT= CONVERT_TO_RENDER_TARGET_FOR_BLEND(color, false, false, 0.0f);
-#elif (RENDER_TARGET_TYPE== RENDER_TARGET_ALBEDO_AND_NORMAL)
-	OUT= convert_to_albedo_target_no_srgb(color, normal, pos_w, geo_normal);
+	OUT= CONVERT_TO_RENDER_TARGET_FOR_BLEND(color, false, false
+#ifdef SSR_ENABLE
+	, 0.0f
+#endif
+	);
+//#elif (RENDER_TARGET_TYPE== RENDER_TARGET_ALBEDO_AND_NORMAL)
+//	OUT= convert_to_albedo_target_no_srgb(color, normal, pos_w, geo_normal);
 #else	//if (RENDER_TARGET_TYPE RENDER_TARGET_ALBEDO_ONLY)
 	OUT.m_color0= color;
 #endif
@@ -804,6 +813,19 @@ s_decal_render_pixel_out default_ps(s_decal_interpolators IN)
 	fade_out(diffuse);
 	
 	return convert_to_decal_target(diffuse, bump, IN.m_pos_w, tangent_framev[2]);
+}
+
+float4 albedo_ps(s_decal_interpolators IN) : SV_Target0
+{
+	clip(float4(IN.m_texcoord.xy, 1.0f-IN.m_texcoord.xy));
+
+	float4 diffuse= sample_diffuse(IN.m_texcoord.xy, IN.m_texcoord.zw, 0.0f);
+	float alpha = diffuse.a * fade.x;
+
+	float3x3 tangent_framev= tangent_frame(IN);
+	float3 bump= sample_bump(IN.m_texcoord.xy, IN.m_texcoord.zw, tangent_framev);
+
+	return float4(bump * 0.5f + 0.5f, alpha);
 }
 
 #endif

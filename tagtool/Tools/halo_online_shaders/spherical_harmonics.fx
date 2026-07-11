@@ -24,7 +24,7 @@ PARAM_SAMPLER_2D(g_sample_vmf_phong_specular); // linear/quadratic terms of the 
 
 // PRT C0 default = 1 / 2 sqrt(pi)
 #define PRT_C0_DEFAULT (0.28209479177387814347403972578039)
-#define pi 3.14159265358979323846
+#define pi 3.14159265358979323846264338327950f
 #define sh_constants_direction_evaluation0 0.28209479177387814347415840517935   //(0.5f/sqrt(D3DX_PI))          //DC
 #define sh_constants_direction_evaluation1 0.48860251190291992158659018158716   //(0.5f*sqrt(3/D3DX_PI))        //Linear
 #define sh_constants_direction_evaluation2 1.0925484305920790705438453491384    //(0.5f*sqrt(15/D3DX_PI))       // Qadratic -2,-1,1,2

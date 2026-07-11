@@ -295,7 +295,7 @@
             the gain to use when the sound is directed away from the listener
             </summary>
         </member>
-        <member name="F:TagTool.Audio.PlaybackParameter.Flags">
+        <member name="F:TagTool.Audio.PlaybackParameter.GainOverrideFlags">
             <summary>
             NOTE: this will only apply when the sound is started via script
             azimuth:
@@ -726,7 +726,7 @@
             Serializer is responsible for properly reading/writing to file.
             </summary>
         </member>
-        <member name="M:TagTool.Cache.CacheVersionDetection.DetectFromTimestamp(System.String)">
+        <member name="M:TagTool.Cache.CacheVersionDetection.DetectFromTimestamp(System.Int64)">
             <summary>
             Detects the engine that a tags.dat was built for based on its timestamp.
             </summary>
@@ -2196,28 +2196,118 @@
             </summary>
             <returns>A <see cref="P:TagTool.Commands.Command.Description"/> based on <see cref="T:TagTool.Porting.PortingFlags"/>.</returns>
         </member>
-        <member name="M:TagTool.Commands.ScenarioStructureBSPs.ImportGeometryWithPathfindingCommand.TryGetTag``1(System.String,``0@)">
-            <summary>
-            Attempts to get a named tag from the cache.<br/>
-            Returns true if the tag was found and deserialized successfully.
-            </summary>
-            <typeparam name="T"> The tag type to get. <typeparamref name="T"/> must be a <see cref="T:TagTool.Tags.TagStructure"/>. </typeparam>
-            <param name="tagName"> The name of the tag to get. </param>
-            <param name="tag"> The <typeparamref name="T"/> object (tag) to output the deserialized tag to. </param>
-            <returns> True if the tag was found and deserialized successfully, false otherwise. </returns>
+        <member name="T:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand">
+             <summary>
+             Generates pathfinding data for all structure BSPs in a scenario.
+            
+             Usage:
+               GeneratePathfindingData [SlopeDegrees] [ThresholdDegrees] [ObjectTypes]
+            
+               SlopeDegrees      - Optional float. Default 45. Surfaces whose angle from horizontal
+                                   exceeds this are treated as walls (not walkable).
+               ThresholdDegrees  - Optional float. Default 15. Minimum angle change between two
+                                   adjacent sectors to generate a threshold link between them.
+               ObjectTypes       - Optional comma-separated filter. Default: all.
+                                   Valid values: Scenery, Machine, Crate, Giant
+                                   Example: "Scenery,Machine"
+            
+             The command:
+               1. Reads all structure BSPs referenced by the scenario.
+               2. For each BSP, reads the collision resource (cluster + instanced geo).
+               3. Reads all scenario object placements and resolves their collision models.
+               4. Builds a PathfindingGeometryContext (world-space first pass).
+               5. Runs sector merging on walkable surfaces.
+               6. Generates Sectors, Links, Vertices, and ObjectReferences.
+               7. Writes the data back to both the tag and the cache resource.
+             </summary>
         </member>
-        <member name="M:TagTool.Commands.ScenarioStructureBSPs.ImportGeometryWithPathfindingCommand.Execute(System.Collections.Generic.List{System.String})">
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.ResolveScenarioPolicy(TagTool.Tags.Definitions.Scenario.PathfindingPolicyValue)">
             <summary>
-            Executes the command.
+            Converts a scenario-level PathfindingPolicyValue to our internal enum.
+            TagDefault must be resolved before calling this.
             </summary>
-            <param name="args">The command arguments.</param>
-            <remarks>
-            Arguments:<br/>
-            &lt;name&gt;         -- Name to use for display and ID purposes.<br/>
-            &lt;tagName&gt;      -- Name to use for the tag.<br/>
-            &lt;daeModelPath&gt; -- Path to the model file to import.<br/>
-            &lt;scenarioPath&gt; -- Path to the scenario file to edit.
-            </remarks>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.ResolveSceneryTagPolicy(TagTool.Tags.Definitions.Scenery.PathfindingPolicyValue)">
+            <summary>
+            Resolves a Scenery tag's own PathfindingPolicyValue to our internal enum.
+            The Scenery tag enum has no TagDefault (index 0 = CutOut), so its integer values
+            are offset by -1 relative to the scenario enum. We cast via int to map correctly:
+              tag 0 (CutOut)  → scenario 1 (CutOut)  → CutOut
+              tag 1 (Static)  → scenario 2 (Standard) → Static
+              tag 2 (Dynamic) → scenario 3 (Dynamic)  → Dynamic
+              tag 3 (None)    → scenario 4 (None)     → None
+            </summary>
+            <summary>
+            Resolves a Scenery tag's own PathfindingPolicyValue by name.
+            The tag enum has no TagDefault; names match directly to our internal policy.
+            </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.ResolveMachineTagPolicy(TagTool.Tags.Definitions.DeviceMachine.PathfindingPolicyValue)">
+            <summary>
+            Resolves a DeviceMachine tag's own PathfindingPolicyValue.
+            Machine tag enum: 0=Discs, 1=Sectors, 2=CutOut, 3=None (no TagDefault).
+            Discs → None (no data; machine uses physics at runtime).
+            Sectors → Dynamic (mobile sectors that move with the machine).
+            </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.ResolveMachinePlacementPolicy(TagTool.Tags.Definitions.Scenario.MachineInstance.PathfindingPolicyValue)">
+            <summary>
+            Resolves a MachineInstance placement PathfindingPolicyValue.
+            TagDefault must be handled before calling this.
+            </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.GenerateIntersectionHints(TagTool.Pathfinding.TagPathfinding,TagTool.Pathfinding.Utils.ProcessedBspBlock,System.Collections.Generic.Dictionary{System.Int32,System.Int32},System.Collections.Generic.Dictionary{System.Int32,System.Int32},System.Collections.Generic.Dictionary{System.Int32,System.Int32},System.Collections.Generic.List{TagTool.Pathfinding.Utils.ProcessedSurface},System.Int32,System.Collections.Generic.List{TagTool.Common.RealPoint3d},System.Single)">
+             <summary>
+             For static objects, marks all intersection boundary links with SectorIntersectionLink,
+             then generates standalone overlay links (claimed by no sector) at walkable entry points
+             with IntersectionLink hints chained in perimeter order.
+            
+             Three categories at the object/map boundary:
+               - Non-walkable slope: SectorIntersectionLink + SectorLinkWallBase (yellow in Sapien)
+               - Walkable: SectorIntersectionLink only on the collision-derived link (base topology)
+                 plus a new standalone overlay link (red hint links in Sapien), which also gets
+                 SectorLinkThreshold if adjacent sector planes differ beyond the angle threshold.
+             </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.IsNeighbourSurfaceAbove(System.Int32,TagTool.Pathfinding.Utils.ProcessedBspBlock,System.Single,System.Single)">
+            <summary>
+            Returns true if the neighbouring surface (on the open side of a boundary link)
+            has any vertex above the shared edge's Z level, indicating a wall the AI would
+            lean against. Returns false if all vertices are at or below the edge Z (ledge/drop off).
+            If the surface index is out of range (open air), returns false (ledge).
+            </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.ResolveNextLink(System.Int32,TagTool.Pathfinding.Utils.ProcessedBspBlock,System.Collections.Generic.Dictionary{System.Int32,System.Int32},System.Int32,System.Boolean)">
+            <summary>
+            Walks the collision edge perimeter from startEdgeIdx, following the correct
+            forward or reverse pointer based on which side of each edge the primary surface is on,
+            until a valid link is found or the chain loops back.
+            </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.BuildSurfaceToSectorMap(System.Collections.Generic.List{TagTool.Pathfinding.Utils.ProcessedSurface},System.Collections.Generic.List{TagTool.Pathfinding.Utils.ProcessedSurface},System.Single)">
+            <summary>
+            Builds a map from original surface index to merged sector local index (0-based).
+            Surfaces that were culled (not walkable) return -1.
+            </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.EnsureObjectReferenceFrame(TagTool.Tags.Definitions.Common.ObjectIdentifier)">
+            <summary>
+            Returns the tag reference from a palette list at the given index, or null if out of range.
+            </summary>
+            <summary>
+            Ensures a matching ReferenceFrame entry exists in the scenario for the given
+            ObjectIdentifier. If one already exists (matched by UniqueId, Type, Source, and
+            OriginBspIndex) it is left as-is. Otherwise a new one is added with:
+              NodeIndex = 0 (root), ProjectionAxis = 2 (Z-up), Flags = None.
+            All three blocks — scenario placement, reference frame, and pathfinding ObjectReference
+            — must share the same ObjectIdentifier.
+            </summary>
+        </member>
+        <member name="M:TagTool.Commands.Scenarios.GeneratePathfindingDataCommand.ResetPathfindingBlock(TagTool.Tags.Definitions.ScenarioStructureBsp)">
+            <summary>
+            Always resets the pathfinding tag block to a fresh empty state regardless of
+            what was there before, so re-running the command produces a clean result.
+            </summary>
         </member>
         <member name="M:TagTool.Commands.Shaders.GenerateShaderCommand.GetDependantsAsync(TagTool.Cache.GameCache,System.IO.Stream,System.String)">
             <summary>
@@ -4393,6 +4483,11 @@
             Each color is some form of RGBE, engine converts it to rgb. Color 4,5 seem unused
             </summary>
         </member>
+        <member name="T:TagTool.Geometry.Utils.BlamAssetWriter">
+            <summary>
+            StreamWriter with formatting for JMS/JMA/ASS values.
+            </summary>
+        </member>
         <member name="T:TagTool.Havok.TagHkpMoppCode">
             <summary>
             Tag variant of HkpMoppCode with the actual codes in a tag block
@@ -4972,6 +5067,219 @@
             <param name="tagPathfinding"></param>
             <returns></returns>
         </member>
+        <member name="T:TagTool.Pathfinding.Utils.ProcessedSurface">
+            <summary>
+            Represents a single collision surface after being read and pre-processed from any source
+            (cluster geo, instanced geo, or scenario object collision model). Vertices are already in
+            world space at this point. The surface normal / plane equation is also world-space.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedSurface.Vertices">
+            <summary>World-space vertices in winding order.</summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedSurface.Plane">
+            <summary>World-space plane equation for this surface.</summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedSurface.SlopeK">
+            <summary>
+            Slope of this surface. K component of the plane normal: 1.0 = perfectly flat,
+            0.0 = perfectly vertical. Surfaces below the threshold are walls and are excluded
+            from walkable sector generation.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedSurface.Source">
+            <summary>Source this surface originated from, used for flag assignment.</summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedSurface.OriginalSurfaceIndex">
+            <summary>
+            Original surface index within its source collision geometry block.
+            Preserved for Bsp2dRef mapping back to the ObjRef block.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedSurface.OwnerIndex">
+            <summary>
+            For object / instanced geo surfaces, a back-reference to the owning context entry.
+            Used during intersection and stitch tests.
+            </summary>
+        </member>
+        <member name="T:TagTool.Pathfinding.Utils.ProcessedInstancedGeo">
+            <summary>
+            Represents one instanced geometry placement, with its collision surfaces already
+            transformed into world space.
+            </summary>
+        </member>
+        <member name="T:TagTool.Pathfinding.Utils.ProcessedObjectPlacement">
+            <summary>
+            Represents one scenario object placement (scenery, machine, crate, giant) whose
+            collision model has been resolved and whose surfaces are in world space.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedObjectPlacement.PlacementObjectId">
+            <summary>
+            The placement's ObjectIdentifier, copied directly from the scenario placement block.
+            Used for the pathfinding ObjectReference.ObjectId and the scenario ObjectReferenceFrames
+            entry — all three blocks must share the same identifier.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedObjectPlacement.RegionBsps">
+            <summary>
+            Surfaces grouped by [region][bsp], preserving the region/bsp structure so we can
+            write the correct BspIndex and VertexOffset values in the ObjectReference block.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedObjectPlacement.RegionBspNodeIndices">
+            <summary>Node index per bsp block, read from the collision model.</summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedObjectPlacement.RegionBspVertexCounts">
+            <summary>Raw vertex count per bsp block, used to compute cumulative VertexOffset.</summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedBspBlock.OriginalEdges">
+            <summary>
+            Original collision edges in this bsp block, preserved so we can re-derive adjacency
+            after surface culling and merging without re-reading from the tag.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.ProcessedBspBlock.OriginalVertices">
+            <summary>
+            Original vertices in world space, parallel to the collision geometry vertex list.
+            </summary>
+        </member>
+        <member name="T:TagTool.Pathfinding.Utils.PathfindingGeometryContext">
+            <summary>
+            The full pre-processed world representation used by the pathfinding generator.
+            Built once from all collision sources before any sector or link generation begins.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.PathfindingGeometryContext.ClusterSurfaces">
+            <summary>
+            All walkable cluster geo surfaces in world space. These feed into the base sector
+            generation and are the reference geometry for instanced geo intersection/cutout tests.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.PathfindingGeometryContext.ObjectPlacements">
+            <summary>
+            Scenario object placements with Static or Dynamic policy — these get ObjectReferences
+            and sector data written into the pathfinding block.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.PathfindingGeometryContext.CutOutPlacements">
+            <summary>
+            Scenario object placements with CutOut policy — these affect the base map sector
+            generation (cutout where they intersect cluster geo) but get no ObjectReference.
+            Populated during first pass for use by GenerateBspPathfinding.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.PathfindingGeometryContext.CumulativeVertexOffset">
+            <summary>
+            Running total of all collision vertices seen across cluster geo, instanced geo,
+            and previously written object refs. Seeded from the BSP collision resource vertex
+            count, or from StructureChecksum if we are appending to existing data.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.PathfindingGeometryContext.SlopeThreshold">
+            <summary>
+            Surfaces whose plane normal K component is below this value are treated as walls.
+            Derived from SlopeDegrees: cos(angle). Default cos(45°) ≈ 0.707.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.PathfindingGeometryContext.ThresholdDegrees">
+            <summary>
+            Minimum angle change (degrees) between two adjacent sector planes to generate
+            a threshold link. Default 15 degrees.
+            </summary>
+        </member>
+        <member name="P:TagTool.Pathfinding.Utils.PathfindingGeometryContext.CoplanarMergeEpsilon">
+            <summary>
+            Maximum gap (world units) between two coplanar surfaces that can still be merged.
+            Surfaces within this distance are treated as touching for the purposes of merging.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.TransformPoint(TagTool.Common.RealPoint3d,TagTool.Common.RealMatrix4x3)">
+            <summary>
+            Transforms a RealPoint3d by a RealMatrix4x3 (rotation + translation, no scale column).
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.TransformNormal(TagTool.Common.RealVector3d,TagTool.Common.RealMatrix4x3)">
+            <summary>
+            Transforms only the direction part of a plane normal (ignores translation).
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.TransformPlane(TagTool.Common.RealPlane3d,TagTool.Common.RealMatrix4x3)">
+            <summary>
+            Transforms a full plane (normal + distance) by a matrix.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.NormalsParallel(TagTool.Common.RealPlane3d,TagTool.Common.RealPlane3d,System.Single)">
+            <summary>
+            Returns true if two plane normals are parallel within a small angular epsilon.
+            Used for coplanar checks.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.PointOnPlane(TagTool.Common.RealPoint3d,TagTool.Common.RealPlane3d,System.Single)">
+            <summary>
+            Returns true if point p lies on plane within distance epsilon.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.AreSurfacesCoplanar(TagTool.Pathfinding.Utils.ProcessedSurface,TagTool.Pathfinding.Utils.ProcessedSurface,System.Single)">
+            <summary>
+            Returns true if two surfaces are coplanar (parallel normals and all vertices of b lie on a's plane).
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.SurfacesAdjacent(TagTool.Pathfinding.Utils.ProcessedSurface,TagTool.Pathfinding.Utils.ProcessedSurface,System.Single)">
+            <summary>
+            Returns true if two surfaces share at least one edge (a pair of vertices within epsilon).
+            Used as a prerequisite for merge candidacy.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.ProjectOntoPlane(TagTool.Common.RealPoint3d,TagTool.Common.RealPlane3d)">
+            <summary>
+            Projects a 3D point onto a 2D plane defined by the largest two axes of the normal,
+            returning a RealPoint2d. Used for convexity testing.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.PathfindingMath.IsConvex2D(System.Collections.Generic.List{System.ValueTuple{System.Single,System.Single}})">
+            <summary>
+            Returns true if the polygon formed by the given vertices (in 2D projection) is convex.
+            Assumes winding order is consistent.
+            </summary>
+        </member>
+        <member name="T:TagTool.Pathfinding.Utils.SectorMerger">
+             <summary>
+             Merges adjacent, coplanar, convex collision surfaces into larger sectors.
+            
+             Rules (matching Bungie's observed generator behaviour):
+               1. Surfaces must be coplanar (same plane normal and D value within epsilon).
+               2. Merged polygon must remain convex — no concave vertices allowed on the same plane.
+               3. Merged polygon must not exceed 8 sides.
+               4. Non-coplanar vertices are allowed in a sector provided the above rules are met
+                  for any sub-set of vertices that lie on a single plane (i.e. ramp + flat seams).
+            
+             This is called once per set of walkable surfaces before sector/link generation.
+             The return value is a new list of ProcessedSurface where merged groups are replaced
+             by a single representative surface; the original surfaces that were consumed are
+             removed from the list. Each returned surface may have more than the original vertex
+             count (up to 8) if merging occurred.
+             </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.SectorMerger.TryMergeInto2DPolygon(System.Collections.Generic.List{TagTool.Pathfinding.Utils.ProcessedSurface},TagTool.Pathfinding.Utils.ProcessedSurface,TagTool.Common.RealPlane3d,System.Single)">
+            <summary>
+            Attempts to compute the 2D convex hull polygon that would result from merging
+            the existing group with the candidate surface. Returns null if the merge is
+            geometrically invalid.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.SectorMerger.BuildMergedSurface(System.Collections.Generic.List{TagTool.Pathfinding.Utils.ProcessedSurface},TagTool.Common.RealPlane3d,System.Single)">
+            <summary>
+            Builds the final merged ProcessedSurface from a group, taking metadata from the
+            first (seed) surface and computing the merged vertex list via convex hull.
+            </summary>
+        </member>
+        <member name="M:TagTool.Pathfinding.Utils.SectorMerger.ConvexHull2D(System.Collections.Generic.List{System.ValueTuple{System.Single,System.Single}})">
+            <summary>
+            Andrew's monotone chain convex hull. O(n log n).
+            Returns hull vertices in counter-clockwise order, or null if degenerate.
+            </summary>
+        </member>
         <member name="M:TagTool.Porting.Gen3.PortingContextGen3.PreConvertDefinition(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,System.Object)">
             <summary>
             Perform pre-conversion fixups to Blam data
@@ -5380,16 +5688,6 @@
             <remarks>
             NOTE: For bulk conversion consider using <see cref="M:TagTool.Porting.PortingContext.ConvertTag(System.IO.Stream,System.IO.Stream,TagTool.Cache.CachedTag,System.String,System.Object,TagTool.Porting.PortingContext.ConvertTagOptions@)"/>
             </remarks>
-        </member>
-        <member name="P:TagTool.Scripting.Compiler.ScriptSyntaxReader.Reader">
-            <summary>
-            The binary reader which reads from the expression data stream.
-            </summary>
-        </member>
-        <member name="F:TagTool.Scripting.Compiler.ScriptSyntaxReader.Delimiters">
-            <summary>
-            Expression syntax delimiters.
-            </summary>
         </member>
         <member name="T:TagTool.Serialization.HaloOnlineSerializationContext">
             <summary>
@@ -16763,16 +17061,6 @@
             particle initial velocity direction relative to the location's forward
             </summary>
         </member>
-        <member name="F:TagTool.Tags.Definitions.Gen2.CacheFileSound.FlagsValue.AlwaysSpatialize">
-            <summary>
-            always play as 3d sound, even in first person
-            </summary>
-        </member>
-        <member name="F:TagTool.Tags.Definitions.Gen2.CacheFileSound.FlagsValue.NeverObstruct">
-            <summary>
-            disable occlusion/obstruction for this sound
-            </summary>
-        </member>
         <member name="F:TagTool.Tags.Definitions.Gen2.CellularAutomata.InfectedCellLifespan">
             <summary>
             the lifespan of a cell once infected
@@ -23511,16 +23799,6 @@
         <member name="F:TagTool.Tags.Definitions.Gen2.Sky.SkyAnimationBlock.AnimationIndex">
             <summary>
             Index of the animation in the animation graph.
-            </summary>
-        </member>
-        <member name="F:TagTool.Tags.Definitions.Gen2.Sound.Gen2SoundFlags.AlwaysSpatialize">
-            <summary>
-            always play as 3d sound, even in first person
-            </summary>
-        </member>
-        <member name="F:TagTool.Tags.Definitions.Gen2.Sound.Gen2SoundFlags.NeverObstruct">
-            <summary>
-            disable occlusion/obstruction for this sound
             </summary>
         </member>
         <member name="F:TagTool.Tags.Definitions.Gen2.SoundCacheFileGestalt.RuntimePermutationFlags">

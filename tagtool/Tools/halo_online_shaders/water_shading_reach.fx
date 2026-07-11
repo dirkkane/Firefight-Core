@@ -207,7 +207,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 	float3 color_refraction;
 	float3 color_refraction_bed;
 	float4 color_refraction_blend;
-	//float color_refraction_bed_contribution= 0.0f;
+	float color_refraction_bed_contribution= 0.0f;
 
 	if (TEST_CATEGORY_OPTION(refraction, none))
 	{
@@ -285,7 +285,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 //		float transparency= compute_fog_transparency(water_murkiness*ripple_slope_length, refraction_depth);		// what does ripple slope length accomplish?  attempt to darken ripple edges?
 		float transparency= compute_fog_transparency_reach(water_murkiness, negative_refraction_depth);
 		transparency *= saturate(refraction_extinct_distance * one_over_camera_distance);							// turns opaque at distance
-		//color_refraction_bed_contribution= transparency;
+		color_refraction_bed_contribution= transparency;
 		
 		if (k_is_camera_underwater)
 		{
@@ -475,7 +475,7 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 	//else
 	{		
 		output_color.rgb= lerp(color_refraction, color_reflection,  fresnel);
-		//color_refraction_bed_contribution*= 1.0f - fresnel;
+		color_refraction_bed_contribution*= 1.0f - fresnel;
 	
 		// add diffuse
 		output_color.rgb= output_color.rgb + color_diffuse; 
@@ -484,31 +484,34 @@ accum_pixel water_shading_reach(s_water_interpolators INTERPOLATORS)
 		if ( !TEST_CATEGORY_OPTION(bankalpha, none) )
 		{
 			output_color.rgb= lerp(color_refraction_bed, output_color.rgb, bank_alpha);
-			//color_refraction_bed_contribution= (1.0f-bank_alpha) + color_refraction_bed_contribution*bank_alpha;
+			color_refraction_bed_contribution= (1.0f-bank_alpha) + color_refraction_bed_contribution*bank_alpha;
 		}
 
 		// apply foam
 		if (!TEST_CATEGORY_OPTION(foam, none))
 		{
 			output_color.rgb= lerp(output_color.rgb, foam_color.rgb, foam_factor);
-			//color_refraction_bed_contribution*= (1.0f - foam_factor);
+			color_refraction_bed_contribution*= (1.0f - foam_factor);
 		}
-	
-		// apply under water fog
-		[branch]
-		if (k_is_camera_underwater)
-		{
-			float transparence= 0.5f * saturate(1.0f - compute_fog_factor_reach(k_ps_underwater_murkiness, INTERPOLATORS.incident_ws.w));
-			output_color.rgb= lerp(k_ps_underwater_fog_color, output_color.rgb, transparence);
-		}
-		output_color.a= 1.0f;
 	}
 	
-	// this needs to be figured out
+	// deduct refrection
 	//output_color.rgb = output_color.rgb - color_refraction_bed*color_refraction_bed_contribution;
-    //output_color.rgb = output_color.rgb * INTERPOLATORS.fog_extinction + INTERPOLATORS.fog_inscatter * BLEND_FOG_INSCATTER_SCALE * (1.0f - color_refraction_bed_contribution);
+
+	//output_color.rgb = output_color.rgb * INTERPOLATORS.fog_extinction + INTERPOLATORS.fog_inscatter * BLEND_FOG_INSCATTER_SCALE * (1.0f - color_refraction_bed_contribution);
 	output_color.rgb = output_color.rgb * g_exposure.rrr;
+
+	// recover refrection
 	//output_color.rgb = output_color.rgb + color_refraction_bed*color_refraction_bed_contribution;
+
+	// apply under water fog
+	[branch]
+	if (k_is_camera_underwater)
+	{
+		float transparence= 0.5f * saturate(1.0f - compute_fog_factor_reach(k_ps_underwater_murkiness, INTERPOLATORS.incident_ws.w));
+		output_color.rgb= lerp(k_ps_underwater_fog_color, output_color.rgb, transparence);
+	}
+	output_color.a= 1.0f;
 		
 	// this may not match reach, but we need to replicate rt write
 	return convert_to_render_target(output_color, true, true, 0.0f);		

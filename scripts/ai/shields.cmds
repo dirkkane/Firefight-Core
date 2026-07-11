@@ -1,7 +1,6 @@
 echo ==Fixing shield impacts...==
 edittag objects\characters\brute\brute.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
@@ -9,7 +8,6 @@ exit
 
 edittag objects\characters\brute\brute_jumppack.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 savetagchanges
@@ -17,7 +15,6 @@ exit
 
 edittag objects\characters\brute\brute_chieftain.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 savetagchanges
@@ -25,7 +22,6 @@ exit
 
 edittag objects\characters\bugger\bugger.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 savetagchanges
@@ -33,7 +29,6 @@ exit
 
 edittag objects\characters\engineer\engineer.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 savetagchanges
@@ -41,7 +36,6 @@ exit
 
 edittag objects\characters\engineer\engineer_freeform.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 savetagchanges
@@ -49,35 +43,30 @@ exit
 
 edittag objects\characters\grunt\grunt.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\jackal\jackal.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\hunter\hunter.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\floodcombat_brute\floodcombat_brute.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\floodcombat_elite\floodcombat_elite.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield ShieldImpactThirdPerson fx\shield_impacts\overshield_3p.shield_impact
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
@@ -85,35 +74,30 @@ exit
 
 edittag objects\characters\floodcombat_human\floodcombat_human.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\flood_ranged\flood_ranged.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\flood_stalker\flood_stalker.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\flood_tank\flood_tank.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
 
 edittag objects\characters\floodcarrier\floodcarrier.model
 setfield NewDamageInfo[0].GlobalShieldMaterialIndex 0
-setfield NewDamageInfo[0].GlobalShieldMaterialName invalid
 setfield OvershieldThirdPerson fx\shield_impacts\elite_overshield_3p.shield_impact
 SaveTagChanges
 exit
