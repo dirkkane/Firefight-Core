@@ -14,6 +14,7 @@ exit
 
 edittag objects\weapons\rifle\smg_silenced\smg_silenced.weapon
 setfield FirstPerson[0].FirstPersonAnimations objects\characters\masterchief\fp\weapons\rifle\fp_smg\fp_smg.model_animation_graph
+SetField FirstPerson[1].FirstPersonAnimations objects\characters\dervish\fp\weapons\rifle\fp_smg\fp_smg.model_animation_graph
 setfield WeaponFlags.NewFlags LoopFPFiringAnimation,CanBeDualWielded
 setfield Barrels[0].DualWeaponError.DualWieldDamageScale 0.8
 setfield WeaponTypeName offset_smg

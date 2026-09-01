@@ -16,6 +16,24 @@ setfield Attachments[*].AtlasFlags GameplayVisionMode
 savetagchanges
 exit
 
+edittag objects\characters\elite\mp_elite\mp_elite.biped
+AddBlockElements Attachments
+setfield Attachments[1].Type objects\characters\odst_recon\recon_flashlight_1p.light
+setfield Attachments[*].Type objects\characters\odst_recon\fx\vision_mode\vision_mode.effect
+setfield Attachments[*].AtlasFlags GameplayVisionMode
+savetagchanges
+exit
+
+EditTag objects\characters\dervish\dervish.biped
+SetField Functions[3].ExportName flashlight_intensity
+AddBlockElements Attachments
+setfield Attachments[1].Type objects\characters\odst_recon\recon_flashlight_1p.light
+SetField Attachments[1].PrimaryScale flashlight_intensity
+setfield Attachments[*].Type objects\characters\odst_recon\fx\vision_mode\vision_mode.effect
+setfield Attachments[*].AtlasFlags GameplayVisionMode
+savetagchanges
+exit
+
 opencachefile firefightfolder\source_maps\odst\h100.map
 porttag replace objects\characters\odst_recon\fx\vision_mode\vision_mode.effect
 porttag sound\game_sfx\ui\hud_ui\vision_on.sound
@@ -44,3 +62,16 @@ setfield EnvironmentPingColor.PingIntensity 0
 savetagchanges
 exit
 
+edittag objects\characters\elite\mp_elite\vision_mode.vision_mode
+setfield OnFootPing.VisionThroughWallsDistance 0
+setfield OnFootPing.PingSpeed 40
+setfield OnFootPing.PingFalloff 0
+setfield EnemyPingColor.Alpha 0.1
+setfield EnemyPingColor.PingIntensity 0
+setfield EnemyPingColor.DefaultColourFunction.Data 013401000000C10000000000000000000300FF00000000000000000000000000
+setfield AllyPingColor.PingIntensity 0
+setfield WeaponPingColor.PingIntensity 0
+setfield ObjectivePingColor.PingIntensity 0
+setfield EnvironmentPingColor.PingIntensity 0
+savetagchanges
+exit
